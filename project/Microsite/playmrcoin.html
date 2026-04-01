@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth scroll-pt-24 md:scroll-pt-32">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mr. Coin | Metropolitan Edition</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;500;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        glass: {
+                            base: '#001a14',    // Deep Jungle Black
+                            surface: '#0d362e', // Emerald Surface
+                            border: '#1d5e4f',  // Light Border
+                            highlight: '#34d399', // Bright Emerald
+                            gold: '#fbbf24',    // Electric Gold
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    backgroundImage: {
+                        'aurora': 'conic-gradient(from 180deg at 50% 50%, #001a14 0deg, #0d362e 180deg, #001a14 360deg)',
+                        'grid-pattern': 'linear-gradient(to right, rgba(251,191,36,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(251,191,36,0.05) 1px, transparent 1px)',
+                    },
+                    boxShadow: {
+                        'neon-green': '0 0 40px -10px rgba(52, 211, 153, 0.3)',
+                        'neon-gold': '0 0 40px -10px rgba(251, 191, 36, 0.3)',
+                        'glass-depth': '0 20px 50px -12px rgba(0, 0, 0, 0.8)',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 3s infinite',
+                        'scan': 'scanline 8s linear infinite',
+                        'spin-slow': 'spin 12s linear infinite',
+                        'shine': 'shine 3s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 0 0 rgba(251, 191, 36, 0.4)' },
+                            '70%': { boxShadow: '0 0 0 20px rgba(251, 191, 36, 0)' },
+                        },
+                        scanline: {
+                            '0%': { top: '-100%' },
+                            '100%': { top: '200%' },
+                        },
+                        shine: {
+                            '0%': { left: '-100%' },
+                            '20%': { left: '100%' },
+                            '100%': { left: '100%' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #001a14;
+            color: #ecfdf5;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .neo-card {
+            background: rgba(13, 54, 46, 0.3);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .neo-card:hover {
+            background: rgba(13, 54, 46, 0.5);
+            border-color: rgba(52, 211, 153, 0.3);
+            transform: translateY(-4px) scale(1.01);
+        }
+
+        .noise-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            opacity: 0.03;
+            z-index: 0;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .text-glow {
+            background: linear-gradient(to right, #fbbf24, #fde68a, #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(251, 191, 36, 0.3);
+        }
+
+        .hero-image-container { perspective: 1000px; }
+        .hero-image-card { transform-style: preserve-3d; transition: transform 0.5s ease; }
+        .hero-image-container:hover .hero-image-card { transform: rotateY(-2deg) rotateX(2deg); }
+
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body class="antialiased selection:bg-glass-gold selection:text-black relative">
+
+    <div class="noise-bg"></div>
+
+    <div class="fixed top-[-20%] left-[-10%] w-[800px] h-[800px] bg-glass-highlight/5 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="fixed bottom-[-20%] right-[-10%] w-[800px] h-[800px] bg-glass-gold/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+    <style>
+        #site-header { transition: background 0.3s, padding 0.3s, box-shadow 0.3s, border-color 0.3s; }
+        #site-header.scrolled { background: rgba(0,26,20,0.92); backdrop-filter: blur(20px); padding-top: 0.75rem; padding-bottom: 0.75rem; box-shadow: 0 4px 24px rgba(0,0,0,0.4); border-color: rgba(251,191,36,0.1); }
+        #site-header.top { background: transparent; padding-top: 1.25rem; padding-bottom: 1.25rem; border-color: transparent; }
+        #mobile-nav { display: none; max-height: 0; overflow: hidden; transition: max-height 0.35s ease, opacity 0.3s ease; opacity: 0; }
+        #mobile-nav.open { display: flex; max-height: 400px; opacity: 1; }
+        #hamburger-icon { transition: all 0.2s ease; }
+    </style>
+
+    <header id="site-header" class="top fixed w-full top-0 z-[9999] border-b">
+        <div class="container mx-auto px-4 md:px-6 flex items-center justify-between">
+
+            <a href="#" class="block relative z-50 hover:opacity-80 transition-opacity">
+                <img src="https://playmrcoin.com/wp-content/themes/site-theme/img/logo.png" alt="Mr. Coin Logo" class="h-8 md:h-12 w-auto object-contain">
+            </a>
+
+            <nav class="hidden md:flex items-center gap-6 lg:gap-8">
+                <a href="#hero" class="text-xs lg:text-sm font-medium text-gray-300 hover:text-yellow-400 transition-colors" style="color:#d1d5db;">Home</a>
+                <a href="#features" class="text-xs lg:text-sm font-medium text-gray-300 hover:text-yellow-400 transition-colors" style="color:#d1d5db;">Features</a>
+                <a href="#guide" class="text-xs lg:text-sm font-medium text-gray-300 hover:text-yellow-400 transition-colors" style="color:#d1d5db;">Guide</a>
+                <a href="#summary" class="text-xs lg:text-sm font-medium text-gray-300 hover:text-yellow-400 transition-colors" style="color:#d1d5db;">Summary</a>
+                <a href="#faq" class="text-xs lg:text-sm font-medium text-gray-300 hover:text-yellow-400 transition-colors" style="color:#d1d5db;">FAQ</a>
+            </nav>
+
+            <div class="flex items-center gap-4">
+                <a href="/game" class="hidden md:flex relative overflow-hidden items-center gap-2 px-5 py-2 lg:px-6 lg:py-2.5 font-bold text-xs lg:text-sm rounded-lg hover:scale-105 transition-transform duration-300" style="background:#fbbf24;color:#000;box-shadow:0 0 40px -10px rgba(251,191,36,0.3);">
+                    <span class="relative z-10">PLAY NOW</span>
+                    <i class="bi bi-play-fill text-base lg:text-lg relative z-10"></i>
+                </a>
+                <button id="hamburger-btn" class="md:hidden text-2xl text-white hover:text-yellow-400 transition-colors p-1 focus:outline-none" aria-label="Toggle menu">
+                    <i id="hamburger-icon" class="bi bi-list"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobile-nav" class="md:hidden flex-col absolute top-full left-0 w-full border-b shadow-2xl" style="background:rgba(0,26,20,0.97);border-color:rgba(251,191,36,0.2);backdrop-filter:blur(20px);">
+            <div class="flex flex-col p-6 gap-4 text-center">
+                <a href="#hero" class="mobile-nav-link text-white font-medium py-2 text-sm hover:text-yellow-400 transition-colors">Home</a>
+                <a href="#features" class="mobile-nav-link text-white font-medium py-2 text-sm hover:text-yellow-400 transition-colors">Features</a>
+                <a href="#guide" class="mobile-nav-link text-white font-medium py-2 text-sm hover:text-yellow-400 transition-colors">Guide</a>
+                <a href="#summary" class="mobile-nav-link text-white font-medium py-2 text-sm hover:text-yellow-400 transition-colors">Summary</a>
+                <a href="/game" class="mobile-nav-link w-full py-3 mt-2 font-bold text-sm rounded" style="background:#fbbf24;color:#000;box-shadow:0 0 20px -5px rgba(251,191,36,0.4);">PLAY NOW</a>
+            </div>
+        </div>
+    </header>
+
+    <script>
+    (function() {
+        var header = document.getElementById('site-header');
+        var hamburger = document.getElementById('hamburger-btn');
+        var icon = document.getElementById('hamburger-icon');
+        var mobileNav = document.getElementById('mobile-nav');
+        var isOpen = false;
+
+        // Scroll behavior
+        function onScroll() {
+            if (window.scrollY > 20) {
+                header.classList.remove('top');
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+                header.classList.add('top');
+            }
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+
+        // Mobile menu toggle
+        hamburger.addEventListener('click', function() {
+            isOpen = !isOpen;
+            if (isOpen) {
+                mobileNav.classList.add('open');
+                icon.className = 'bi bi-x-lg';
+            } else {
+                mobileNav.classList.remove('open');
+                icon.className = 'bi bi-list';
+            }
+        });
+
+        // Close on link click
+        document.querySelectorAll('.mobile-nav-link').forEach(function(link) {
+            link.addEventListener('click', function() {
+                isOpen = false;
+                mobileNav.classList.remove('open');
+                icon.className = 'bi bi-list';
+            });
+        });
+    })();
+    </script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('bannerSlider', () => ({
+                activeSlide: 0,
+                slides: [
+                    'https://playmrcoin.com/wp-content/themes/site-theme/img/banner1.png',
+                    'https://playmrcoin.com/wp-content/themes/site-theme/img/banner2.png',
+                    'https://playmrcoin.com/wp-content/themes/site-theme/img/banner3.png'
+                ],
+                timer: null,
+                init() { this.startAutoPlay(); },
+                startAutoPlay() {
+                    clearInterval(this.timer);
+                    this.timer = setInterval(() => { this.next(); }, 5000);
+                },
+                next() { this.activeSlide = (this.activeSlide + 1) % this.slides.length; },
+                goTo(index) { this.activeSlide = index; this.startAutoPlay(); }
+            }));
+
+             Alpine.data('faq', () => ({
+                selected: null,
+                toggle(id) { this.selected = this.selected === id ? null : id },
+                items: [
+                    { q: 'Is Mr Coin free to play?', a: 'Yes. This game is free to play and loads instantly in your browser without any delay.' },
+                    { q: 'Do I need an account or payment method?', a: 'No. There is no sign up required and no payment method is requested on this platform.' },
+                    { q: 'Can I win real money or cash out?', a: 'No. Everything in the game is virtual and has no cash value in the real world.' },
+                    { q: 'How do I start playing?', a: 'You can open the game and press the play button after using the plus or minus controls to set a comfortable level.' },
+                    { q: 'What is the goal of the game?', a: 'The goal is to match symbols on the five reel board and watch for special Mr Coin tiles and prize coins that make rounds more exciting.' },
+                    { q: 'How do the jackpots work?', a: 'Four tiers of virtual jackpots can be collected when a Mr Coin symbol lands at the same time as a Jackpot icon on the reels.' },
+                    { q: 'What do the Coin Surge symbols do?', a: 'The Mr Coin icons act as a collection mechanic that gathers all displayed prizes and jackpots currently visible on the board.' },
+                    { q: 'Is there a Hold and Spin style feature?', a: 'Yes. Certain triggers can start a short sequence where triggering icons lock in place and open spaces refresh for a set count.' },
+                    { q: 'Are there free spins?', a: 'Some versions include a set of free rounds where Mr Coin icons and prize coins appear more often because the trigger and number of rounds can vary.' },
+                    { q: 'Does the game work on mobile?', a: 'Yes. The layout and fonts and buttons are specifically designed to be easy to use on phones and tablets and desktop.' },
+                    { q: 'What can I do if the game does not load?', a: 'You should refresh the page and check your internet connection and try closing other tabs or apps. If issues continue then you may try another browser.' }
+                ]
+            }));
+        });
+    </script>
+
+    <main>
+        <section id="top-banner" class="pt-24 pb-6 md:pb-12 relative overflow-hidden" x-data="bannerSlider">
+            <div class="container mx-auto px-4 md:px-6 relative z-10">
+                <div class="relative w-full h-[130px] md:h-[450px] rounded-xl md:rounded-2xl overflow-hidden border border-glass-gold/30 shadow-glass-depth bg-black hero-image-container group">
+                    <template x-for="(slide, index) in slides" :key="index">
+                        <div x-show="activeSlide === index"
+                             x-transition:enter="transition ease-out duration-1000"
+                             x-transition:enter-start="opacity-0 scale-105"
+                             x-transition:enter-end="opacity-100 scale-100"
+                             x-transition:leave="transition ease-in duration-700"
+                             x-transition:leave-start="opacity-100 scale-100"
+                             x-transition:leave-end="opacity-0 scale-95"
+                             class="absolute inset-0">
+                            <img :src="slide" class="w-full h-full object-cover opacity-90">
+                            <div class="absolute inset-0 bg-gradient-to-t from-glass-base via-transparent to-transparent"></div>
+                        </div>
+                    </template>
+                    <div class="absolute inset-0 pointer-events-none p-4 md:p-12 flex flex-col justify-end items-start">
+                        <div class="pointer-events-auto bg-glass-base/60 backdrop-blur-md border border-white/10 px-4 py-2 md:px-6 md:py-3 rounded-lg md:rounded-xl mb-4 transform translate-y-4 opacity-0 animate-[float_1s_ease-out_forwards]">
+                            <h3 class="text-white font-bold font-display uppercase tracking-widest text-xs md:text-base">
+                                <i class="bi bi-star-fill text-glass-gold mr-2"></i> Featured Event
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-4 right-4 md:bottom-6 md:right-6 flex gap-2 z-30 pointer-events-auto">
+                        <template x-for="(slide, index) in slides" :key="index">
+                            <button @click="goTo(index)" 
+                                    class="h-1.5 rounded-full transition-all duration-300 shadow-lg"
+                                    :class="activeSlide === index ? 'w-6 md:w-8 bg-glass-gold' : 'w-2 bg-white/40 hover:bg-white'"></button>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="hero" class="relative py-8 md:py-12">
+            <div class="absolute inset-0 bg-aurora opacity-20 animate-pulse pointer-events-none"></div>
+
+            <div class="container mx-auto px-4 md:px-6 relative z-10">
+                <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-20">
+                    
+                    <div class="lg:w-1/2 w-full order-1 lg:order-1" data-aos="fade-right">
+                        <div class="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-glass-highlight/30 bg-glass-highlight/5 backdrop-blur-md mb-6 md:mb-8 shadow-neon-green">
+                            <span class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-glass-highlight animate-pulse"></span>
+                            <span class="text-glass-highlight text-[10px] md:text-xs font-bold uppercase tracking-widest">Free to Play Edition</span>
+                        </div>
+
+                        <h1 class="font-display text-4xl md:text-5xl lg:text-7xl font-bold mb-4 md:mb-6 text-white leading-[1.1]">
+                            MR. COIN'S <br>
+                            <span class="text-glow italic">RADIANT VAULT</span>
+                        </h1>
+
+                        <p class="text-gray-400 text-sm md:text-lg leading-relaxed mb-6 md:mb-8 max-w-xl border-l-2 border-glass-gold/30 pl-4 md:pl-6">
+                            Mr Coin provides a radiant free to play experience where shimmering cityscapes and golden treasure symbols meet high energy gaming on a polished five reel board.
+                        </p>
+
+                        <div class="flex flex-col sm:flex-row gap-4 md:gap-5">
+                            <a href="/game" class="group relative px-6 py-3 md:px-8 md:py-4 bg-glass-gold text-black font-bold font-display text-sm md:text-base rounded-xl overflow-hidden shadow-neon-gold text-center">
+                                <span class="relative z-10 flex items-center justify-center gap-2">
+                                    START SESSION <i class="bi bi-play-circle-fill group-hover:translate-x-1 transition-transform"></i>
+                                </span>
+                                <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-30 transition-opacity"></div>
+                            </a>
+                            <a href="#features" class="px-6 py-3 md:px-8 md:py-4 rounded-xl border border-white/10 hover:bg-white/5 hover:border-glass-gold text-white font-medium text-sm md:text-base transition-all flex items-center justify-center gap-2 text-center">
+                                <i class="bi bi-info-circle"></i> Learn More
+                            </a>
+                        </div>
+                        
+                        <div class="mt-8 md:mt-12 flex items-center gap-4 md:gap-6 opacity-70">
+                            <div class="flex items-center gap-2">
+                                <i class="bi bi-shield-check text-glass-gold text-lg md:text-xl"></i>
+                                <div class="text-[10px] md:text-xs uppercase font-bold tracking-widest text-gray-400">No Download</div>
+                            </div>
+                             <div class="w-px h-6 md:h-8 bg-white/10"></div>
+                             <div class="flex items-center gap-2">
+                                <i class="bi bi-infinity text-glass-gold text-lg md:text-xl"></i>
+                                <div class="text-[10px] md:text-xs uppercase font-bold tracking-widest text-gray-400">Unlimited Play</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:w-1/2 w-full order-2 lg:order-2 hero-image-container" data-aos="fade-left">
+                        <div class="relative w-full aspect-video rounded-xl md:rounded-2xl p-2 bg-gradient-to-br from-white/10 to-transparent backdrop-blur-md border border-white/20 shadow-glass-depth animate-float hero-image-card">
+                            <div class="relative w-full h-full rounded-lg md:rounded-xl overflow-hidden bg-black group cursor-pointer">
+                                <img src="https://playmrcoin.com/wp-content/themes/site-theme/img/previewgame.png" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700">
+                                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-500"></div>
+                                <div class="absolute inset-0 flex items-center justify-center z-20">
+                                    <a href="/game" class="relative w-16 h-16 md:w-24 md:h-24 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                                        <div class="absolute inset-0 rounded-full border-2 border-glass-gold opacity-50 animate-[spin_8s_linear_infinite]"></div>
+                                        <div class="absolute inset-2 rounded-full border border-white opacity-30 animate-[spin_6s_linear_infinite_reverse]"></div>
+                                        <div class="absolute inset-4 rounded-full bg-glass-gold shadow-neon-gold flex items-center justify-center animate-pulse-glow">
+                                            <i class="bi bi-play-fill text-2xl md:text-4xl text-black ml-1"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Rating Section ── -->
+        <section id="ratings" class="py-12 md:py-20 relative overflow-hidden">
+            <div class="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none"></div>
+            <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-glass-gold/5 blur-[120px] rounded-full pointer-events-none"></div>
+
+            <div class="container mx-auto px-4 md:px-6 relative z-10">
+
+                <!-- Header -->
+                <div class="text-center mb-10 md:mb-14" data-aos="fade-down">
+                    <span class="inline-flex items-center gap-2 text-glass-gold text-xs font-bold uppercase tracking-widest mb-3">
+                        <i class="bi bi-star-fill"></i> Verified Player Scores
+                    </span>
+                    <h2 class="font-display text-3xl md:text-5xl font-bold text-white">Game at a Glance</h2>
+                </div>
+
+                <!-- Big score + breakdown -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+
+                    <!-- Overall score card -->
+                    <div class="lg:col-span-4 bg-glass-surface border border-glass-border rounded-2xl p-6 md:p-10 flex flex-col items-center justify-center text-center relative overflow-hidden" data-aos="fade-right">
+                        <div class="absolute inset-0 bg-gradient-to-br from-glass-gold/10 to-transparent pointer-events-none"></div>
+                        <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-glass-gold/50 to-transparent"></div>
+                        <p class="text-glass-gold text-xs font-bold uppercase tracking-widest mb-4">Overall Rating</p>
+                        <div class="relative mb-2">
+                            <span class="font-display font-bold text-[6rem] md:text-[8rem] leading-none text-white" style="text-shadow: 0 0 40px rgba(251,191,36,0.4)">4.8</span>
+                            <span class="absolute top-4 -right-6 text-glass-gold text-lg font-bold">/5</span>
+                        </div>
+                        <div class="flex gap-1 text-glass-gold text-xl mb-4">
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
+                        </div>
+                        <span class="text-xs text-gray-400 font-semibold uppercase tracking-widest">Based on 1,200+ reviews</span>
+                        <!-- Pulse ring -->
+                        <div class="absolute inset-0 rounded-2xl border border-glass-gold/20 animate-pulse-glow pointer-events-none"></div>
+                    </div>
+
+                    <!-- Category bars -->
+                    <div class="lg:col-span-5 bg-glass-surface border border-glass-border rounded-2xl p-6 md:p-8 flex flex-col justify-center gap-5" data-aos="fade-up">
+                        <p class="text-glass-highlight text-xs font-bold uppercase tracking-widest mb-1">Category Breakdown</p>
+
+                        <div>
+                            <div class="flex justify-between items-center mb-1.5">
+                                <span class="text-sm font-semibold text-gray-200">Visual Quality</span>
+                                <span class="text-glass-gold font-bold text-sm">5.0</span>
+                            </div>
+                            <div class="h-2 bg-glass-border rounded-full overflow-hidden">
+                                <div class="h-full rounded-full bg-gradient-to-r from-glass-highlight to-glass-gold" style="width:100%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between items-center mb-1.5">
+                                <span class="text-sm font-semibold text-gray-200">Gameplay Feel</span>
+                                <span class="text-glass-gold font-bold text-sm">4.9</span>
+                            </div>
+                            <div class="h-2 bg-glass-border rounded-full overflow-hidden">
+                                <div class="h-full rounded-full bg-gradient-to-r from-glass-highlight to-glass-gold" style="width:98%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between items-center mb-1.5">
+                                <span class="text-sm font-semibold text-gray-200">Mobile Experience</span>
+                                <span class="text-glass-gold font-bold text-sm">4.8</span>
+                            </div>
+                            <div class="h-2 bg-glass-border rounded-full overflow-hidden">
+                                <div class="h-full rounded-full bg-gradient-to-r from-glass-highlight to-glass-gold" style="width:96%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between items-center mb-1.5">
+                                <span class="text-sm font-semibold text-gray-200">Bonus Features</span>
+                                <span class="text-glass-gold font-bold text-sm">4.7</span>
+                            </div>
+                            <div class="h-2 bg-glass-border rounded-full overflow-hidden">
+                                <div class="h-full rounded-full bg-gradient-to-r from-glass-highlight to-glass-gold" style="width:94%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between items-center mb-1.5">
+                                <span class="text-sm font-semibold text-gray-200">Audio Design</span>
+                                <span class="text-glass-gold font-bold text-sm">4.6</span>
+                            </div>
+                            <div class="h-2 bg-glass-border rounded-full overflow-hidden">
+                                <div class="h-full rounded-full bg-gradient-to-r from-glass-highlight to-glass-gold" style="width:92%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stat pills -->
+                    <div class="lg:col-span-3 flex flex-col gap-4" data-aos="fade-left">
+
+                        <div class="bg-glass-surface border border-glass-border rounded-2xl p-5 flex items-center gap-4 hover:border-glass-gold/50 transition-colors duration-300">
+                            <div class="w-11 h-11 rounded-xl bg-glass-gold/10 flex items-center justify-center flex-shrink-0 border border-glass-gold/20">
+                                <i class="bi bi-phone text-glass-gold text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-white font-bold text-sm">Instant Play</p>
+                                <p class="text-gray-400 text-xs">No download needed</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-glass-surface border border-glass-border rounded-2xl p-5 flex items-center gap-4 hover:border-glass-gold/50 transition-colors duration-300">
+                            <div class="w-11 h-11 rounded-xl bg-glass-highlight/10 flex items-center justify-center flex-shrink-0 border border-glass-highlight/20">
+                                <i class="bi bi-lightning-charge-fill text-glass-highlight text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-white font-bold text-sm">60 FPS</p>
+                                <p class="text-gray-400 text-xs">Buttery smooth gameplay</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-glass-surface border border-glass-border rounded-2xl p-5 flex items-center gap-4 hover:border-glass-gold/50 transition-colors duration-300">
+                            <div class="w-11 h-11 rounded-xl bg-glass-gold/10 flex items-center justify-center flex-shrink-0 border border-glass-gold/20">
+                                <i class="bi bi-gift-fill text-glass-gold text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-white font-bold text-sm">4 Jackpot Tiers</p>
+                                <p class="text-gray-400 text-xs">Mini to Grand</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-glass-surface border border-glass-border rounded-2xl p-5 flex items-center gap-4 hover:border-glass-gold/50 transition-colors duration-300">
+                            <div class="w-11 h-11 rounded-xl bg-glass-highlight/10 flex items-center justify-center flex-shrink-0 border border-glass-highlight/20">
+                                <i class="bi bi-shield-check text-glass-highlight text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-white font-bold text-sm">100% Free</p>
+                                <p class="text-gray-400 text-xs">No purchase required</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="py-8 md:py-24 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-full bg-grid-pattern opacity-20 pointer-events-none"></div>
+            <div class="absolute right-0 top-1/4 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-glass-gold/5 rounded-full blur-[80px] md:blur-[120px] pointer-events-none"></div>
+
+            <div class="container mx-auto px-4 md:px-6 relative z-10">
+                <div class="text-center mb-6 md:mb-20" data-aos="fade-down">
+                    <h2 class="font-display text-3xl md:text-4xl text-white font-bold mb-3 md:mb-4">Game Architecture</h2>
+                    <p class="text-gray-400 text-sm md:text-base max-w-2xl mx-auto">Exploring the radiant metropolitan skyline and the vault within.</p>
+                </div>
+
+                <div class="flex flex-col lg:flex-row items-center gap-6 md:gap-12 lg:gap-20 mb-8 md:mb-24">
+                    <div class="lg:w-1/2 order-2 lg:order-1" data-aos="fade-right">
+                        <div class="flex items-center gap-3 mb-4 md:mb-6">
+                            <div class="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-glass-gold/20 flex items-center justify-center text-glass-gold border border-glass-gold/30">
+                                <i class="bi bi-buildings-fill text-sm md:text-base"></i>
+                            </div>
+                            <h3 class="font-display text-2xl md:text-3xl text-white font-bold tracking-tight">VISUAL OVERVIEW</h3>
+                        </div>
+                        <div class="neo-card p-4 md:p-8 rounded-2xl border-l-4 border-l-glass-gold">
+                            <p class="text-gray-300 text-sm md:text-base leading-relaxed mb-4 md:mb-6">
+                                A radiant metropolitan skyline featuring a warm sunset and luminous skyscrapers frames the board area. The reels sit in a heavy golden frame that resembles a regal vault with a sophisticated finish. 
+                            </p>
+                            <p class="text-gray-300 text-sm md:text-base leading-relaxed mb-4 md:mb-6">
+                                Animated sparks and golden light reflections provide a rhythmic pulse to the screen to indicate activity during the session. Symbols remain high contrast and easy to read on mobile devices through the use of high definition icons such as <strong class="text-white">Mr Coin</strong> himself in his signature tuxedo.
+                            </p>
+                            <div class="flex items-center gap-4 text-xs md:text-sm font-bold text-glass-highlight">
+                                <span class="flex items-center gap-2"><i class="bi bi-check-circle-fill"></i> Clean Bevels</span>
+                                <span class="flex items-center gap-2"><i class="bi bi-check-circle-fill"></i> Crisp Highlights</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg:w-1/2 w-full order-1 lg:order-2" data-aos="fade-left">
+                        <div class="relative group perspective-1000">
+                            <div class="absolute -inset-2 bg-gradient-to-r from-glass-gold/30 to-glass-highlight/30 opacity-40 blur-xl group-hover:opacity-60 transition-opacity duration-700 rounded-2xl"></div>
+                            <div class="absolute top-4 -right-4 w-full h-full border border-glass-gold/30 rounded-2xl -z-10 group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform duration-500"></div>
+                            
+                            <div class="relative rounded-2xl overflow-hidden border border-white/10 shadow-glass-depth bg-black aspect-video transform transition-transform duration-700 group-hover:scale-[1.02]">
+                                <img src="https://playmrcoin.com/wp-content/themes/site-theme/img/visualoverview.png" alt="Visual Overview" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-all duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent pointer-events-none"></div>
+                                <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black/80 to-transparent">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-[10px] md:text-xs font-mono text-glass-gold uppercase tracking-widest"><i class="bi bi-circle-fill animate-pulse mr-2"></i>Live Render</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col lg:flex-row items-center gap-6 md:gap-12 lg:gap-20 mb-8 md:mb-24">
+                    <div class="lg:w-1/2 w-full" data-aos="fade-right">
+                        <div class="relative group">
+                             <div class="absolute -inset-2 bg-gradient-to-l from-glass-surface to-glass-highlight/20 opacity-30 blur-xl group-hover:opacity-50 transition-opacity duration-700 rounded-2xl"></div>
+                            <div class="absolute bottom-4 -left-4 w-full h-full border border-glass-highlight/30 rounded-2xl -z-10 group-hover:-translate-x-2 group-hover:translate-y-2 transition-transform duration-500"></div>
+
+                             <div class="relative rounded-2xl overflow-hidden border border-white/10 shadow-glass-depth aspect-video group transform transition-transform duration-700 group-hover:scale-[1.02]">
+                                <img src="https://playmrcoin.com/wp-content/themes/site-theme/img/themevisuals.png" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                                <div class="absolute inset-0 group-hover:bg-transparent transition-colors duration-500"></div>
+                                <div class="absolute top-4 left-4 md:top-6 md:left-6 neo-card px-3 py-1.5 md:px-4 md:py-2 rounded-lg">
+                                    <span class="text-[10px] md:text-xs font-bold text-white uppercase"><i class="bi bi-palette-fill text-glass-highlight mr-2"></i>Deep Navy & Gold</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg:w-1/2" data-aos="fade-left">
+                        <div class="flex items-center gap-3 mb-4 md:mb-6">
+                            <div class="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-glass-highlight/20 flex items-center justify-center text-glass-highlight border border-glass-highlight/30">
+                                <i class="bi bi-brush-fill text-sm md:text-base"></i>
+                            </div>
+                            <h3 class="font-display text-2xl md:text-3xl text-white font-bold tracking-tight">THEME & VISUALS</h3>
+                        </div>
+                        <div class="space-y-4 md:space-y-6 text-gray-400 leading-relaxed text-sm md:text-base">
+                            <p>
+                                A sophisticated and metropolitan theme sets the stage through the use of deep navy blues and warm gold accents that feel professional and upbeat. The playfield sits in a polished gold frame with a gentle glow while prize coins and safe icons use clean bevels and crisp highlights for easy reading on all devices.
+                            </p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mt-4 md:mt-6">
+                                <div class="p-4 rounded-xl bg-white/5 border border-white/5 hover:border-glass-gold/30 transition-colors">
+                                    <h4 class="text-white font-bold text-xs md:text-sm mb-1">Visual Cues</h4>
+                                    <p class="text-[10px] md:text-xs">Subtle sparkles mark active tiles while golden flashes confirm matches.</p>
+                                </div>
+                                <div class="p-4 rounded-xl bg-white/5 border border-white/5 hover:border-glass-gold/30 transition-colors">
+                                    <h4 class="text-white font-bold text-xs md:text-sm mb-1">Premium Audio</h4>
+                                    <p class="text-[10px] md:text-xs">Electronic style with soft swells and chimes keeps the tone cheerful.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="neo-card rounded-3xl p-4 md:p-12 relative overflow-hidden" data-aos="fade-up">
+                    <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+                    <div class="relative z-10 flex flex-col md:flex-row gap-5 md:gap-12 items-center">
+                        <div class="md:w-3/5">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-glass-gold/10 border border-glass-gold/30 text-glass-gold text-[10px] md:text-xs font-bold uppercase mb-4 md:mb-6">
+                                <i class="bi bi-stars"></i> Bonus Mechanics
+                            </div>
+                            <h3 class="font-display text-2xl md:text-4xl text-white font-bold mb-4 md:mb-6">FREE SPIN FEATURES</h3>
+                            <p class="text-gray-300 text-sm md:text-base leading-relaxed mb-4 md:mb-6">
+                                Free rounds begin when bonus icons land in view although the exact trigger and round count may vary by version. Once active you play a set of rounds at the same level with prize coins and Mr Coin icons appearing more often.
+                            </p>
+                            <ul class="space-y-2 md:space-y-3 mb-6 md:mb-8 text-sm md:text-base">
+                                <li class="flex items-start gap-3">
+                                    <i class="bi bi-arrow-return-right text-glass-highlight mt-1"></i>
+                                    <span class="text-gray-400">Special symbols can extend the feature or add more rounds.</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="bi bi-arrow-return-right text-glass-highlight mt-1"></i>
+                                    <span class="text-gray-400">Can link with a short Hold and Spin sequence.</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="bi bi-arrow-return-right text-glass-highlight mt-1"></i>
+                                    <span class="text-gray-400">Bright counters and soft glows make progress easy to follow.</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="md:w-2/5 w-full">
+                            <div class="relative aspect-video rounded-2xl overflow-hidden border border-glass-gold/30 shadow-[0_0_50px_-10px_rgba(251,191,36,0.2)] group">
+                                <img src="https://playmrcoin.com/wp-content/themes/site-theme/img/freespins.png" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="guide" class="py-16 md:py-24 bg-glass-surface/10 border-t border-white/5 overflow-hidden">
+            <div class="absolute -left-20 top-40 w-96 h-96 bg-glass-highlight/5 rounded-full blur-[100px] pointer-events-none"></div>
+            <div class="container mx-auto px-4 md:px-6 relative z-10">
+                <div class="text-center mb-12 md:mb-16" data-aos="fade-up">
+                    <h2 class="font-display text-3xl md:text-4xl text-white font-bold">Flight Control Manual</h2>
+                    <div class="w-16 h-1 bg-glass-gold mx-auto mt-4 rounded-full shadow-neon-gold"></div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="neo-card p-6 md:p-8 rounded-2xl group hover:border-glass-gold/50 relative overflow-hidden" data-aos="fade-up" data-aos-delay="0">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 font-display font-bold text-5xl md:text-6xl text-white group-hover:opacity-20 transition-opacity">01</div>
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-white/5 flex items-center justify-center text-glass-gold text-xl md:text-2xl mb-4 md:mb-6 group-hover:scale-110 transition-transform">
+                            <i class="bi bi-sliders"></i>
+                        </div>
+                        <h3 class="text-lg md:text-xl font-display font-bold text-white mb-2 md:mb-3">Choose your play level</h3>
+                        <p class="text-xs md:text-sm text-gray-400 leading-relaxed">You should use the plus and minus buttons to set a comfortable level before you begin your session.</p>
+                    </div>
+                    <div class="neo-card p-6 md:p-8 rounded-2xl group hover:border-glass-gold/50 relative overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 font-display font-bold text-5xl md:text-6xl text-white group-hover:opacity-20 transition-opacity">02</div>
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-white/5 flex items-center justify-center text-glass-highlight text-xl md:text-2xl mb-4 md:mb-6 group-hover:scale-110 transition-transform">
+                            <i class="bi bi-play-circle-fill"></i>
+                        </div>
+                        <h3 class="text-lg md:text-xl font-display font-bold text-white mb-2 md:mb-3">Press play</h3>
+                        <p class="text-xs md:text-sm text-gray-400 leading-relaxed">The five reel grid spins and stops automatically while matches are evaluated on the specific lines shown within the game interface.</p>
+                    </div>
+                    <div class="neo-card p-6 md:p-8 rounded-2xl group hover:border-glass-gold/50 relative overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 font-display font-bold text-5xl md:text-6xl text-white group-hover:opacity-20 transition-opacity">03</div>
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-white/5 flex items-center justify-center text-yellow-400 text-xl md:text-2xl mb-4 md:mb-6 group-hover:scale-110 transition-transform">
+                            <i class="bi bi-lightning-charge-fill"></i>
+                        </div>
+                        <h3 class="text-lg md:text-xl font-display font-bold text-white mb-2 md:mb-3">Watch for Coin Surge symbols</h3>
+                        <p class="text-xs md:text-sm text-gray-400 leading-relaxed">Special Mr Coin icons grant instant virtual rewards when they appear alongside prize coins on the first and second reels.</p>
+                    </div>
+                    <div class="neo-card p-6 md:p-8 rounded-2xl group hover:border-glass-gold/50 relative overflow-hidden" data-aos="fade-up" data-aos-delay="300">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 font-display font-bold text-5xl md:text-6xl text-white group-hover:opacity-20 transition-opacity">04</div>
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-white/5 flex items-center justify-center text-blue-400 text-xl md:text-2xl mb-4 md:mb-6 group-hover:scale-110 transition-transform">
+                            <i class="bi bi-lock-fill"></i>
+                        </div>
+                        <h3 class="text-lg md:text-xl font-display font-bold text-white mb-2 md:mb-3">Trigger Hold and Spin</h3>
+                        <p class="text-xs md:text-sm text-gray-400 leading-relaxed">Landing the required feature symbols starts a short Hold and Spin style sequence. Triggering icons lock in place while open spaces refresh for a set number of tries.</p>
+                    </div>
+                    <div class="neo-card p-6 md:p-8 rounded-2xl group hover:border-glass-gold/50 relative overflow-hidden" data-aos="fade-up" data-aos-delay="400">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 font-display font-bold text-5xl md:text-6xl text-white group-hover:opacity-20 transition-opacity">05</div>
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-white/5 flex items-center justify-center text-purple-400 text-xl md:text-2xl mb-4 md:mb-6 group-hover:scale-110 transition-transform">
+                            <i class="bi bi-arrow-repeat"></i>
+                        </div>
+                        <h3 class="text-lg md:text-xl font-display font-bold text-white mb-2 md:mb-3">Free rounds if available</h3>
+                        <p class="text-xs md:text-sm text-gray-400 leading-relaxed">Landing three or more scatter symbols activates a set of free rounds where prize coins and Mr Coin icons appear more frequently.</p>
+                    </div>
+                    <div class="neo-card p-6 md:p-8 rounded-2xl group hover:border-glass-gold/50 relative overflow-hidden" data-aos="fade-up" data-aos-delay="500">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 font-display font-bold text-5xl md:text-6xl text-white group-hover:opacity-20 transition-opacity">06</div>
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-white/5 flex items-center justify-center text-red-400 text-xl md:text-2xl mb-4 md:mb-6 group-hover:scale-110 transition-transform">
+                            <i class="bi bi-display"></i>
+                        </div>
+                        <h3 class="text-lg md:text-xl font-display font-bold text-white mb-2 md:mb-3">Read the screen cues</h3>
+                        <p class="text-xs md:text-sm text-gray-400 leading-relaxed">Glows and counters and large numbers show your current progress and remaining tries so it is easy to follow on both mobile and desktop.</p>
+                    </div>
+                </div>
+                <div class="mt-8 md:mt-12 p-4 md:p-6 rounded-xl border border-glass-gold/30 bg-gradient-to-r from-glass-gold/10 to-transparent flex flex-col md:flex-row items-center gap-4 md:gap-6" data-aos="fade-up" data-aos-delay="600">
+                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-glass-gold/20 flex items-center justify-center text-glass-gold flex-shrink-0">
+                        <i class="bi bi-shield-exclamation text-xl md:text-2xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold uppercase tracking-widest text-xs md:text-sm mb-1">System Alert: Remember</h4>
+                        <p class="text-gray-300 text-xs md:text-sm">Everything within this game is virtual and provided strictly for entertainment purposes only.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="summary" class="py-16 md:py-24 relative overflow-hidden">
+            <div class="container mx-auto px-4 md:px-6 relative z-10">
+                <div class="neo-card p-8 md:p-12 rounded-3xl border-t border-glass-highlight/40 relative overflow-hidden group" data-aos="zoom-in-up">
+                    <div class="absolute left-0 w-full h-1 bg-glass-highlight/30 shadow-[0_0_20px_#34d399] animate-scan pointer-events-none z-0"></div>
+                    <div class="absolute inset-0 bg-grid-pattern opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-0"></div>
+                    <div class="relative z-10 flex flex-col lg:flex-row gap-8 md:gap-12 items-center">
+                        <div class="lg:w-2/3">
+                            <div class="flex items-center gap-3 mb-4 md:mb-6">
+                                <i class="bi bi-cpu-fill text-glass-gold text-xl md:text-2xl"></i>
+                                <h2 class="font-display text-2xl md:text-4xl text-white font-bold tracking-tight">GAME FEATURES</h2>
+                            </div>
+                            <div class="text-gray-300 leading-relaxed text-sm md:text-base space-y-4 md:space-y-6">
+                                <p>
+                                    <strong class="text-white">Mr Coin</strong> plays on a vibrant five reel grid with easy to read luxury icons and golden wealth symbols. Special Mr Coin tiles trigger instant virtual rewards when they land alongside prize coins or jackpot icons during regular play.
+                                </p>
+                                <p>
+                                    Landing enough feature symbols can shift the action into a high energy bonus sequence where triggering coins stay in place and open spaces refresh for a set count. New prizes or multipliers or boosters add to your virtual total during this mode.
+                                </p>
+                                <p>
+                                    This game also includes a tiered <span class="text-glass-gold">Jackpot system</span> that offers Mini and Minor and Major and Grand levels of virtual prestige for the most successful players. All items within this game are virtual and provided for entertainment purposes only.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="lg:w-1/3 w-full flex justify-center">
+                            <div class="relative w-36 h-36 md:w-48 md:h-48 flex items-center justify-center">
+                                <div class="absolute inset-0 border border-dashed border-glass-highlight/30 rounded-full animate-spin-slow"></div>
+                                <div class="absolute inset-4 border border-glass-gold/20 rounded-full animate-[spin_8s_linear_infinite_reverse]"></div>
+                                <div class="w-16 h-16 md:w-24 md:h-24 rounded-full bg-gradient-to-tr from-glass-gold to-yellow-600 shadow-neon-gold flex items-center justify-center relative z-10">
+                                    <span class="font-display font-bold text-2xl md:text-4xl text-black">M</span>
+                                </div>
+                                <div class="absolute top-0 right-6 md:right-10 w-6 h-6 md:w-8 md:h-8 rounded-full bg-glass-surface border border-white/10 animate-float" style="animation-delay: 1s;"></div>
+                                <div class="absolute bottom-4 left-4 md:bottom-5 md:left-5 w-4 h-4 md:w-6 md:h-6 rounded-full bg-glass-highlight/50 blur-sm animate-float"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="py-16 md:py-24" x-data="faq">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="text-center mb-12 md:mb-16" data-aos="fade-down">
+                    <h2 class="font-display text-3xl md:text-4xl text-white font-bold">Knowledge Base</h2>
+                    <p class="text-gray-500 mt-2 text-sm md:text-base">System Frequently Asked Questions</p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+                    <template x-for="(item, index) in items" :key="index">
+                        <div class="neo-card rounded-xl overflow-hidden group cursor-pointer hover:border-glass-gold/50" 
+                             @click="toggle(index)"
+                             data-aos="fade-up" :data-aos-delay="index * 50">
+                            <div class="p-4 md:p-6 flex items-start gap-4">
+                                <div class="w-6 h-6 md:w-8 md:h-8 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0 mt-1 transition-colors group-hover:bg-glass-gold/20">
+                                    <i class="bi text-white text-sm md:text-base transition-transform duration-300"
+                                       :class="selected === index ? 'bi-dash-lg text-glass-gold rotate-180' : 'bi-plus-lg group-hover:text-glass-gold'"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-display font-bold text-white text-base md:text-lg leading-snug group-hover:text-glass-gold transition-colors" x-text="item.q"></h4>
+                                    <div x-show="selected === index" x-collapse class="mt-3 md:mt-4 pt-3 md:pt-4 border-t border-white/10">
+                                        <p class="font-mono text-xs md:text-sm text-glass-highlight/90 leading-relaxed" x-text="item.a"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="h-0.5 bg-gradient-to-r from-glass-gold to-glass-highlight w-0 group-hover:w-full transition-all duration-500"></div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="relative bg-glass-base pt-16 md:pt-20 pb-12 border-t border-glass-gold/20 overflow-hidden">
+        
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-glass-gold/5 blur-[120px] rounded-full pointer-events-none"></div>
+        <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-glass-gold/40 to-transparent"></div>
+
+        <div class="container mx-auto px-6 text-center relative z-10">
+            
+            <div class="flex items-center justify-center mb-8">
+                <img src="https://playmrcoin.com/wp-content/themes/site-theme/img/logo.png" alt="Mr. Coin Logo" class="h-12 w-auto object-contain">
+            </div>
+            
+            <p class="text-gray-300 text-xs md:text-sm max-w-2xl mx-auto mb-10 leading-relaxed opacity-90">
+                The website provides free-to-play social games intended for adult entertainment purposes only. To participate, players must be 18 years or older. Success in these games does not imply future success in real-money gaming. No real money or prizes can be won.
+            </p>
+
+            <div class="flex flex-col md:flex-row justify-center gap-4 md:gap-8 text-[11px] uppercase font-bold text-glass-highlight/80 tracking-widest mb-10">
+                <span>&copy; 2026 playmrcoin.com</span>
+                <span class="hidden md:inline text-glass-gold">•</span>
+                <span>18+ Entertainment Only</span>
+                <span class="hidden md:inline text-glass-gold">•</span>
+                <span>No Real Money</span>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-8 text-sm font-medium">
+                <a href="/terms" class="text-white hover:text-glass-gold hover:underline underline-offset-4 decoration-glass-gold/50 transition-all duration-300">Terms of Service</a>
+                <a href="/privacy" class="text-white hover:text-glass-gold hover:underline underline-offset-4 decoration-glass-gold/50 transition-all duration-300">Privacy Policy</a>
+                <a href="/cookie" class="text-white hover:text-glass-gold hover:underline underline-offset-4 decoration-glass-gold/50 transition-all duration-300">Cookie Policy</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true, offset: 50 });
+    </script>
+     <script type="text/javascript">
+          function replaceLinks() {
+           var urlParams = location.search.substring(1).split("&").map(function(s) {
+             return s.split("=").map(function(p) {
+               return decodeURIComponent(p);
+             });
+           }).reduce(function(p, c) {
+             p[c[0]] = c[1];
+             return p;
+           }, {});
+           var paramRegex = /\[\[(.+?)\]\]/g;
+           document.querySelectorAll("a").forEach(function(a) {
+             a.href = a.href.replace(paramRegex, function(match, key) {
+               var lowerKey = key.toLowerCase();
+               return (lowerKey in urlParams ? urlParams[lowerKey] : "");
+             });
+           });
+         }
+         replaceLinks();
+    </script>
+</body>
+</html>

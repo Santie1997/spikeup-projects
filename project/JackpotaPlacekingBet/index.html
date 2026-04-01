@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>America's Newest Social Casino</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/highcharts/highmaps.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highcharts/modules/exporting.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pageBg: '#000000', 
+                        cardBlack: '#0d1317',
+                        bannerBlack: '#111111',
+                        accent: '#fbab00', 
+                        accentHover: '#e09900',
+                        ctaGreen: '#4ade80', 
+                        ctaGreenHover: '#22c55e',
+                        success: '#22c55e',
+                        danger: '#ef4444',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Impact', 'Arial Black', 'sans-serif'],
+                    },
+                    maxWidth: {
+                        '8xl': '1600px',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delayed': 'float 6s ease-in-out 3s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #000000;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out, padding 0.4s ease;
+            opacity: 0;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            opacity: 1;
+            padding-top: 0.75rem;
+        }
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+            color: #ffcd36; 
+        }
+        .faq-item.active .faq-question {
+            color: #ffcd36;
+        }
+        
+        .chat-bubble::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 20px;
+            border-width: 10px 10px 10px 0;
+            border-color: transparent #1a1a1a transparent transparent;
+        }
+
+        /* Custom style for the button text stroke to match the image */
+        .btn-text-stroke {
+            -webkit-text-stroke: 1.5px #d97706; /* Amber/Gold outline */
+            text-shadow: 0 2px 2px rgba(0,0,0,0.3);
+            paint-order: stroke fill;
+        }
+
+        .responsive-cta {
+            display: inline-block;
+            background-color: rgba(77, 255, 134, 1);
+            background-image: linear-gradient(180deg, #44FF7F 0%, #018408 118.61%);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            padding: 8px 20px;
+            color: #fff;
+            border-radius: 60px;
+            border: 1px solid rgba(77, 255, 134, 1);
+            text-shadow: 0 0 2px rgba(2, 83, 9, 1);
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 48px;
+            transition: .25s all !important;
+            text-transform: uppercase;
+            text-align: center;
+            width: 100%;
+            text-decoration: none;
+            font-family: "Ubuntu", "Inter", sans-serif;
+            box-shadow: none;
+            overflow: hidden;
+            user-select: none;
+            cursor: pointer;
+        }
+
+        .responsive-cta:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        /* ── Hero offer box ── */
+        .hero-offer-box {
+            background: #0d1317;
+            border: 2px dashed rgba(255,205,54,0.6);
+            box-shadow: 0 5px 0 rgba(255,205,54,0.3), 0 8px 28px rgba(0,0,0,0.5);
+            transition: box-shadow 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+        }
+        a:hover .hero-offer-box {
+            border-color: rgba(255,205,54,0.9);
+            box-shadow: 0 5px 0 rgba(255,205,54,0.5), 0 12px 40px rgba(0,0,0,0.65), 0 0 25px rgba(255,205,54,0.12);
+        }
+        a:active .hero-offer-box {
+            box-shadow: 0 2px 0 rgba(255,205,54,0.4), 0 4px 12px rgba(0,0,0,0.4);
+            transform: translateY(3px);
+        }
+        /* shimmer sweep */
+        .hero-offer-shimmer {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.06) 50%, transparent 70%);
+            background-size: 200% 100%;
+            animation: heroShimmer 2.5s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+        @keyframes heroShimmer {
+            0%   { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        .hero-offer-cta-pill {
+            background: rgba(255,205,54,0.1);
+            border: 1px solid rgba(255,205,54,0.35);
+            color: rgba(255,205,54,1);
+        }
+        a:hover .hero-offer-cta-pill {
+            background: rgba(255,205,54,0.18);
+            border-color: rgba(255,205,54,0.7);
+        }
+
+        .offer-card-clickable {
+            cursor: pointer;
+            background: #0e0c14;
+            border-radius: 16px;
+            box-shadow: 0 6px 0 rgba(255,205,54,0.35), 0 10px 30px rgba(0,0,0,0.6);
+            border: 1.5px solid rgba(255,205,54,0.35);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            overflow: hidden;
+            position: relative;
+        }
+        a:hover .offer-card-clickable {
+            box-shadow: 0 6px 0 rgba(255,205,54,0.5), 0 12px 40px rgba(0,0,0,0.7), 0 0 30px rgba(255,205,54,0.1) !important;
+            border-color: rgba(255,205,54,0.6) !important;
+        }
+        a:active .offer-card-clickable {
+            box-shadow: 0 2px 0 rgba(255,205,54,0.4), 0 4px 12px rgba(0,0,0,0.5) !important;
+            transform: translateY(3px) !important;
+        }
+        /* animated border glow */
+        .offer-card-clickable::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 16px;
+            background: linear-gradient(120deg, transparent 30%, rgba(255,205,54,0.4) 50%, transparent 70%);
+            background-size: 200% 100%;
+            animation: offerShine 3s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+        @keyframes offerShine {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        .offer-badge-pulse {
+            animation: badgePulse 2s ease-in-out infinite;
+        }
+        @keyframes badgePulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(255,205,54,0.4); }
+            50% { opacity: 0.85; box-shadow: 0 0 0 5px rgba(255,205,54,0); }
+        }
+        .offer-inner-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background-color: rgba(77, 255, 134, 1);
+            background-image: linear-gradient(180deg, #44FF7F 0%, #018408 118.61%);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            padding: 6px 20px;
+            color: #fff;
+            border-radius: 60px;
+            border: 1px solid rgba(77, 255, 134, 1);
+            text-shadow: 0 0 2px rgba(2, 83, 9, 1);
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 28px;
+            transition: .25s all !important;
+            text-transform: uppercase;
+            text-align: center;
+            text-decoration: none;
+            font-family: "Ubuntu", "Inter", sans-serif;
+            box-shadow: none;
+            overflow: hidden;
+            user-select: none;
+            cursor: pointer;
+            position: relative;
+            z-index: 2;
+        }
+        .offer-inner-btn i {
+            font-size: 11px;
+            line-height: 1;
+        }
+        a:hover .offer-inner-btn {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        a:active .offer-inner-btn {
+            transform: translateY(1px);
+        }
+        .offer-headline {
+            font-size:2.6rem !important;
+        }
+        .offer-coins{
+            font-size: 2rem !important;
+        }
+        .offer-spins{
+            font-size: 1.5rem !important;
+            color: rgba(30,224,92,1) !important;
+        }
+        /* Winner feed */
+        .winner-entry {
+            animation: winnerSlideIn 0.4s ease forwards;
+        }
+        @keyframes winnerSlideIn {
+            from { opacity: 0; transform: translateY(-12px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .winner-card-new {
+            animation: winnerCardPop 0.45s ease forwards;
+        }
+        @keyframes winnerCardPop {
+            from { opacity: 0; transform: scale(0.96); }
+            to   { opacity: 1; transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .responsive-cta {
+                padding: 0px 10px;
+                font-size: 17px;
+                max-width: 100%;
+            }
+            .offer-headline {
+                font-size: 1.4rem !important;
+            }
+            .offer-coins {
+                font-size: 1.1rem !important;
+            }
+            .offer-spins {
+                font-size: 0.85rem !important;
+            }
+            .offer-inner-btn {
+                font-size: 10px;
+                padding: 5px 20px;
+                line-height: 22px;
+                gap: 4px;
+            }
+            .offer-inner-btn i {
+                font-size: 9px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-pageBg text-white font-sans antialiased selection:bg-accent selection:text-black">
+
+    <style>
+        #mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease;
+            opacity: 0;
+        }
+        #mobile-menu.open {
+            max-height: 400px;
+            opacity: 1;
+        }
+        .hamburger-bar {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: #fff;
+            border-radius: 2px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            transform-origin: center;
+        }
+        #hamburger-btn.open .hamburger-bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        #hamburger-btn.open .hamburger-bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        #hamburger-btn.open .hamburger-bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+    </style>
+
+    <nav class="w-full bg-black border-b border-white/10 sticky top-0 z-50">
+        <div class="max-w-8xl mx-auto px-4 md:px-6 h-12 md:h-20 flex items-center justify-between gap-4">
+            <!-- Desktop links -->
+            <div class="hidden md:flex items-center gap-8 text-sm font-semibold text-gray-400">
+                <a href="https://track.placekingbet.com/click/15" class="hover:text-white transition">Social Casino</a>
+                <a href="https://track.placekingbet.com/click/15" class="hover:text-white transition">Games</a>
+                <a href="https://track.placekingbet.com/click/15" class="text-accent transition">Promotions</a>
+                <a href="https://track.placekingbet.com/click/15" class="hover:text-white transition">About Us</a>
+                <a href="https://track.placekingbet.com/click/15" class="hover:text-white transition">Help Center</a>
+            </div>
+
+            <!-- Mobile: PlaceKingBet brand left + hamburger right -->
+            <div class="md:hidden flex items-center justify-between w-full">
+                <a href="https://track.placekingbet.com/click/15" class="flex flex-col items-start no-underline" style="text-decoration:none;">
+                    <img src="img/placekinglogo.png" alt="PlaceKingBet" class="h-7 w-auto object-contain">
+                    <span class="text-gray-500 text-[9px] font-semibold tracking-wide leading-none mt-0.5">Partnered with Jackpota</span>
+                </a>
+                <button id="hamburger-btn" aria-label="Toggle navigation" class="flex flex-col gap-[6px] p-2 rounded-md focus:outline-none">
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                </button>
+            </div>
+
+            <!-- Desktop: PlaceKingBet co-brand right -->
+            <a href="https://track.placekingbet.com/click/15" class="hidden md:flex items-center gap-3 flex-shrink-0 ml-auto group" style="text-decoration:none;">
+                <div class="h-7 w-px bg-white/15"></div>
+                <div class="flex flex-col items-start leading-none gap-0.5">
+                    <img src="img/placekinglogo.png" alt="PlaceKingBet" class="h-8 w-auto object-contain group-hover:opacity-90 transition-opacity">
+                    <span class="text-gray-500 text-[10px] font-semibold tracking-wide">Partnered with Jackpota</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- Mobile dropdown -->
+        <div id="mobile-menu" class="md:hidden bg-black border-t border-white/10">
+            <div class="flex flex-col px-5 py-4 gap-1">
+                <!-- Mobile co-brand header -->
+                <div class="flex items-center gap-2 py-2 mb-1 border-b border-white/10">
+                    <img src="img/placekinglogo.png" alt="PlaceKingBet" class="h-5 w-auto object-contain">
+                    <span class="text-gray-400 text-[10px] font-bold uppercase tracking-widest">Top Pick</span>
+                    <span class="ml-auto text-[9px] text-accent font-bold uppercase tracking-wider border border-accent/40 rounded-full px-2 py-0.5">Exclusive</span>
+                </div>
+                <a href="https://track.placekingbet.com/click/15" class="text-gray-300 hover:text-white text-sm font-semibold py-3 border-b border-white/5 flex items-center gap-3 transition">
+                    <i class="fa-solid fa-dice w-4 text-accent"></i> Social Casino
+                </a>
+                <a href="https://track.placekingbet.com/click/15" class="text-gray-300 hover:text-white text-sm font-semibold py-3 border-b border-white/5 flex items-center gap-3 transition">
+                    <i class="fa-solid fa-gamepad w-4 text-accent"></i> Games
+                </a>
+                <a href="https://track.placekingbet.com/click/15" class="text-accent text-sm font-semibold py-3 border-b border-white/5 flex items-center gap-3 transition">
+                    <i class="fa-solid fa-tag w-4"></i> Promotions
+                </a>
+                <a href="https://track.placekingbet.com/click/15" class="text-gray-300 hover:text-white text-sm font-semibold py-3 border-b border-white/5 flex items-center gap-3 transition">
+                    <i class="fa-solid fa-circle-info w-4 text-accent"></i> About Us
+                </a>
+                <a href="https://track.placekingbet.com/click/15" class="text-gray-300 hover:text-white text-sm font-semibold py-3 flex items-center gap-3 transition">
+                    <i class="fa-solid fa-headset w-4 text-accent"></i> Help Center
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        hamburgerBtn.addEventListener('click', () => {
+            hamburgerBtn.classList.toggle('open');
+            mobileMenu.classList.toggle('open');
+        });
+    </script>
+
+    <header id="hero-section" class="w-full pt-6 pb-6 lg:pt-16 lg:pb-10 scroll-mt-28">
+        <div class="max-w-8xl mx-auto px-4 md:px-6">
+            <div id="left-content-column" class="flex flex-col items-center text-center w-full">
+                <div id="brand-logo" class="mb-4">
+                    <img src="https://crownpickz.com/img/jackpota.png" alt="Jackpota" class="w-40 md:w-64 lg:w-80">
+                </div>
+
+                <p id="update-date" class="text-[10px] md:text-sm text-gray-500 italic mb-4 flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-accent animate-pulse"></span>
+                    Updated <span id="current-date-display">Loading...</span>
+                </p>
+
+                <div id="conversion-hero" class="w-full max-w-3xl md:max-w-[65rem]">
+                    <h1 class="text-2xl md:text-4xl lg:text-5xl font-black text-white mb-3 md:mb-4 leading-tight md:max-w-[48rem] md:mx-auto">
+                        Claim Your <span class="text-accent">676,000 Gold Coins</span> &amp; Start Spinning
+                    </h1>
+
+                    <p class="text-xs md:text-lg text-gray-300 leading-relaxed mb-5 md:mb-7 md:max-w-[48rem] md:mx-auto">
+                        Join America’s fastest-growing social casino. Play 700+ premium Vegas-style slots instantly—no purchase required.
+                    </p>
+
+                    <!-- Game thumbnails grid -->
+                    <div class="grid grid-cols-3 gap-2 md:gap-3 mb-5 md:mb-7">
+                        <div class="relative rounded-lg md:rounded-xl overflow-hidden aspect-[4/3] group cursor-pointer">
+                            <img src="img/aztec.png" alt="Aztec Fire slot" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <span class="absolute bottom-1.5 left-2 text-[9px] md:text-xs font-bold text-white leading-tight">Aztec Fire</span>
+                            <span class="absolute top-1.5 right-1.5 bg-accent text-black text-[7px] md:text-[9px] font-black px-1.5 py-0.5 rounded-full uppercase">HOT</span>
+                        </div>
+                        <div class="relative rounded-lg md:rounded-xl overflow-hidden aspect-[4/3] group cursor-pointer">
+                            <img src="img/royalcoins2.png" alt="Royal Coins 2 slot" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <span class="absolute bottom-1.5 left-2 text-[9px] md:text-xs font-bold text-white leading-tight">Royal Coins 2</span>
+                            <span class="absolute top-1.5 right-1.5 bg-green-500 text-white text-[7px] md:text-[9px] font-black px-1.5 py-0.5 rounded-full uppercase">NEW</span>
+                        </div>
+                        <div class="relative rounded-lg md:rounded-xl overflow-hidden aspect-[4/3] group cursor-pointer">
+                            <img src="img/moregames.png" alt="700+ Vegas slots" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <span class="absolute bottom-1.5 left-2 text-[9px] md:text-xs font-bold text-white leading-tight">700+ Slots</span>
+                            <span class="absolute top-1.5 right-1.5 bg-purple-500 text-white text-[7px] md:text-[9px] font-black px-1.5 py-0.5 rounded-full uppercase">VIEW</span>
+                        </div>
+                    </div>
+
+                    <!-- Trust badges row -->
+                    <div class="flex flex-wrap items-center justify-center gap-3 md:gap-5 text-[10px] md:text-xs text-gray-400 font-semibold">
+                        <span class="flex items-center gap-1.5"><i class="fa-solid fa-shield-halved text-accent"></i> No Purchase Required</span>
+                        <span class="flex items-center gap-1.5"><i class="fa-solid fa-bolt text-accent"></i> Instant Play</span>
+                        <span class="flex items-center gap-1.5"><i class="fa-solid fa-users text-accent"></i> 1M+ Players</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Offer card — full width, below hero -->
+    <div id="right-card-column" class="max-w-8xl mx-auto px-4 md:px-6 pb-8 md:pb-12">
+        <div class="bg-cardBlack border border-white/10 rounded-xl md:rounded-3xl p-4 md:p-10 shadow-2xl">
+            <div class="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
+
+                <!-- Left: offer box -->
+                <a href="https://track.placekingbet.com/click/15" id="promo-box-dotted" class="block md:w-1/2 group cursor-pointer flex-shrink-0" style="text-decoration:none;">
+                    <div class="hero-offer-box flex flex-col items-center justify-center text-center gap-2 md:gap-4 px-4 py-6 md:px-8 md:py-10 rounded-lg md:rounded-2xl relative overflow-hidden h-full">
+                        <div class="hero-offer-shimmer"></div>
+                        <div class="absolute top-2 right-2 md:top-4 md:right-4 text-accent opacity-30 group-hover:opacity-60 -rotate-12 transform transition-opacity duration-300 z-10">
+                            <i class="fa-solid fa-tags text-3xl md:text-5xl"></i>
+                        </div>
+                        <div class="relative z-10">
+                            <h2 id="main-offer-headline" class="offer-headline text-xl md:text-4xl font-black text-white mb-1 leading-none tracking-tight">
+                                Welcome Package
+                            </h2>
+                            <div class="offer-coins text-accent text-base md:text-2xl font-bold leading-tight mb-1 whitespace-nowrap">
+                                676K GC + 355.5 SC
+                            </div>
+                            <div class="offer-spins text-sm md:text-lg font-bold">
+                                &amp; 80 FREE SPINS
+                            </div>
+                        </div>
+                        <span class="text-gray-500 text-[9px] md:text-xs uppercase tracking-widest border-t border-gray-700 pt-2 md:pt-3 w-full font-semibold group-hover:text-accent transition-colors relative z-10">
+                            Exclusive New Player Offer
+                        </span>
+                        <div class="relative z-10 flex items-center justify-center gap-2 rounded-full px-5 py-2 transition-all duration-200 hero-offer-cta-pill">
+                            <span class="font-black uppercase tracking-widest text-[10px] md:text-xs">Claim Offer</span>
+                            <i class="fa-solid fa-arrow-right text-[10px] md:text-xs group-hover:translate-x-1 transition-transform duration-200"></i>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Right: checklist + CTA -->
+                <div class="flex flex-col justify-center w-full">
+                    <ul class="space-y-2 md:space-y-4 mb-4 md:mb-6">
+                        <li class="flex items-center text-xs md:text-base text-gray-300"><span class="text-accent mr-3 font-bold text-sm md:text-lg">✓</span>Instant access to 700+ top-tier slots</li>
+                        <li class="flex items-center text-xs md:text-base text-gray-300"><span class="text-accent mr-3 font-bold text-sm md:text-lg">✓</span>Daily login bonuses and email rewards</li>
+                        <li class="flex items-center text-xs md:text-base text-gray-300"><span class="text-accent mr-3 font-bold text-sm md:text-lg">✓</span>Fast prize redemptions to your bank</li>
+                    </ul>
+                    <a href="https://track.placekingbet.com/click/15" class="responsive-cta">
+                        Claim Free Coins &amp; Play
+                    </a>
+                    <p class="text-[9px] md:text-xs text-gray-600 text-center mt-3">By clicking "Claim Free Coins &amp; Play", you agree to our Terms &amp; Conditions. 18+ Only.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="review-container" class="max-w-8xl mx-auto px-4 md:px-6 pb-8 md:pb-20 border-b border-gray-800 scroll-mt-28">
+        
+        <div id="ratings-section" class="py-6 md:py-12">
+            <h3 class="text-xl md:text-3xl font-bold text-white mb-4 md:mb-8 text-center lg:text-left">Casino Scorecard</h3>
+            
+            <div class="bg-[#111] border border-white/10 rounded-xl md:rounded-3xl p-4 md:p-12 relative overflow-hidden" >
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center relative z-10">
+
+                    <div class="lg:col-span-4 flex flex-col items-center justify-center text-center border-b lg:border-b-0 lg:border-r border-white/10 pb-6 lg:pb-0 lg:pr-10">
+                        <h4 class="text-gray-400 font-bold tracking-widest uppercase text-[10px] md:text-xs mb-2 md:mb-3">Overall Rating</h4>
+                        <div class="relative inline-block">
+                            <span class="text-7xl md:text-9xl font-black text-accent">4.9</span>
+                            <div class="absolute -top-1 -right-3 md:-top-2 md:-right-4 bg-white text-black text-[8px] md:text-[10px] font-bold px-1.5 py-0.5 rounded">out of 5.0</div>
+                        </div>
+                        <div class="flex gap-1 text-accent text-base md:text-xl mt-2 md:mt-3 mb-2 md:mb-3">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <span class="inline-flex items-center gap-1.5 text-white font-semibold bg-white/10 px-3 py-1 rounded-full text-[9px] md:text-xs">
+                            <i class="fa-solid fa-circle-check text-accent"></i>Verified by Experts
+                        </span>
+                    </div>
+
+                    <div class="lg:col-span-8">
+                        <div class="grid grid-cols-2 gap-2 md:gap-4">
+                            
+                            <div class="bg-[#0d1317] p-3 md:p-6 rounded-lg md:rounded-2xl border border-white/5 hover:border-accent/50 transition-all duration-300 group">
+                                <div class="flex justify-between items-start mb-1 md:mb-2">
+                                    <div class="bg-white/5 p-1.5 md:p-3 rounded-md md:rounded-lg text-accent group-hover:bg-accent group-hover:text-black transition-colors">
+                                        <i class="fa-solid fa-gamepad text-sm md:text-xl"></i>
+                                    </div>
+                                    <span class="text-lg md:text-2xl font-black text-white">5.0</span>
+                                </div>
+                                <h5 class="text-white font-bold text-xs md:text-lg">Game Variety</h5>
+                                <p class="text-gray-500 text-[10px] md:text-sm mt-0.5 md:mt-1">Huge selection of slots & tables.</p>
+                            </div>
+
+                            <div class="bg-[#0d1317] p-3 md:p-6 rounded-lg md:rounded-2xl border border-white/5 hover:border-accent/50 transition-all duration-300 group">
+                                <div class="flex justify-between items-start mb-1 md:mb-2">
+                                    <div class="bg-white/5 p-1.5 md:p-3 rounded-md md:rounded-lg text-accent group-hover:bg-accent group-hover:text-black transition-colors">
+                                        <i class="fa-solid fa-mobile-screen text-sm md:text-xl"></i>
+                                    </div>
+                                    <span class="text-lg md:text-2xl font-black text-white">4.9</span>
+                                </div>
+                                <h5 class="text-white font-bold text-xs md:text-lg">Mobile Play</h5>
+                                <p class="text-gray-500 text-[10px] md:text-sm mt-0.5 md:mt-1">Smooth instant-play interface.</p>
+                            </div>
+
+                            <div class="bg-[#0d1317] p-3 md:p-6 rounded-lg md:rounded-2xl border border-white/5 hover:border-accent/50 transition-all duration-300 group">
+                                <div class="flex justify-between items-start mb-1 md:mb-2">
+                                    <div class="bg-white/5 p-1.5 md:p-3 rounded-md md:rounded-lg text-accent group-hover:bg-accent group-hover:text-black transition-colors">
+                                        <i class="fa-solid fa-bolt text-sm md:text-xl"></i>
+                                    </div>
+                                    <span class="text-lg md:text-2xl font-black text-white">4.8</span>
+                                </div>
+                                <h5 class="text-white font-bold text-xs md:text-lg">Load Speed</h5>
+                                <p class="text-gray-500 text-[10px] md:text-sm mt-0.5 md:mt-1">Lag-free spinning action.</p>
+                            </div>
+
+                            <div class="bg-[#0d1317] p-3 md:p-6 rounded-lg md:rounded-2xl border border-white/5 hover:border-accent/50 transition-all duration-300 group">
+                                <div class="flex justify-between items-start mb-1 md:mb-2">
+                                    <div class="bg-white/5 p-1.5 md:p-3 rounded-md md:rounded-lg text-accent group-hover:bg-accent group-hover:text-black transition-colors">
+                                        <i class="fa-solid fa-gift text-sm md:text-xl"></i>
+                                    </div>
+                                    <span class="text-lg md:text-2xl font-black text-white">5.0</span>
+                                </div>
+                                <h5 class="text-white font-bold text-xs md:text-lg">Promotions</h5>
+                                <p class="text-gray-500 text-[10px] md:text-sm mt-0.5 md:mt-1">Generous daily coin drops.</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <main id="review-main-content">
+            
+            <div class="mb-10 flex flex-col sm:flex-row items-center justify-between gap-4 bg-cardBlack border border-white/10 rounded-xl px-5 py-4 md:px-8 md:py-5">
+                <p class="text-sm md:text-base text-gray-300 text-center sm:text-left">
+                    Ready to spin? New players get <span class="text-accent font-bold">676K Gold Coins + 80 Free Spins</span> instantly on signup.
+                </p>
+                <a href="https://track.placekingbet.com/click/15" class="shrink-0 inline-flex items-center gap-2 bg-accent hover:bg-accentHover text-black font-black text-xs md:text-sm uppercase tracking-wide px-5 py-2.5 rounded-full transition-colors duration-200 whitespace-nowrap">
+                    Claim Free Coins &amp; Play <i class="fa-solid fa-arrow-right text-xs"></i>
+                </a>
+            </div>
+            <div id="marketing-spiel" class="border-l-2 md:border-l-[6px] border-accent pl-4 lg:pl-8 py-1 mb-8 text-left">
+                <h2 class="text-2xl md:text-5xl font-black text-white mb-2 md:mb-6 uppercase tracking-tight leading-tight">
+                    The Ultimate <br> <span class="text-accent">Social Casino</span>
+                </h2>
+                
+                <div class="space-y-4 text-xs md:text-lg text-gray-400 leading-relaxed max-w-none prose prose-invert">
+                    <p>
+                        Step into a world of endless entertainment with Jackpota, the premier social casino delivering the thrill of Vegas directly to your screen. We don't just offer games; we offer an immersive experience with massive jackpots and vibrant visuals.
+                    </p>
+                    <p>
+                        Dive into our library of over 700+ slot games, including Megaways, Hold & Spin, and classic steppers. Our state-of-the-art platform ensures smooth gameplay, whether you're spinning for a Mini jackpot or chasing the Grand prize.
+                    </p>
+                    <p>
+                        Join thousands of players who have already discovered the excitement. With fast prize redemptions, daily free coins, and 24/7 support, Jackpota is the number one choice for casino fans nationwide.
+                    </p>
+                </div>
+            </div>
+
+            <div id="pros-cons-section" class="my-6 md:my-8">
+                <h3 class="text-xl md:text-3xl font-bold text-white mb-4 pl-2 md:pl-0">Jackpota: Pros and Cons</h3>
+                
+                <a href="https://track.placekingbet.com/click/15" class="bg-bannerBlack border border-gray-800 rounded-xl md:rounded-2xl overflow-hidden grid md:grid-cols-2 shadow-xl group hover:border-accent/40 transition-colors duration-300 cursor-pointer" style="text-decoration:none;">
+                    <div class="relative min-h-[200px] md:min-h-[500px] bg-[#0d1317] border-r border-gray-800 overflow-hidden">
+                        <img src="https://crownpickz.com/img/jackpota2.png"
+                             alt="Jackpota App Interface"
+                             class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"></div>
+                    </div>
+
+                    <div class="p-4 md:p-14 flex flex-col justify-center bg-cardBlack">
+                        <ul class="space-y-3 md:space-y-6">
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-circle-check text-success text-base md:text-2xl mr-2 md:mr-4 mt-1"></i>
+                                <div>
+                                    <span class="block text-white text-sm md:text-xl font-bold">Massive Slot Library</span>
+                                    <span class="text-gray-500 text-[10px] md:text-sm">Over 700 games from top providers.</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-circle-check text-success text-base md:text-2xl mr-2 md:mr-4 mt-1"></i>
+                                <div>
+                                    <span class="block text-white text-sm md:text-xl font-bold">Daily Login Rewards</span>
+                                    <span class="text-gray-500 text-[10px] md:text-sm">Get free coins every 24 hours.</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-circle-check text-success text-base md:text-2xl mr-2 md:mr-4 mt-1"></i>
+                                <div>
+                                    <span class="block text-white text-sm md:text-xl font-bold">Instant Play</span>
+                                    <span class="text-gray-500 text-[10px] md:text-sm">No download needed to play.</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-circle-check text-success text-base md:text-2xl mr-2 md:mr-4 mt-1"></i>
+                                <div>
+                                    <span class="block text-white text-sm md:text-xl font-bold">Responsive support</span>
+                                    <span class="text-gray-500 text-[10px] md:text-sm">24/7 assistance whenever you need it.</span>
+                                </div>
+                            </li>
+                            <div class="h-px bg-gray-800 my-2 md:my-4"></div>
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-circle-minus text-danger text-base md:text-2xl mr-2 md:mr-4 mt-1"></i>
+                                <div>
+                                    <span class="block text-gray-300 text-sm md:text-xl font-medium">Limited Table Games</span>
+                                    <span class="text-gray-600 text-[10px] md:text-sm">Focus is primarily on slots.</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </a>
+            </div>
+
+            <div class="prose prose-sm prose-invert md:prose-xl max-w-none text-gray-300 space-y-2 md:space-y-6 max-md:[&_p]:text-xs max-md:[&_p]:leading-5 max-md:[&_h3]:text-sm">
+                <h3 class="text-white text-lg md:text-3xl font-black mb-2 md:mb-4">Gaming at Jackpota - my experiences</h3>
+                <p>
+                    I want to kick this Jackpota review off with a bang, so let’s look at the game collection and the fun it provides. In total, this social casino has hundreds of slot titles and over time I’ve seen them continually add new providers and features to keep things fresh.
+                </p>
+                <p>
+                    Whether you are a fan of Pragmatic Play hits or exclusive jackpots, the library is curated to ensure there is zero filler—only killer options. I spent hours testing the platform on both desktop and mobile browsers, and I was impressed by the load times and the graphics. It truly rivals the experience of real-money casinos, all while remaining 100% free to play.
+                </p>
+                
+                <div class="p-3 md:p-6 bg-[#1a1f24] border-l-4 border-accent rounded-r-lg md:rounded-r-xl my-4 md:my-6">
+                    <p class="text-white font-bold italic m-0 text-xs md:text-base">
+                        "The streamlined interface makes finding your favorite slot easier than ever. It's rare to find a social casino that balances quantity with such high quality."
+                    </p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <section class="py-8 md:py-24 bg-pageBg border-t border-gray-900 overflow-hidden relative scroll-mt-28">
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03]">
+            <span class="text-[30vw] font-black font-display text-white leading-none">WIN</span>
+        </div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/3 h-1/3 bg-accent/10 blur-[100px] rounded-full pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-6 lg:gap-16 items-center">
+                
+                <div class="text-center lg:text-left">
+                    <h5 class="text-accent font-bold tracking-widest uppercase mb-2 md:mb-4 text-[10px] md:text-sm"><i class="fa-solid fa-circle-check mr-1 md:mr-2"></i> Verified Redemptions</h5>
+                    <h2 class="text-3xl md:text-8xl font-black text-white tracking-tighter mb-2 md:mb-6 leading-none">
+                        BUILT FOR <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500">WINNERS.</span>
+                    </h2>
+                    <p class="text-xs md:text-xl text-gray-400 mb-6 md:mb-8 max-w-md mx-auto lg:mx-0 leading-relaxed">
+                        Join over <span class="text-white font-bold">100,000+ players</span> who have already hit the jackpot and redeemed real prizes.
+                    </p>
+
+                    <div class="flex justify-center lg:justify-start gap-6 md:gap-12 border-t border-white/10 pt-4 md:pt-8">
+                        <div>
+                            <div class="text-2xl md:text-4xl font-black text-accent mb-0.5 md:mb-1">Millions</div>
+                            <div class="text-[9px] md:text-xs text-gray-500 uppercase tracking-wider font-bold">Coins Redeemed</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl md:text-4xl font-black text-white mb-0.5 md:mb-1">24/7</div>
+                            <div class="text-[9px] md:text-xs text-gray-500 uppercase tracking-wider font-bold">Live Support</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Winner Feed -->
+                <div class="relative mt-6 lg:mt-0">
+                    <div class="flex items-center gap-2 mb-3 md:mb-4">
+                        <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                        <span class="text-green-400 text-[10px] md:text-xs font-bold uppercase tracking-widest">Live Winner Feed</span>
+                    </div>
+                    <div id="winner-feed-ticker" class="space-y-2 md:space-y-3 overflow-hidden" style="max-height: 320px;">
+                        <!-- JS-populated -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="play-nationwide" class="py-8 md:py-24 bg-pageBg scroll-mt-28">
+        <div class="max-w-8xl mx-auto px-4 md:px-6">
+            <div class="text-center mb-6 md:mb-12">
+                <h2 class="text-3xl md:text-7xl font-black text-white uppercase tracking-tighter mb-2 md:mb-4 font-sans" style="font-family: 'Inter', sans-serif;">PLAY NATIONWIDE</h2>
+                <p class="text-xs md:text-xl text-gray-400">Start playing Jackpota today in <span class="text-accent font-bold">40+ states</span>.</p>
+                <p class="text-[9px] md:text-xs text-gray-600 mt-1 md:mt-2">Eligibility varies by state. 18+ in most jurisdictions.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-6 items-start">
+                <div class="lg:col-span-12 h-[200px] md:h-[600px] w-full" id="us-map-container"></div>
+            </div>
+
+            <div class="mt-6 md:mt-12 pt-6 md:pt-12 border-t border-gray-800">
+                <div class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 md:gap-4 text-center text-[10px] md:text-sm text-gray-400 font-medium">
+                    <div class="hover:text-accent transition">Alaska</div>
+                    <div class="hover:text-accent transition">Arkansas</div>
+                    <div class="hover:text-accent transition">California</div>
+                    <div class="hover:text-accent transition">Delaware</div>
+                    <div class="hover:text-accent transition">Florida</div>
+                    <div class="hover:text-accent transition">Georgia</div>
+                    <div class="hover:text-accent transition">Illinois</div>
+                    <div class="hover:text-accent transition">Indiana</div>
+                    <div class="hover:text-accent transition">Kansas</div>
+                    <div class="hover:text-accent transition">Kentucky</div>
+                    <div class="hover:text-accent transition">Maine</div>
+                    <div class="hover:text-accent transition">Massachusetts</div>
+                    <div class="hover:text-accent transition">Minnesota</div>
+                    <div class="hover:text-accent transition">Missouri</div>
+                    <div class="hover:text-accent transition">Nebraska</div>
+                    <div class="hover:text-accent transition">New Hampshire</div>
+                    <div class="hover:text-accent transition">New Mexico</div>
+                    <div class="hover:text-accent transition">North Carolina</div>
+                    <div class="hover:text-accent transition">North Dakota</div>
+                    <div class="hover:text-accent transition">Oklahoma</div>
+                    <div class="hover:text-accent transition">Oregon</div>
+                    <div class="hover:text-accent transition">Pennsylvania</div>
+                    <div class="hover:text-accent transition">Rhode Island</div>
+                    <div class="hover:text-accent transition">South Carolina</div>
+                    <div class="hover:text-accent transition">South Dakota</div>
+                    <div class="hover:text-accent transition">Texas</div>
+                    <div class="hover:text-accent transition">Utah</div>
+                    <div class="hover:text-accent transition">Vermont</div>
+                    <div class="hover:text-accent transition">Virginia</div>
+                    <div class="hover:text-accent transition">Washington D.C.</div>
+                    <div class="hover:text-accent transition">West Virginia</div>
+                    <div class="hover:text-accent transition">Wisconsin</div>
+                    <div class="hover:text-accent transition">Wyoming</div>
+                    <div class="hover:text-accent transition col-span-3 md:col-span-1">Canada (excl Ontario)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            const topology = await fetch(
+                'https://cdn.jsdelivr.net/npm/@highcharts/map-collection/countries/us/us-all.topo.json'
+            ).then(res => res.json());
+
+            const availableStates = [
+                'us-ak', 'us-ar', 'us-ca', 'us-de', 'us-fl', 'us-ga', 'us-il', 'us-in',
+                'us-ks', 'us-ky', 'us-me', 'us-ma', 'us-mn', 'us-mo', 'us-ne', 'us-nh',
+                'us-nm', 'us-nc', 'us-nd', 'us-ok', 'us-or', 'us-pa', 'us-ri', 'us-sc',
+                'us-sd', 'us-tx', 'us-ut', 'us-vt', 'us-va', 'us-wv', 'us-wi', 'us-wy', 'us-dc'
+            ];
+
+            const data = availableStates.map(code => ({
+                'hc-key': code,
+                color: '#ffcd36'
+            }));
+
+            Highcharts.mapChart('us-map-container', {
+                chart: {
+                    map: topology,
+                    backgroundColor: 'transparent',
+                },
+                title: { text: '' },
+                exporting: { enabled: false },
+                credits: { enabled: false },
+                legend: { enabled: false },
+                mapNavigation: { enabled: false },
+                tooltip: {
+                    backgroundColor: '#111',
+                    borderColor: '#333',
+                    borderRadius: 8,
+                    style: { color: '#fff' },
+                    headerFormat: '',
+                    pointFormat: '<span style="color:{point.color}">\u25CF</span> {point.name}'
+                },
+                series: [{
+                    data: data,
+                    mapData: topology,
+                    name: 'Available States',
+                    borderColor: '#000000',
+                    borderWidth: 1,
+                    nullColor: '#1f2937',
+                    cursor: 'pointer',
+                    point: {
+                        events: {
+                            click: function () {
+                                window.open('https://track.placekingbet.com/click/15', '_blank');
+                            }
+                        }
+                    },
+                    states: {
+                        hover: {
+                            color: '#e09900',
+                            borderColor: '#ffffff'
+                        }
+                    },
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        format: '{point.properties.postal-code}',
+                        style: {
+                            fontWeight: 'bold',
+                            textOutline: 'none',
+                            fontSize: '10px'
+                        }
+                    }
+                }, {
+                    type: 'mapline',
+                    data: Highcharts.geojson(topology, 'mapline'),
+                    color: '#000000'
+                }]
+            });
+        });
+    </script>
+
+    <section id="what-we-offer" class="py-8 md:py-24 bg-pageBg scroll-mt-28">
+        <div class="max-w-8xl mx-auto px-4 md:px-6">
+            <h2 class="text-2xl md:text-4xl font-black text-white mb-6 md:mb-12 uppercase tracking-tight text-center md:text-left">What do we offer?</h2>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-6 mb-6 md:mb-16">
+                <a href="https://track.placekingbet.com/click/15" class="bg-cardBlack border border-accent/50 rounded-lg md:rounded-2xl p-3 md:p-8 text-center flex flex-col items-center hover:border-accent hover:scale-[1.03] hover:shadow-[0_0_18px_rgba(255,205,54,0.15)] active:scale-[0.97] transition-all duration-200 group" style="text-decoration:none;">
+                    <i class="fa-solid fa-gem text-2xl md:text-5xl text-accent mb-2 md:mb-6 group-hover:scale-110 transition-transform"></i>
+                    <h3 class="text-xs md:text-lg font-bold text-white">TOP TIER</h3>
+                    <p class="text-sm md:text-2xl font-black text-accent leading-none">SLOTS</p>
+                </a>
+                <a href="https://track.placekingbet.com/click/15" class="bg-cardBlack border border-accent/50 rounded-lg md:rounded-2xl p-3 md:p-8 text-center flex flex-col items-center hover:border-accent hover:scale-[1.03] hover:shadow-[0_0_18px_rgba(255,205,54,0.15)] active:scale-[0.97] transition-all duration-200 group" style="text-decoration:none;">
+                    <i class="fa-solid fa-gift text-2xl md:text-5xl text-accent mb-2 md:mb-6 group-hover:scale-110 transition-transform"></i>
+                    <h3 class="text-xs md:text-lg font-bold text-white">Daily</h3>
+                    <p class="text-sm md:text-2xl font-black text-accent leading-none">Free Coins</p>
+                </a>
+                <a href="https://track.placekingbet.com/click/15" class="bg-cardBlack border border-accent/50 rounded-lg md:rounded-2xl p-3 md:p-8 text-center flex flex-col items-center hover:border-accent hover:scale-[1.03] hover:shadow-[0_0_18px_rgba(255,205,54,0.15)] active:scale-[0.97] transition-all duration-200 group" style="text-decoration:none;">
+                    <i class="fa-solid fa-trophy text-2xl md:text-5xl text-accent mb-2 md:mb-6 group-hover:scale-110 transition-transform"></i>
+                    <h3 class="text-xs md:text-lg font-bold text-white">Massive</h3>
+                    <p class="text-sm md:text-2xl font-black text-accent leading-none">Jackpots</p>
+                </a>
+                <a href="https://track.placekingbet.com/click/15" class="bg-cardBlack border border-accent/50 rounded-lg md:rounded-2xl p-3 md:p-8 text-center flex flex-col items-center hover:border-accent hover:scale-[1.03] hover:shadow-[0_0_18px_rgba(255,205,54,0.15)] active:scale-[0.97] transition-all duration-200 group" style="text-decoration:none;">
+                    <i class="fa-solid fa-crown text-2xl md:text-5xl text-accent mb-2 md:mb-6 group-hover:scale-110 transition-transform"></i>
+                    <h3 class="text-xs md:text-lg font-bold text-white">VIP</h3>
+                    <p class="text-sm md:text-2xl font-black text-accent leading-none">Rewards</p>
+                </a>
+                <a href="https://track.placekingbet.com/click/15" class="bg-cardBlack border border-accent/50 rounded-lg md:rounded-2xl p-3 md:p-8 text-center flex flex-col items-center hover:border-accent hover:scale-[1.03] hover:shadow-[0_0_18px_rgba(255,205,54,0.15)] active:scale-[0.97] transition-all duration-200 group" style="text-decoration:none;">
+                    <i class="fa-solid fa-headset text-2xl md:text-5xl text-accent mb-2 md:mb-6 group-hover:scale-110 transition-transform"></i>
+                    <h3 class="text-xs md:text-lg font-bold text-white">24/7</h3>
+                    <p class="text-sm md:text-2xl font-black text-accent leading-none">Customer Support</p>
+                </a>
+            </div>
+            <div class="bg-bannerBlack border border-gray-800 rounded-xl md:rounded-3xl p-4 md:p-16 text-center mb-6 md:mb-16 shadow-2xl">
+                <h3 class="text-xl md:text-4xl font-black text-accent mb-2 md:mb-4 uppercase">NO PURCHASE REQUIRED. FREE FOREVER</h3>
+                <p class="text-white font-bold text-xs md:text-lg uppercase tracking-wider mb-4 md:mb-10">FREE-TO-PLAY SOCIAL CASINO. HAVE FUN WITHOUT PAYING</p>
+                <div class="max-w-5xl mx-auto space-y-2 md:space-y-6 text-gray-300 text-sm md:text-lg leading-relaxed">
+                    <p>Our exclusive rewards are up for grabs every day. You can get free Gold Coins and Sweeps Coins by simply logging into your account every 24 hours, referring friends to our site, joining our community on social media, and more!</p>
+                </div>
+            </div>
+
+            <div class="mb-8 text-center py-6 md:py-8">
+                <p class="text-gray-400 text-sm md:text-base mb-4">No deposit needed. Join thousands of players already spinning for free.</p>
+                <a href="https://track.placekingbet.com/click/15" class="inline-flex items-center gap-2 bg-accent hover:bg-accentHover text-black font-black text-sm md:text-base uppercase tracking-wide px-8 py-3 rounded-full transition-colors duration-200">
+                    <i class="fa-solid fa-coins"></i> Claim Free Coins &amp; Play
+                </a>
+                <p class="text-gray-700 text-[9px] md:text-xs mt-3">By clicking "Claim Free Coins &amp; Play", you agree to our Terms &amp; Conditions. 18+ Only.</p>
+            </div>
+            <a href="https://track.placekingbet.com/click/15" class="grid md:grid-cols-2 bg-bannerBlack border border-gray-800 hover:border-accent/40 rounded-xl md:rounded-3xl overflow-hidden shadow-2xl min-h-[300px] md:min-h-[500px] group transition-colors duration-300 cursor-pointer" style="text-decoration:none;">
+                <div class="p-6 md:p-24 flex flex-col justify-center">
+                    <h3 class="text-lg md:text-3xl font-black text-accent mb-2 md:mb-6">Refer a friend</h3>
+                    <p class="text-white text-base md:text-2xl font-bold leading-tight">
+                        Receive <i class="fa-solid fa-coins text-accent mx-1 md:mx-2"></i> free coins when your friends sign up and play.
+                    </p>
+                </div>
+                <div class="relative h-48 md:h-auto w-full bg-cardBlack overflow-hidden">
+                    <img src="https://crownpickz.com/img/refer.png"
+                         alt="Refer a Friend"
+                         class="absolute inset-0 w-full h-full object-cover object-top opacity-90 group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-r from-bannerBlack via-bannerBlack/50 to-transparent pointer-events-none"></div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section id="recent-winners" class="py-8 md:py-20 bg-pageBg border-t border-gray-800 scroll-mt-28">
+        <div class="max-w-8xl mx-auto px-4 md:px-6">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-6 md:mb-10">
+                <h2 class="text-2xl md:text-4xl font-black text-white uppercase tracking-tight">Recent Winners</h2>
+                <span class="flex items-center gap-2 text-green-400 text-xs md:text-sm font-bold">
+                    <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span> Updated live
+                </span>
+            </div>
+            <div id="winner-cards-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5">
+                <!-- JS-populated -->
+            </div>
+        </div>
+    </section>
+
+    <section id="faq-section" class="py-8 md:py-20 bg-pageBg border-t border-white/10 scroll-mt-28">
+        <div class="max-w-4xl mx-auto px-4 md:px-6">
+            <h2 class="text-2xl md:text-5xl font-black text-white text-center mb-6 md:mb-12 uppercase">Frequently Asked Questions</h2>
+            
+            <div class="space-y-2 md:space-y-4">
+                <div class="faq-item bg-[#0d1317] border border-white/10 rounded-lg md:rounded-xl overflow-hidden hover:border-accent/50 transition duration-300">
+                    <div class="flex items-center justify-between p-3 md:p-6 cursor-pointer" onclick="toggleFaq(this)">
+                        <h3 class="text-sm md:text-xl font-bold text-white faq-question transition-colors duration-300">Is Jackpota legal in the US?</h3>
+                        <i class="fa-solid fa-chevron-down text-gray-500 faq-icon text-sm md:text-xl"></i>
+                    </div>
+                    <div class="faq-answer px-3 md:px-6 bg-[#0d1317]">
+                        <p class="text-gray-400 pb-3 md:pb-6 leading-relaxed text-xs md:text-base">Yes! Jackpota is a social casino that operates legally in over 40 US states. We use a sweepstakes model where no purchase is necessary to play or win, making us distinct from traditional real-money gambling sites.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-[#0d1317] border border-white/10 rounded-lg md:rounded-xl overflow-hidden hover:border-accent/50 transition duration-300">
+                    <div class="flex items-center justify-between p-3 md:p-6 cursor-pointer" onclick="toggleFaq(this)">
+                        <h3 class="text-sm md:text-xl font-bold text-white faq-question transition-colors duration-300">How do I claim the welcome bonus?</h3>
+                        <i class="fa-solid fa-chevron-down text-gray-500 faq-icon text-sm md:text-xl"></i>
+                    </div>
+                    <div class="faq-answer px-3 md:px-6 bg-[#0d1317]">
+                        <p class="text-gray-400 pb-3 md:pb-6 leading-relaxed text-xs md:text-base">It's automatic! When you sign up for a new account, your 676K GC, 355.5 SC, and 80 Free Spins are credited to your wallet instantly so you can start spinning immediately.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-[#0d1317] border border-white/10 rounded-lg md:rounded-xl overflow-hidden hover:border-accent/50 transition duration-300">
+                    <div class="flex items-center justify-between p-3 md:p-6 cursor-pointer" onclick="toggleFaq(this)">
+                        <h3 class="text-sm md:text-xl font-bold text-white faq-question transition-colors duration-300">What games can I play?</h3>
+                        <i class="fa-solid fa-chevron-down text-gray-500 faq-icon text-sm md:text-xl"></i>
+                    </div>
+                    <div class="faq-answer px-3 md:px-6 bg-[#0d1317]">
+                        <p class="text-gray-400 pb-3 md:pb-6 leading-relaxed text-xs md:text-base">We offer hundreds of casino-style games, primarily focusing on Slots (including Megaways, Hold & Spin, and Classic Steppers) as well as select Table Games.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-[#0d1317] border border-white/10 rounded-lg md:rounded-xl overflow-hidden hover:border-accent/50 transition duration-300">
+                    <div class="flex items-center justify-between p-3 md:p-6 cursor-pointer" onclick="toggleFaq(this)">
+                        <h3 class="text-sm md:text-xl font-bold text-white faq-question transition-colors duration-300">How do I redeem prizes?</h3>
+                        <i class="fa-solid fa-chevron-down text-gray-500 faq-icon text-sm md:text-xl"></i>
+                    </div>
+                    <div class="faq-answer px-3 md:px-6 bg-[#0d1317]">
+                        <p class="text-gray-400 pb-3 md:pb-6 leading-relaxed text-xs md:text-base">Once you have accumulated enough Sweeps Coins (SC) through winnings, you can redeem them for real cash prizes to your bank account or gift cards. The process is secure and typically takes 1-3 business days.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-[#0d1317] border border-white/10 rounded-lg md:rounded-xl overflow-hidden hover:border-accent/50 transition duration-300">
+                    <div class="flex items-center justify-between p-3 md:p-6 cursor-pointer" onclick="toggleFaq(this)">
+                        <h3 class="text-sm md:text-xl font-bold text-white faq-question transition-colors duration-300">Is there a mobile app?</h3>
+                        <i class="fa-solid fa-chevron-down text-gray-500 faq-icon text-sm md:text-xl"></i>
+                    </div>
+                    <div class="faq-answer px-3 md:px-6 bg-[#0d1317]">
+                        <p class="text-gray-400 pb-3 md:pb-6 leading-relaxed text-xs md:text-base">Jackpota is designed for instant play! There is no download required; simply access our site through your mobile browser for a fully optimized experience.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-[#0d1317] border border-white/10 rounded-lg md:rounded-xl overflow-hidden hover:border-accent/50 transition duration-300">
+                    <div class="flex items-center justify-between p-3 md:p-6 cursor-pointer" onclick="toggleFaq(this)">
+                        <h3 class="text-sm md:text-xl font-bold text-white faq-question transition-colors duration-300">Do I need to purchase to play?</h3>
+                        <i class="fa-solid fa-chevron-down text-gray-500 faq-icon text-sm md:text-xl"></i>
+                    </div>
+                    <div class="faq-answer px-3 md:px-6 bg-[#0d1317]">
+                        <p class="text-gray-400 pb-3 md:pb-6 leading-relaxed text-xs md:text-base">No purchase is ever necessary. We provide free daily login rewards, social media giveaways, and mail-in requests to ensure you can always play for free.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-[#0d1317] border border-white/10 rounded-lg md:rounded-xl overflow-hidden hover:border-accent/50 transition duration-300">
+                    <div class="flex items-center justify-between p-3 md:p-6 cursor-pointer" onclick="toggleFaq(this)">
+                        <h3 class="text-sm md:text-xl font-bold text-white faq-question transition-colors duration-300">How does the referral program work?</h3>
+                        <i class="fa-solid fa-chevron-down text-gray-500 faq-icon text-sm md:text-xl"></i>
+                    </div>
+                    <div class="faq-answer px-3 md:px-6 bg-[#0d1317]">
+                        <p class="text-gray-400 pb-3 md:pb-6 leading-relaxed text-xs md:text-base">Share your unique referral link with friends. When they sign up and make a qualifying purchase, both you and your friend receive a bonus of Gold Coins and Sweeps Coins directly to your accounts.</p>
+                    </div>
+                </div>
+
+                 <div class="faq-item bg-[#0d1317] border border-white/10 rounded-lg md:rounded-xl overflow-hidden hover:border-accent/50 transition duration-300">
+                    <div class="flex items-center justify-between p-3 md:p-6 cursor-pointer" onclick="toggleFaq(this)">
+                        <h3 class="text-sm md:text-xl font-bold text-white faq-question transition-colors duration-300">Is my data secure?</h3>
+                        <i class="fa-solid fa-chevron-down text-gray-500 faq-icon text-sm md:text-xl"></i>
+                    </div>
+                    <div class="faq-answer px-3 md:px-6 bg-[#0d1317]">
+                        <p class="text-gray-400 pb-3 md:pb-6 leading-relaxed text-xs md:text-base">Yes, we use bank-level SSL encryption and partner with trusted payment providers to ensure your personal and financial information is always protected.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            function toggleFaq(element) {
+                const item = element.parentElement;
+                const isActive = item.classList.contains('active');
+                
+                // Close all other items
+                document.querySelectorAll('.faq-item').forEach(i => {
+                    i.classList.remove('active');
+                });
+
+                // Toggle current item
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            }
+        </script>
+    </section>
+
+    <footer id="site-footer" class="site-footer" style="background-color:#000; padding:80px 20px 40px; border-top:1px solid rgba(255,255,255,0.08);">
+        <div class="footer-content" style="max-width:1400px; margin:0 auto;">
+            <div class="footer-disclaimer-title" style="color:#fbab00; font-weight:800; font-size:1.1rem; margin-bottom:20px;">Disclaimer.</div>
+
+            <div class="footer-disclaimer-text" style="color:#6b7280; font-size:0.85rem; line-height:1.8; margin-bottom:30px;">
+                Any and all information found on this site is for entertainment purposes only. Please be sure to understand the sports gambling and betting laws governing your country, state, or local area as they do vary. It is your sole responsibility to understand these restrictions prior to making or placing any bets on the third-party services provided.
+                <strong style="color:#d1d5db;">Placekingbet.com</strong> does make use of third-party links for your convenience; however, we are not responsible for the content, practices, or policies of these third-party sites.<br><br>
+                If you or anyone you know has a gambling problem, crisis counseling and referral services can be used by calling 1-800-GAMBLER.
+            </div>
+
+            <div class="footer-logos" style="display:flex; flex-wrap:wrap; gap:40px; margin:50px 0; opacity:0.7;">
+                <img src="img-footer/21.svg" alt="21 Plus" style="height:30px; width:auto; filter:grayscale(100%);">
+                <img src="img-footer/care.svg" alt="GamCare" style="height:30px; width:auto; filter:grayscale(100%);">
+                <img src="img-footer/bg.svg" alt="BeGambleAware" style="height:30px; width:auto; filter:grayscale(100%);">
+                <img src="img-footer/sd.png" alt="SportsDataIO" style="height:30px; width:auto; filter:grayscale(100%);">
+            </div>
+
+            <div style="border-top:1px solid rgba(255,255,255,0.08); margin:40px 0;"></div>
+
+            <div style="text-align:center; color:#4b5563; font-size:0.85rem;">
+                Copyright 2025 placekingbet.com All rights reserved
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Dynamic Date Logic
+            const dateElement = document.getElementById('current-date-display');
+            if(dateElement) {
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                const today = new Date().toLocaleDateString('en-US', options);
+                dateElement.textContent = today;
+            }
+        });
+    </script>
+    <!-- Winner Feed Engine -->
+    <script>
+    (function () {
+        var NAMES = [
+            'Jonathan P.','Maria S.','Derek W.','Ashley M.','Carlos R.',
+            'Tiffany B.','Kevin L.','Sandra O.','Marcus J.','Brianna C.',
+            'Tyler H.','Nicole F.','Darnell T.','Heather N.','Jose G.',
+            'Melissa K.','Brandon E.','Latoya D.','Ryan A.','Stephanie V.'
+        ];
+        var GAMES = [
+            'Aztec Fire','Royal Coins 2','Fire Stampede','Golden Buffalo',
+            'Book of Dead','Lucky Fortune','Dragon\'s Gold','Wolf Gold',
+            'Sweet Bonanza','Gates of Olympus','Cash Bandits 3','Cleopatra'
+        ];
+        var PRIZES = [
+            '101,141 GC','258,900 GC','45,600 GC','500,000 GC','87,320 GC',
+            '312,450 GC','19,870 GC','72,100 GC','150,000 GC','640,000 GC',
+            '33,500 GC','210,000 GC','96,750 GC','480,200 GC','27,880 GC'
+        ];
+        var SPINS = ['500','1,000','2,500','750','200','1,500','300','800','100','50'];
+        var TIMES = ['just now','1 min ago','2 min ago','3 min ago','4 min ago','5 min ago','7 min ago','9 min ago','11 min ago','14 min ago'];
+        var AVATARBG = ['#b45309','#1d4ed8','#15803d','#9333ea','#be123c','#0e7490','#c2410c','#4d7c0f'];
+
+        function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+        function makeEntry(index) {
+            var name  = NAMES[index % NAMES.length];
+            var game  = rand(GAMES);
+            var prize = rand(PRIZES);
+            var spin  = rand(SPINS);
+            var time  = TIMES[Math.min(index, TIMES.length - 1)];
+            var bg    = AVATARBG[index % AVATARBG.length];
+            var initial = name.charAt(0);
+            return { name: name, game: game, prize: prize, spin: spin, time: time, bg: bg, initial: initial };
+        }
+
+        /* ── Ticker (inside BUILT FOR WINNERS) ── */
+        var ticker = document.getElementById('winner-feed-ticker');
+        var tickerPool = [];
+        for (var i = 0; i < 20; i++) tickerPool.push(makeEntry(i));
+        var tickerIdx = 0;
+
+        function renderTickerEntry(d) {
+            var el = document.createElement('div');
+            el.className = 'winner-entry flex items-center gap-3 bg-[#0d1317] border border-white/8 rounded-lg px-3 py-2 md:px-4 md:py-3';
+            el.innerHTML =
+                '<div class="w-7 h-7 md:w-9 md:h-9 rounded-full flex-shrink-0 flex items-center justify-center text-white font-black text-xs md:text-sm" style="background:' + d.bg + '">' + d.initial + '</div>' +
+                '<div class="flex-1 min-w-0">' +
+                  '<span class="text-white font-bold text-[11px] md:text-sm">' + d.name + '</span>' +
+                  '<span class="text-gray-500 text-[10px] md:text-xs"> won </span>' +
+                  '<span class="text-accent font-bold text-[11px] md:text-sm">' + d.prize + '</span>' +
+                  '<span class="text-gray-500 text-[10px] md:text-xs"> on ' + d.game + '</span>' +
+                '</div>' +
+                '<span class="text-gray-600 text-[9px] md:text-[10px] whitespace-nowrap">' + d.time + '</span>';
+            return el;
+        }
+
+        function initTicker() {
+            if (!ticker) return;
+            ticker.innerHTML = '';
+            for (var i = 0; i < 5; i++) {
+                ticker.appendChild(renderTickerEntry(tickerPool[(tickerIdx + i) % tickerPool.length]));
+            }
+            tickerIdx = (tickerIdx + 5) % tickerPool.length;
+        }
+
+        function rotateTicker() {
+            if (!ticker) return;
+            var newEntry = renderTickerEntry(tickerPool[tickerIdx % tickerPool.length]);
+            tickerIdx = (tickerIdx + 1) % tickerPool.length;
+            ticker.insertBefore(newEntry, ticker.firstChild);
+            var children = ticker.children;
+            if (children.length > 5) ticker.removeChild(children[children.length - 1]);
+        }
+
+        /* ── Cards grid (Recent Winners section) ── */
+        var grid = document.getElementById('winner-cards-grid');
+        var cardPool = [];
+        for (var j = 0; j < 30; j++) cardPool.push(makeEntry(j + 5));
+        var cardSet = [];
+
+        function renderCard(d) {
+            var el = document.createElement('div');
+            el.className = 'winner-card-new bg-cardBlack border border-white/10 rounded-xl p-4 md:p-5 flex items-start gap-3 hover:border-accent/50 transition-colors duration-300';
+            el.innerHTML =
+                '<div class="w-10 h-10 md:w-12 md:h-12 rounded-full flex-shrink-0 flex items-center justify-center text-white font-black text-base md:text-lg" style="background:' + d.bg + '">' + d.initial + '</div>' +
+                '<div class="flex-1 min-w-0">' +
+                  '<div class="flex items-center justify-between mb-1">' +
+                    '<span class="text-white font-bold text-sm md:text-base">' + d.name + '</span>' +
+                    '<span class="text-gray-600 text-[9px] md:text-xs">' + d.time + '</span>' +
+                  '</div>' +
+                  '<p class="text-accent font-black text-sm md:text-base leading-tight">' + d.prize + '</p>' +
+                  '<p class="text-gray-500 text-[10px] md:text-xs mt-0.5">' + d.game + ' &bull; ' + d.spin + ' spin</p>' +
+                '</div>';
+            return el;
+        }
+
+        function initGrid() {
+            if (!grid) return;
+            grid.innerHTML = '';
+            cardSet = [];
+            for (var k = 0; k < 6; k++) {
+                var d = cardPool[k % cardPool.length];
+                cardSet.push({ el: grid.appendChild(renderCard(d)), data: d });
+            }
+        }
+
+        function rotateGrid() {
+            if (!grid || !cardSet.length) return;
+            var slot = Math.floor(Math.random() * cardSet.length);
+            var nextIdx = Math.floor(Math.random() * cardPool.length);
+            var d = cardPool[nextIdx];
+            var newEl = renderCard(d);
+            grid.replaceChild(newEl, cardSet[slot].el);
+            cardSet[slot] = { el: newEl, data: d };
+        }
+
+        initTicker();
+        initGrid();
+        setInterval(rotateTicker, 2800);
+        setInterval(rotateGrid, 3500);
+    })();
+    </script>
+
+    <script type="text/javascript" src="https://track.placekingbet.com/track.js?rtkcmpid=694e58694c4415ff666d6bbc"></script>
+
+    <!-- Sticky Mobile CTA -->
+    <div id="sticky-mobile-cta" class="md:hidden fixed bottom-0 left-0 right-0 z-50 px-4 py-3 bg-black/95 backdrop-blur-sm border-t border-white/10" style="transform: translateY(100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);">
+        <a href="https://track.placekingbet.com/click/15" class="responsive-cta block" style="line-height: 44px; font-size: 15px; padding: 0 16px;">
+            Claim Free Coins &amp; Play
+        </a>
+        <p class="text-center text-gray-600 text-[9px] mt-1.5">18+ only. No purchase required. T&amp;Cs apply.</p>
+    </div>
+
+    <script>
+        (function () {
+            var bar = document.getElementById('sticky-mobile-cta');
+            if (!bar) return;
+            function update() {
+                if (window.scrollY > 300) {
+                    bar.style.transform = 'translateY(0)';
+                } else {
+                    bar.style.transform = 'translateY(100%)';
+                }
+            }
+            window.addEventListener('scroll', update, { passive: true });
+            update();
+        })();
+    </script>
+</body>
+</html>

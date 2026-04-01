@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth scroll-pt-20 md:scroll-pt-32">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J Mania Lucky Pyggs</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;500;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="https://playluckypiggs.com/wp-content/themes/site-theme/img/icon.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        glass: {
+                            base: '#130a26',      
+                            surface: '#2e1065',   
+                            border: '#7c3aed',    
+                            highlight: '#d946ef', 
+                            gold: '#f0abfc',      
+                            accent: '#8b5cf6'     
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    backgroundImage: {
+                        'aurora': 'conic-gradient(from 180deg at 50% 50%, #130a26 0deg, #4c1d95 180deg, #130a26 360deg)',
+                        'grid-pattern': 'linear-gradient(to right, rgba(217,70,239,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(217,70,239,0.05) 1px, transparent 1px)',
+                    },
+                    boxShadow: {
+                        'neon-pink': '0 0 40px -10px rgba(217, 70, 239, 0.4)',
+                        'glass-depth': '0 20px 50px -12px rgba(19, 10, 38, 0.9)',
+                        'hud': '0 0 15px rgba(139, 92, 246, 0.3), inset 0 0 20px rgba(139, 92, 246, 0.1)',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 3s infinite',
+                        'scan': 'scanline 8s linear infinite',
+                        'spin-slow': 'spin 12s linear infinite',
+                        'shine': 'shine 3s infinite',
+                        'slide-down': 'slideDown 0.5s ease-out forwards',
+                        'blob': 'blob 7s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 0 0 rgba(217, 70, 239, 0.4)' },
+                            '70%': { boxShadow: '0 0 0 20px rgba(217, 70, 239, 0)' },
+                        },
+                        scanline: {
+                            '0%': { top: '-100%' },
+                            '100%': { top: '200%' },
+                        },
+                        shine: {
+                            '0%': { left: '-100%' },
+                            '20%': { left: '100%' },
+                            '100%': { left: '100%' },
+                        },
+                        slideDown: {
+                            '0%': { transform: 'translateY(-100%)' },
+                            '100%': { transform: 'translateY(0)' },
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #130a26;
+            color: #fce7f3;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #130a26; }
+        ::-webkit-scrollbar-thumb { background: #7c3aed; border-radius: 4px; }
+
+        /* General Styles */
+        .neo-card {
+            background: rgba(46, 16, 101, 0.3);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(217, 70, 239, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .neo-card:hover {
+            background: rgba(46, 16, 101, 0.6);
+            border-color: rgba(217, 70, 239, 0.5);
+            transform: translateY(-4px) scale(1.01);
+        }
+
+        .mr-coin-logo-text {
+            background: linear-gradient(to bottom, #fae8ff 0%, #e879f9 30%, #d946ef 70%, #86198f 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+            filter: drop-shadow(0 4px 0px rgba(0,0,0,0.5));
+        }
+
+        /* Header Styles */
+        .hud-header {
+            transition: all 0.4s ease;
+        }
+        
+        .hud-container {
+            background: rgba(19, 10, 38, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
+            width: 100%;
+        }
+
+        .hud-nav-item {
+            position: relative;
+            color: #d1d5db;
+            transition: color 0.3s;
+        }
+        
+        .hud-nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: #d946ef;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+            box-shadow: 0 0 10px #d946ef;
+        }
+        
+        .hud-nav-item:hover { color: white; }
+        .hud-nav-item:hover::after { width: 100%; }
+
+        @media (min-width: 768px) {
+            .header-scrolled .hud-container {
+                background: rgba(19, 10, 38, 0.95);
+                border-color: rgba(217, 70, 239, 0.5);
+                box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+            }
+        }
+
+        @media (max-width: 767px) {
+            .hud-header { top: 0 !important; width: 100%; padding-top: 0 !important; }
+            .hud-container { 
+                border-radius: 0 !important; 
+                border-left: 0; 
+                border-right: 0; 
+                border-top: 0;
+                background: rgba(19, 10, 38, 0.95);
+            }
+        }
+        
+        .slider-slide {
+            transition: opacity 1000ms ease-out, transform 1000ms ease-out;
+            opacity: 0;
+            transform: scale(0.95);
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+        .slider-slide.active { opacity: 1; transform: scale(1); pointer-events: auto; z-index: 10; }
+        
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out, opacity 0.3s ease-out; opacity: 0; }
+        .faq-answer.open { opacity: 1; }
+        
+        .section-features { background-color: #1e103f; background-image: radial-gradient(#4c1d95 1px, transparent 1px); background-size: 20px 20px; }
+        .section-guide { background: linear-gradient(135deg, #130a26 0%, #2e1065 100%); }
+    </style>
+</head>
+<body class="antialiased selection:bg-glass-highlight selection:text-white relative bg-[#130a26]">
+
+    <div class="fixed top-[-20%] left-[-10%] w-[800px] h-[800px] bg-glass-highlight/10 rounded-full blur-[120px] pointer-events-none animate-blob"></div>
+    <div class="fixed bottom-[-20%] right-[-10%] w-[800px] h-[800px] bg-glass-border/10 rounded-full blur-[120px] pointer-events-none animate-blob animation-delay-2000"></div>
+
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 hud-header pt-0 md:pt-6">
+        <div class="w-full md:container md:mx-auto px-0 md:px-6">
+            <div class="hud-container w-full md:rounded-2xl px-4 md:px-8 py-3 md:py-4 flex items-center justify-between relative overflow-hidden group">
+                <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-glass-highlight/70 to-transparent opacity-50"></div>
+                
+                <a href="#" class="relative z-50 flex items-center gap-3">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-glass-highlight blur-lg opacity-40 animate-pulse"></div>
+                        <img src="https://playluckypiggs.com/wp-content/themes/site-theme/img/logo.png" alt="Lucky Pyggs" class="h-8 md:h-10 w-auto relative z-10 filter hue-rotate-30">
+                    </div>
+                </a>
+
+                <nav class="hidden md:flex items-center gap-8">
+                    <a href="#hero" class="hud-nav-item font-display text-sm font-medium tracking-wide py-2">THE FARM</a>
+                    <a href="#features" class="hud-nav-item font-display text-sm font-medium tracking-wide py-2">GAME FEATURES</a>
+                    <a href="#guide" class="hud-nav-item font-display text-sm font-medium tracking-wide py-2">HOW TO PLAY</a>
+                    <a href="#faq" class="hud-nav-item font-display text-sm font-medium tracking-wide py-2">FAQ</a>
+                </nav>
+
+                <div class="flex items-center gap-4">
+                    <a href="/game" class="hidden md:flex relative group overflow-hidden bg-glass-surface border border-glass-highlight/30 px-6 py-2 rounded-lg transition-all hover:border-glass-highlight hover:shadow-[0_0_20px_rgba(217,70,239,0.4)]">
+                        <span class="absolute inset-0 bg-glass-highlight/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
+                        <span class="relative z-10 flex items-center gap-2 font-mono text-xs font-bold text-glass-gold group-hover:text-white">
+                            <i class="bi bi-controller"></i> PLAY NOW
+                        </span>
+                    </a>
+
+                    <button id="mobile-menu-btn" class="md:hidden text-2xl text-glass-gold hover:text-white transition-colors">
+                        <i class="bi bi-grid-fill" id="mobile-menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full mt-4 left-4 right-4 bg-[#1a0e35] border border-glass-highlight/30 rounded-2xl shadow-2xl overflow-hidden origin-top animate-slide-down">
+            <div class="p-2 space-y-1">
+                <a href="#hero" class="block px-4 py-3 rounded-xl hover:bg-white/5 text-gray-300 hover:text-white font-display border border-transparent hover:border-white/5 transition-all">
+                    <i class="bi bi-house-door mr-3 text-glass-highlight"></i>The Farm
+                </a>
+                <a href="#features" class="block px-4 py-3 rounded-xl hover:bg-white/5 text-gray-300 hover:text-white font-display border border-transparent hover:border-white/5 transition-all">
+                    <i class="bi bi-stars mr-3 text-glass-highlight"></i>Game Features
+                </a>
+                <a href="#guide" class="block px-4 py-3 rounded-xl hover:bg-white/5 text-gray-300 hover:text-white font-display border border-transparent hover:border-white/5 transition-all">
+                    <i class="bi bi-journal-text mr-3 text-glass-highlight"></i>How to Play
+                </a>
+                <a href="#faq" class="block px-4 py-3 rounded-xl hover:bg-white/5 text-gray-300 hover:text-white font-display border border-transparent hover:border-white/5 transition-all">
+                    <i class="bi bi-question-circle mr-3 text-glass-highlight"></i>FAQ
+                </a>
+                <div class="h-px bg-white/10 my-2"></div>
+                <a href="/game" class="block px-4 py-3 rounded-xl bg-glass-highlight/10 text-glass-gold font-bold text-center border border-glass-highlight/30 hover:bg-glass-highlight/20 transition-all">
+                    PLAY NOW
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-20 md:pt-32">
+        <section id="hero" class="relative py-4 md:py-12">
+            <div class="absolute inset-0 bg-aurora opacity-30 animate-pulse pointer-events-none"></div>
+
+            <div class="container mx-auto px-4 md:px-6 relative z-10">
+                <div id="slider-container" class="relative w-full h-[120px] md:h-[380px] rounded-xl md:rounded-2xl overflow-hidden border border-glass-highlight/30 shadow-glass-depth bg-black mb-6 md:mb-12 group">
+                    <div class="slider-slide active" data-index="0">
+                        <img src="https://playluckypiggs.com/wp-content/themes/site-theme/img/banner1.png" class="w-full h-full object-fill md:object-cover opacity-90 filter hue-rotate-15">
+                        <div class="absolute inset-0 bg-gradient-to-t from-glass-base via-transparent to-transparent"></div>
+                    </div>
+                    <div class="slider-slide" data-index="1">
+                        <img src="https://playluckypiggs.com/wp-content/themes/site-theme/img/banner2.png" class="w-full h-full object-fill md:object-cover opacity-90 filter hue-rotate-15">
+                        <div class="absolute inset-0 bg-gradient-to-t from-glass-base via-transparent to-transparent"></div>
+                    </div>
+                    <div class="slider-slide" data-index="2">
+                        <img src="https://playluckypiggs.com/wp-content/themes/site-theme/img/banner3.png" class="w-full h-full object-fill md:object-cover opacity-90 filter hue-rotate-15">
+                        <div class="absolute inset-0 bg-gradient-to-t from-glass-base via-transparent to-transparent"></div>
+                    </div>
+                    <div class="absolute bottom-4 right-4 md:bottom-6 md:right-6 flex gap-2 z-30 pointer-events-auto" id="slider-dots">
+                        <button class="slider-dot h-1.5 rounded-full transition-all duration-300 shadow-lg w-6 md:w-8 bg-glass-highlight" data-index="0"></button>
+                        <button class="slider-dot h-1.5 rounded-full transition-all duration-300 shadow-lg w-2 bg-white/40 hover:bg-white" data-index="1"></button>
+                        <button class="slider-dot h-1.5 rounded-full transition-all duration-300 shadow-lg w-2 bg-white/40 hover:bg-white" data-index="2"></button>
+                    </div>
+                </div>
+
+                <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-20">
+                    <div class="lg:w-1/2 w-full order-1 lg:order-1 text-center lg:text-left" data-aos="fade-right">
+                        <div class="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-glass-highlight/30 bg-glass-highlight/5 backdrop-blur-md mb-6 shadow-neon-pink">
+                            <span class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-glass-highlight animate-pulse"></span>
+                            <span class="text-glass-highlight text-[10px] md:text-xs font-bold uppercase tracking-widest">Free to Play Edition</span>
+                        </div>
+                        
+                        <h1 class="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">
+                            J MANIA <br>
+                            <span class="mr-coin-logo-text relative inline-block">
+                                LUCKY PYGGS
+                                <span class="absolute -top-4 -right-4 text-glass-highlight text-2xl animate-spin-slow"><i class="bi bi-stars"></i></span>
+                            </span>
+                        </h1>
+                        
+                        <p class="text-gray-300 text-sm md:text-base leading-relaxed max-w-lg mb-8 md:border-l-2 md:border-glass-highlight md:pl-4 mx-auto lg:mx-0">
+                            Lucky Pyggs offers a lively free-to-play slot experience where cheerful piggy symbols and shining treasure icons come together on a compact and energetic grid. Built for fast sessions and smooth play, the game loads instantly in your browser and delivers bright feature moments without unnecessary complexity. All gameplay elements, rewards, and outcomes are entirely virtual and provided for entertainment purposes only, with no cash value at any time.
+                        </p>
+                        
+                        <div class="flex items-center justify-center lg:justify-start gap-6 opacity-70">
+                            <div class="flex items-center gap-2">
+                                <i class="bi bi-shield-check text-glass-highlight text-xl"></i>
+                                <div class="text-xs uppercase font-bold tracking-widest text-gray-400">No Download</div>
+                            </div>
+                            <div class="w-px h-8 bg-white/10"></div>
+                            <div class="flex items-center gap-2">
+                                <i class="bi bi-infinity text-glass-highlight text-xl"></i>
+                                <div class="text-xs uppercase font-bold tracking-widest text-gray-400">Unlimited Play</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg:w-1/2 w-full order-2 lg:order-2" data-aos="fade-left">
+                        <div class="animate-float w-full">
+                            
+                            <div class="relative w-full aspect-video rounded-2xl p-2 bg-gradient-to-br from-glass-highlight/20 to-transparent backdrop-blur-md border border-glass-highlight/20 shadow-neon-pink" 
+                                data-tilt 
+                                data-tilt-max="10" 
+                                data-tilt-speed="400" 
+                                data-tilt-perspective="1000" 
+                                data-tilt-glare="true" 
+                                data-tilt-max-glare="0.2"
+                                style="transform-style: preserve-3d;">
+                                
+                                <div class="relative w-full h-full rounded-xl overflow-hidden bg-black group cursor-pointer shadow-2xl" style="transform: translateZ(30px); transform-style: preserve-3d;">
+                                    <img src="https://playluckypiggs.com/wp-content/themes/site-theme/img/previewgame.png" alt="Game Preview" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90">
+                                    
+                                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center transition-all duration-300">
+                                        
+                                        <div class="w-16 h-16 rounded-full bg-glass-highlight/20 backdrop-blur-sm flex items-center justify-center border border-glass-highlight/50 shadow-neon-pink transition-all duration-300 group-hover:bg-glass-highlight/50 group-hover:scale-110" style="transform: translateZ(60px);">
+                                            <i class="bi bi-play-fill text-3xl text-white ml-1"></i>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-8 md:py-12 bg-[#0f0721]/90 border-y border-white/5 relative overflow-hidden">
+             <div class="absolute inset-0 bg-grid-pattern opacity-10"></div>
+             
+             <div class="container mx-auto px-4 md:px-6 relative z-10">
+                 <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-stretch">
+                    
+                    <div class="w-full lg:w-1/3 flex flex-col justify-between rounded-2xl bg-gradient-to-br from-white/5 to-transparent border border-white/10 p-8 relative overflow-hidden group hover:border-glass-highlight/30 transition-all">
+                        <div class="absolute inset-0 bg-glass-highlight/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        <div class="relative z-10 text-center">
+                             <div class="text-xs font-bold text-glass-highlight uppercase tracking-[0.2em] mb-4 flex items-center justify-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-glass-highlight animate-pulse"></span> System Rating
+                             </div>
+                             
+                             <div class="relative inline-block">
+                                <span class="text-7xl md:text-8xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-glass-highlight drop-shadow-2xl">4.8</span>
+                                <span class="absolute top-2 -right-6 text-xl text-gray-400 font-mono">/5</span>
+                             </div>
+                             
+                             <div class="flex justify-center gap-1.5 my-4 text-yellow-400 text-xl">
+                                <i class="bi bi-star-fill drop-shadow-[0_0_8px_rgba(250,204,21,0.6)]"></i>
+                                <i class="bi bi-star-fill drop-shadow-[0_0_8px_rgba(250,204,21,0.6)]"></i>
+                                <i class="bi bi-star-fill drop-shadow-[0_0_8px_rgba(250,204,21,0.6)]"></i>
+                                <i class="bi bi-star-fill drop-shadow-[0_0_8px_rgba(250,204,21,0.6)]"></i>
+                                <i class="bi bi-star-half drop-shadow-[0_0_8px_rgba(250,204,21,0.6)]"></i>
+                             </div>
+                             <p class="text-sm text-gray-400 font-mono">Based on <span class="text-white font-bold">14,203</span> sessions</p>
+                        </div>
+                    </div>
+
+                    <div class="w-full lg:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="p-5 rounded-xl bg-white/5 border border-white/5 flex flex-col justify-center">
+                            <div class="flex justify-between items-end mb-2">
+                                <span class="text-sm font-bold text-white flex items-center gap-2"><i class="bi bi-eye text-glass-highlight"></i> Visual Fidelity</span>
+                                <span class="text-2xl font-display font-bold text-white">9.8</span>
+                            </div>
+                            <div class="w-full bg-black/50 h-2 rounded-full overflow-hidden">
+                                <div class="bg-gradient-to-r from-purple-500 to-glass-highlight h-full w-[98%] relative"><div class="absolute inset-0 bg-white/30 animate-shine"></div></div>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2">Rendering quality & animation smoothness</p>
+                        </div>
+
+                        <div class="p-5 rounded-xl bg-white/5 border border-white/5 flex flex-col justify-center">
+                            <div class="flex justify-between items-end mb-2">
+                                <span class="text-sm font-bold text-white flex items-center gap-2"><i class="bi bi-speaker text-blue-400"></i> Audio Immersion</span>
+                                <span class="text-2xl font-display font-bold text-white">9.5</span>
+                            </div>
+                            <div class="w-full bg-black/50 h-2 rounded-full overflow-hidden">
+                                <div class="bg-gradient-to-r from-blue-600 to-blue-400 h-full w-[95%] relative"><div class="absolute inset-0 bg-white/30 animate-shine"></div></div>
+                            </div>
+                             <p class="text-xs text-gray-500 mt-2">Soundtrack depth & effect clarity</p>
+                        </div>
+
+                        <div class="p-5 rounded-xl bg-white/5 border border-white/5 flex flex-col justify-center">
+                            <div class="flex justify-between items-end mb-2">
+                                <span class="text-sm font-bold text-white flex items-center gap-2"><i class="bi bi-controller text-green-400"></i> Gameplay Loop</span>
+                                <span class="text-2xl font-display font-bold text-white">9.9</span>
+                            </div>
+                            <div class="w-full bg-black/50 h-2 rounded-full overflow-hidden">
+                                <div class="bg-gradient-to-r from-emerald-600 to-green-400 h-full w-[99%] relative"><div class="absolute inset-0 bg-white/30 animate-shine"></div></div>
+                            </div>
+                             <p class="text-xs text-gray-500 mt-2">Mechanic engagement & response time</p>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="rounded-xl border border-glass-highlight/20 bg-glass-highlight/5 flex flex-col items-center justify-center p-2 text-center">
+                                <i class="bi bi-trophy-fill text-yellow-400 text-xl mb-1"></i>
+                                <span class="text-[10px] font-bold text-white uppercase tracking-wider">Top Rated</span>
+                                <span class="text-[9px] text-gray-400">Q1 2026</span>
+                            </div>
+                            <div class="rounded-xl border border-blue-500/20 bg-blue-500/5 flex flex-col items-center justify-center p-2 text-center">
+                                <i class="bi bi-phone-fill text-blue-400 text-xl mb-1"></i>
+                                <span class="text-[10px] font-bold text-white uppercase tracking-wider">Mobile First</span>
+                                <span class="text-[9px] text-gray-400">Optimized</span>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+             </div>
+        </section>
+
+        <section id="features" class="section-features py-10 md:py-16 relative">
+            <div class="container mx-auto px-4 md:px-6 relative z-10">
+                <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-24 mb-16 md:mb-24">
+                    <div class="lg:w-1/2" data-aos="fade-up">
+                        <div class="text-glass-highlight text-xs font-bold uppercase mb-4 flex items-center gap-2">
+                            <i class="bi bi-layers-fill"></i> Overview
+                        </div>
+                        <h3 class="font-display text-3xl md:text-4xl text-white font-bold mb-4">VISUAL <span class="text-glass-highlight">OVERVIEW</span></h3>
+                        <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                            The game presents a colorful and playful vault-style setting filled with warm gold tones, polished highlights, and friendly pig characters that immediately set a lighthearted mood. The compact grid keeps the action centered and easy to follow, making it ideal for both desktop and mobile play.
+                        </p>
+                        <p class="text-gray-300 text-sm leading-relaxed mb-6">
+                            Symbols are bold and high-contrast, featuring piggy icons, coins, gems, and classic wealth imagery that remain clear even during fast spins. Subtle animations such as coin showers, glowing frames, and pulsing multipliers guide attention to active areas without overwhelming the screen. Smooth transitions and clean lighting effects ensure the playfield feels lively while staying easy to read at a glance.
+                        </p>
+                        <div class="flex items-center gap-4 text-sm font-bold text-glass-highlight">
+                            <span><i class="bi bi-check-circle-fill mr-1"></i> Clean Bevels</span>
+                            <span><i class="bi bi-check-circle-fill mr-1"></i> Crisp Highlights</span>
+                        </div>
+                    </div>
+                    <div class="lg:w-1/2" data-aos="fade-up" data-aos-delay="200">
+                        <div class="neo-card p-2 rounded-2xl rotate-3 hover:rotate-0 transition-transform duration-500">
+                             <img src="https://playluckypiggs.com/wp-content/themes/site-theme/img/visualoverview.png" class="rounded-xl w-full h-auto filter hue-rotate-15">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-24 mb-16 md:mb-24">
+                    <div class="lg:w-1/2 order-2 lg:order-1" data-aos="fade-up">
+                         <div class="neo-card p-2 rounded-2xl -rotate-3 hover:rotate-0 transition-transform duration-500">
+                             <img src="https://playluckypiggs.com/wp-content/themes/site-theme/img/themevisuals.png" class="rounded-xl w-full h-auto filter hue-rotate-15">
+                        </div>
+                    </div>
+                    <div class="lg:w-1/2 order-1 lg:order-2" data-aos="fade-up" data-aos-delay="200">
+                        <div class="text-glass-highlight text-xs font-bold uppercase mb-4 flex items-center gap-2">
+                            <i class="bi bi-palette-fill"></i> Art Direction
+                        </div>
+                        <h3 class="font-display text-3xl md:text-4xl text-white font-bold mb-4">THEME AND <span class="text-glass-highlight">VISUALS</span></h3>
+                        <p class="text-gray-300 text-sm leading-relaxed mb-6">
+                            A sophisticated and metropolitan theme sets the stage through the use of deep navy blues and warm gold accents that feel professional and upbeat. The playfield sits in a polished gold frame with a gentle glow while prize coins and safe icons use clean bevels and crisp highlights for easy reading on all devices. Multipliers and rewards appear on bold metallic badges that shimmer when active and jackpot values gleam with a subtle sparkle so their role is clear at a glance. Motion is light and readable throughout the site as coins glint while they settle and values pulse to confirm activity. Locking tiles add a soft halo during feature moments to highlight your progress. The fonts are large and high contrast while the user interface buttons are simple and rounded. The audio leans toward a premium electronic style with soft swells and chimes and a mild lift during feature moments which keeps the tone cheerful without overpowering the screen. All elements work together to deliver a clean and colorful and inviting look.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
+                    <div class="lg:w-1/2" data-aos="fade-up">
+                        <div class="text-glass-highlight text-xs font-bold uppercase mb-4 flex items-center gap-2">
+                            <i class="bi bi-lightning-charge-fill"></i> Game Mechanics
+                        </div>
+                        <h3 class="font-display text-3xl md:text-4xl text-white font-bold mb-4">FREE ROUNDS AND <span class="text-glass-highlight">BONUS FEATURES</span></h3>
+                        <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                            Free rounds activate when the required scatter symbols land on the grid. During these rounds, special symbols appear more frequently to keep the pace lively and engaging. Certain symbols can extend the feature, add extra rounds, or increase prize values.
+                        </p>
+                        <p class="text-gray-300 text-sm leading-relaxed mb-6">
+                            In some versions, free rounds may link into a Hold and Spin style sequence where prize symbols remain locked while new spaces refresh for a set count. Clear counters and visual highlights make it easy to track progress throughout each bonus.
+                        </p>
+                         <div class="flex items-center gap-4 text-sm font-bold text-glass-highlight">
+                            <span><i class="bi bi-check-circle-fill mr-1"></i> Scatter Triggers</span>
+                            <span><i class="bi bi-check-circle-fill mr-1"></i> Hold & Spin</span>
+                        </div>
+                    </div>
+                    <div class="lg:w-1/2" data-aos="fade-up" data-aos-delay="200">
+                        <div class="neo-card p-2 rounded-2xl rotate-2 hover:rotate-0 transition-transform duration-500">
+                             <img src="https://playluckypiggs.com/wp-content/themes/site-theme/img/freespins.png" class="rounded-xl w-full h-auto filter hue-rotate-15">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="guide" class="section-guide py-10 md:py-24 relative overflow-hidden">
+            <div class="absolute inset-0 bg-[url('https://playluckypiggs.com/wp-content/themes/site-theme/img/pattern.png')] opacity-5"></div>
+            
+            <div class="container mx-auto px-4 md:px-6 relative z-10">
+                <div class="mb-16 text-center" data-aos="fade-up">
+                    <h3 class="font-display text-3xl md:text-5xl text-white font-bold mb-4">HOW TO <span class="text-glass-highlight">PLAY</span></h3>
+                    <p class="text-gray-300 text-sm leading-relaxed max-w-2xl mx-auto">
+                        Follow the sequence below to initialize your session and engage with the system protocols.
+                    </p>
+                </div>
+
+                <div class="max-w-4xl mx-auto relative">
+                    <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-glass-highlight to-transparent -translate-x-1/2 opacity-50"></div>
+
+                    <div class="space-y-8 md:space-y-12">
+                        <div class="flex flex-row items-center w-full gap-4 md:gap-0" data-aos="fade-right">
+                            <div class="hidden md:block w-5/12 order-3"></div> <div class="w-8 h-8 md:w-2/12 order-1 md:order-2 flex justify-center items-center z-10 flex-shrink-0">
+                                <div class="w-8 h-8 rounded-full bg-glass-base border-2 border-glass-highlight flex items-center justify-center text-white font-bold text-sm shadow-[0_0_15px_#d946ef]">1</div>
+                            </div>
+
+                            <div class="flex-1 md:w-5/12 order-2 md:order-1 relative">
+                                <div class="neo-card p-4 md:p-6 rounded-2xl border-l-4 border-l-glass-highlight relative hover:-translate-x-2 transition-transform duration-300">
+                                    <h4 class="text-xl font-display font-bold text-white mb-2 flex items-center gap-2">
+                                        <i class="bi bi-sliders text-glass-highlight"></i> Choose your level
+                                    </h4>
+                                    <p class="text-sm text-gray-400 text-left">Use the plus and minus controls to select a comfortable level before spinning.</p>
+                                    <div class="hidden md:block absolute top-1/2 -right-12 w-12 h-[1px] bg-glass-highlight/50"></div>
+                                    <div class="hidden md:block absolute top-1/2 -right-14 w-2 h-2 rounded-full bg-glass-highlight shadow-[0_0_10px_#d946ef]"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-row items-center w-full gap-4 md:gap-0" data-aos="fade-left">
+                            <div class="hidden md:block w-5/12 order-1"></div> <div class="w-8 h-8 md:w-2/12 order-1 md:order-2 flex justify-center items-center z-10 flex-shrink-0">
+                                <div class="w-8 h-8 rounded-full bg-glass-base border-2 border-glass-highlight flex items-center justify-center text-white font-bold text-sm shadow-[0_0_15px_#d946ef]">2</div>
+                            </div>
+
+                            <div class="flex-1 md:w-5/12 order-2 md:order-3 relative">
+                                <div class="neo-card p-4 md:p-6 rounded-2xl border-r-0 border-l-4 md:border-l-0 md:border-r-4 border-glass-highlight relative hover:translate-x-2 transition-transform duration-300">
+                                    <h4 class="text-xl font-display font-bold text-white mb-2 flex items-center gap-2 justify-start md:justify-end md:flex-row-reverse">
+                                        <i class="bi bi-arrow-clockwise text-glass-highlight"></i> Press spin 
+                                    </h4>
+                                    <p class="text-sm text-gray-400 text-left md:text-right">The grid spins automatically and evaluates all possible symbol combinations.</p>
+                                    <div class="hidden md:block absolute top-1/2 -left-12 w-12 h-[1px] bg-glass-highlight/50"></div>
+                                    <div class="hidden md:block absolute top-1/2 -left-14 w-2 h-2 rounded-full bg-glass-highlight shadow-[0_0_10px_#d946ef]"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-row items-center w-full gap-4 md:gap-0" data-aos="fade-right">
+                            <div class="hidden md:block w-5/12 order-3"></div>
+                            
+                            <div class="w-8 h-8 md:w-2/12 order-1 md:order-2 flex justify-center items-center z-10 flex-shrink-0">
+                                <div class="w-8 h-8 rounded-full bg-glass-base border-2 border-glass-highlight flex items-center justify-center text-white font-bold text-sm shadow-[0_0_15px_#d946ef]">3</div>
+                            </div>
+
+                            <div class="flex-1 md:w-5/12 order-2 md:order-1 relative">
+                                <div class="neo-card p-4 md:p-6 rounded-2xl border-l-4 border-l-glass-highlight relative hover:-translate-x-2 transition-transform duration-300">
+                                    <h4 class="text-xl font-display font-bold text-white mb-2 flex items-center gap-2">
+                                        <i class="bi bi-stars text-glass-highlight"></i> Feature symbols
+                                    </h4>
+                                    <p class="text-sm text-gray-400 text-left">Pig icons, scatters, and special symbols can activate bonus rounds or additional features.</p>
+                                    <div class="hidden md:block absolute top-1/2 -right-12 w-12 h-[1px] bg-glass-highlight/50"></div>
+                                    <div class="hidden md:block absolute top-1/2 -right-14 w-2 h-2 rounded-full bg-glass-highlight shadow-[0_0_10px_#d946ef]"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-row items-center w-full gap-4 md:gap-0" data-aos="fade-left">
+                            <div class="hidden md:block w-5/12 order-1"></div>
+                            
+                            <div class="w-8 h-8 md:w-2/12 order-1 md:order-2 flex justify-center items-center z-10 flex-shrink-0">
+                                <div class="w-8 h-8 rounded-full bg-glass-base border-2 border-glass-highlight flex items-center justify-center text-white font-bold text-sm shadow-[0_0_15px_#d946ef]">4</div>
+                            </div>
+
+                            <div class="flex-1 md:w-5/12 order-2 md:order-3 relative">
+                                <div class="neo-card p-4 md:p-6 rounded-2xl border-r-0 border-l-4 md:border-l-0 md:border-r-4 border-glass-highlight relative hover:translate-x-2 transition-transform duration-300">
+                                    <h4 class="text-xl font-display font-bold text-white mb-2 flex items-center gap-2 justify-start md:justify-end md:flex-row-reverse">
+                                         <i class="bi bi-magnet-fill text-glass-highlight"></i> Hold & Spin
+                                    </h4>
+                                    <p class="text-sm text-gray-400 text-left md:text-right">Triggering symbols lock in place while empty spaces refresh for a set number of tries.</p>
+                                    <div class="hidden md:block absolute top-1/2 -left-12 w-12 h-[1px] bg-glass-highlight/50"></div>
+                                    <div class="hidden md:block absolute top-1/2 -left-14 w-2 h-2 rounded-full bg-glass-highlight shadow-[0_0_10px_#d946ef]"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-row items-center w-full gap-4 md:gap-0" data-aos="fade-right">
+                             <div class="hidden md:block w-5/12 order-3"></div>
+                             
+                             <div class="w-8 h-8 md:w-2/12 order-1 md:order-2 flex justify-center items-center z-10 flex-shrink-0">
+                                <div class="w-8 h-8 rounded-full bg-glass-base border-2 border-glass-highlight flex items-center justify-center text-white font-bold text-sm shadow-[0_0_15px_#d946ef]">5</div>
+                            </div>
+
+                            <div class="flex-1 md:w-5/12 order-2 md:order-1 relative">
+                                <div class="neo-card p-4 md:p-6 rounded-2xl border-l-4 border-l-glass-highlight relative hover:-translate-x-2 transition-transform duration-300">
+                                    <h4 class="text-xl font-display font-bold text-white mb-2 flex items-center gap-2">
+                                        <i class="bi bi-eye-fill text-glass-highlight"></i> On-screen cues
+                                    </h4>
+                                    <p class="text-sm text-gray-400 text-left">Glows, counters, and highlighted symbols clearly show progress and remaining spins.</p>
+                                    <div class="hidden md:block absolute top-1/2 -right-12 w-12 h-[1px] bg-glass-highlight/50"></div>
+                                    <div class="hidden md:block absolute top-1/2 -right-14 w-2 h-2 rounded-full bg-glass-highlight shadow-[0_0_10px_#d946ef]"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-row items-center w-full gap-4 md:gap-0" data-aos="fade-left">
+                            <div class="hidden md:block w-5/12 order-1"></div>
+                            
+                            <div class="w-8 h-8 md:w-2/12 order-1 md:order-2 flex justify-center items-center z-10 flex-shrink-0">
+                                <div class="w-8 h-8 rounded-full bg-glass-base border-2 border-glass-highlight flex items-center justify-center text-white font-bold text-sm shadow-[0_0_15px_#d946ef]">6</div>
+                            </div>
+
+                            <div class="flex-1 md:w-5/12 order-2 md:order-3 relative">
+                                <div class="neo-card p-4 md:p-6 rounded-2xl border-r-0 border-l-4 md:border-l-0 md:border-r-4 border-glass-highlight bg-glass-highlight/10 relative hover:translate-x-2 transition-transform duration-300">
+                                    <h4 class="text-xl font-display font-bold text-white mb-2 flex items-center gap-2 justify-start md:justify-end md:flex-row-reverse">
+                                         <i class="bi bi-info-circle-fill text-glass-highlight"></i> Remember
+                                    </h4>
+                                    <p class="text-sm text-gray-300 font-bold text-left md:text-right">Everything in the game is virtual and has no real-world value.</p>
+                                    <div class="hidden md:block absolute top-1/2 -left-12 w-12 h-[1px] bg-glass-highlight/50"></div>
+                                    <div class="hidden md:block absolute top-1/2 -left-14 w-2 h-2 rounded-full bg-glass-highlight shadow-[0_0_10px_#d946ef]"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="summary" class="py-10 md:py-16 bg-[#0f0721] relative overflow-hidden">
+             <div class="container mx-auto px-4 md:px-6 relative z-10">
+                 <div class="max-w-4xl mx-auto" data-aos="fade-up">
+                    
+                    <div class="text-center mb-12">
+                         <h2 class="font-display text-3xl md:text-5xl font-bold text-white mb-4">OVERALL <span class="text-glass-highlight">SUMMARY</span></h2>
+                         <div class="w-24 h-1 bg-gradient-to-r from-transparent via-glass-highlight to-transparent mx-auto"></div>
+                    </div>
+
+                    <div class="relative p-1 rounded-2xl bg-gradient-to-r from-transparent via-glass-highlight/50 to-transparent">
+                        <div class="bg-[#130a26]/90 backdrop-blur-xl rounded-xl p-8 md:p-12 border border-glass-highlight/20 relative overflow-hidden group">
+                            
+                            <div class="absolute top-0 left-0 w-full h-[2px] bg-glass-highlight/50 shadow-[0_0_15px_#d946ef] animate-[scan_4s_linear_infinite] opacity-50"></div>
+                            
+                            <div class="flex gap-4 md:gap-6 mb-8 items-start">
+                                <div class="hidden md:flex w-12 h-12 rounded-lg bg-white/5 border border-white/10 items-center justify-center flex-shrink-0 text-glass-highlight text-2xl">
+                                    <i class="bi bi-terminal"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-bold font-display text-lg mb-2 text-glass-highlight">CORE MECHANICS</h4>
+                                    <p class="text-gray-300 text-sm md:text-base leading-relaxed">
+                                        Lucky Pyggs is easy to learn and built for short and lively sessions. A clean five reel layout keeps rounds readable while golden multipliers and the Coin Surge mechanic add simple progress moments that feel purposeful as you play. Features appear often enough to keep the pace moving without any clutter and visual cues make changes clear on both mobile and desktop.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent my-8"></div>
+
+                            <div class="flex gap-4 md:gap-6 items-start">
+                                <div class="hidden md:flex w-12 h-12 rounded-lg bg-white/5 border border-white/10 items-center justify-center flex-shrink-0 text-purple-400 text-2xl">
+                                    <i class="bi bi-cpu"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-bold font-display text-lg mb-2 text-purple-400">SYSTEM LOGIC</h4>
+                                    <p class="text-gray-300 text-sm md:text-base leading-relaxed">
+                                        Most of the action centers on two specific paths. Instant coin rewards create bright bursts during regular rounds and certain triggers can shift into a brief Hold and Spin sequence where triggering icons lock and open spaces refresh for a set count. This allows new prizes to add to the virtual total. If you enjoy clear progress and quick feature bursts and a bright clean look then this is a strong pick for casual sessions. All items and outcomes are virtual and have no cash value.
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                 </div>
+             </div>
+        </section>
+
+        <section id="faq" class="py-10 md:py-16 border-t border-white/5">
+            <div class="container mx-auto px-4 md:px-6 max-w-3xl">
+                <div class="text-center mb-12">
+                    <h2 class="font-display text-4xl font-bold text-white">FAQ</h2>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="faq-item neo-card rounded-xl overflow-hidden group cursor-pointer" data-aos="fade-up" data-aos-delay="0">
+                        <div class="p-5 flex items-start gap-4">
+                            <i class="bi bi-plus-lg text-white mt-1 icon-toggle"></i>
+                            <div>
+                                <h4 class="font-display font-bold text-white text-base md:text-lg group-hover:text-glass-highlight transition-colors">Is J Mania Lucky Pyggs free to play?</h4>
+                                <div class="faq-answer">
+                                    <p class="text-sm text-glass-gold pt-4 mt-2 border-t border-white/10">Yes. The game is completely free to play and runs instantly in your browser.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item neo-card rounded-xl overflow-hidden group cursor-pointer" data-aos="fade-up" data-aos-delay="50">
+                        <div class="p-5 flex items-start gap-4">
+                            <i class="bi bi-plus-lg text-white mt-1 icon-toggle"></i>
+                            <div>
+                                <h4 class="font-display font-bold text-white text-base md:text-lg group-hover:text-glass-highlight transition-colors">Do I need to sign up or enter payment details?</h4>
+                                <div class="faq-answer">
+                                    <p class="text-sm text-glass-gold pt-4 mt-2 border-t border-white/10">No. No account or payment method is required.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item neo-card rounded-xl overflow-hidden group cursor-pointer" data-aos="fade-up" data-aos-delay="100">
+                        <div class="p-5 flex items-start gap-4">
+                            <i class="bi bi-plus-lg text-white mt-1 icon-toggle"></i>
+                            <div>
+                                <h4 class="font-display font-bold text-white text-base md:text-lg group-hover:text-glass-highlight transition-colors">Can I win real money?</h4>
+                                <div class="faq-answer">
+                                    <p class="text-sm text-glass-gold pt-4 mt-2 border-t border-white/10">No. All gameplay outcomes are virtual and have no real-world cash value.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item neo-card rounded-xl overflow-hidden group cursor-pointer" data-aos="fade-up" data-aos-delay="150">
+                        <div class="p-5 flex items-start gap-4">
+                            <i class="bi bi-plus-lg text-white mt-1 icon-toggle"></i>
+                            <div>
+                                <h4 class="font-display font-bold text-white text-base md:text-lg group-hover:text-glass-highlight transition-colors">How do I start playing?</h4>
+                                <div class="faq-answer">
+                                    <p class="text-sm text-glass-gold pt-4 mt-2 border-t border-white/10">Open the game, set your preferred level, and press spin.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item neo-card rounded-xl overflow-hidden group cursor-pointer" data-aos="fade-up" data-aos-delay="200">
+                        <div class="p-5 flex items-start gap-4">
+                            <i class="bi bi-plus-lg text-white mt-1 icon-toggle"></i>
+                            <div>
+                                <h4 class="font-display font-bold text-white text-base md:text-lg group-hover:text-glass-highlight transition-colors">What is the goal of the game?</h4>
+                                <div class="faq-answer">
+                                    <p class="text-sm text-glass-gold pt-4 mt-2 border-t border-white/10">Match symbols and trigger bonus features to build virtual rewards.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item neo-card rounded-xl overflow-hidden group cursor-pointer" data-aos="fade-up" data-aos-delay="250">
+                        <div class="p-5 flex items-start gap-4">
+                            <i class="bi bi-plus-lg text-white mt-1 icon-toggle"></i>
+                            <div>
+                                <h4 class="font-display font-bold text-white text-base md:text-lg group-hover:text-glass-highlight transition-colors">Does the game work on mobile devices?</h4>
+                                <div class="faq-answer">
+                                    <p class="text-sm text-glass-gold pt-4 mt-2 border-t border-white/10">Yes. It is optimized for mobile, tablet, and desktop play.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item neo-card rounded-xl overflow-hidden group cursor-pointer" data-aos="fade-up" data-aos-delay="300">
+                        <div class="p-5 flex items-start gap-4">
+                            <i class="bi bi-plus-lg text-white mt-1 icon-toggle"></i>
+                            <div>
+                                <h4 class="font-display font-bold text-white text-base md:text-lg group-hover:text-glass-highlight transition-colors">What should I do if the game does not load?</h4>
+                                <div class="faq-answer">
+                                    <p class="text-sm text-glass-gold pt-4 mt-2 border-t border-white/10">Refresh the page, check your internet connection, or try another browser.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+ <footer class="relative pt-10 pb-8 md:pt-20 md:pb-10 bg-gradient-to-b from-[#1a0e35] via-[#130a26] to-[#090414] border-t border-glass-highlight/30 overflow-hidden shadow-[0_-10px_40px_rgba(139,92,246,0.1)]">
+    
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[2px] bg-gradient-to-r from-transparent via-glass-highlight to-transparent opacity-70 shadow-neon-pink"></div>
+    
+    <div class="absolute top-[-10%] left-[-5%] w-96 h-96 bg-glass-accent/10 rounded-full blur-[100px] pointer-events-none"></div>
+    <div class="absolute bottom-[-10%] right-[-5%] w-96 h-96 bg-glass-highlight/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+    <div class="container mx-auto px-6 relative z-10">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
+            
+            <div class="md:col-span-5 space-y-6">
+                <a href="#" class="flex items-center gap-3 group">
+                     <div class="relative">
+                         <div class="absolute inset-0 bg-glass-highlight blur-md opacity-0 group-hover:opacity-50 transition-opacity"></div>
+                         <img src="https://playluckypiggs.com/wp-content/themes/site-theme/img/logo.png" alt="Lucky Pyggs" class="h-10 w-auto relative z-10 filter hue-rotate-30 opacity-90 group-hover:opacity-100 transition-opacity">
+                     </div>
+                     <span class="font-display font-bold text-xl text-white tracking-widest group-hover:text-glass-highlight transition-colors drop-shadow-lg">LUCKY PYGGS</span>
+                </a>
+                <p class="text-gray-400 text-sm leading-relaxed max-w-sm">
+                    Step into the Violet Vault. A premium free-to-play social gaming experience designed for entertainment. No real money, just pure digital vibes.
+                </p>
+            </div>
+
+            <div class="md:col-span-3 space-y-6">
+                <h4 class="font-display font-bold text-white tracking-wider flex items-center gap-2">
+                    <i class="bi bi-piggy-bank text-glass-highlight"></i> EXPLORE
+                </h4>
+                <ul class="space-y-3">
+                    <li><a href="#hero" class="text-sm text-gray-400 hover:text-white hover:translate-x-1 inline-block transition-all flex items-center gap-2"><i class="bi bi-house-heart text-[10px] text-glass-highlight/50"></i> The Farm</a></li>
+                    <li><a href="#features" class="text-sm text-gray-400 hover:text-white hover:translate-x-1 inline-block transition-all flex items-center gap-2"><i class="bi bi-stars text-[10px] text-glass-highlight/50"></i> Game Features</a></li>
+                    <li><a href="#guide" class="text-sm text-gray-400 hover:text-white hover:translate-x-1 inline-block transition-all flex items-center gap-2"><i class="bi bi-book text-[10px] text-glass-highlight/50"></i> How to Play</a></li>
+                    <li><a href="#faq" class="text-sm text-gray-400 hover:text-white hover:translate-x-1 inline-block transition-all flex items-center gap-2"><i class="bi bi-question-circle text-[10px] text-glass-highlight/50"></i> FAQ</a></li>
+                </ul>
+            </div>
+
+            <div class="md:col-span-4 space-y-6">
+                <h4 class="font-display font-bold text-white tracking-wider flex items-center gap-2">
+                    <i class="bi bi-file-earmark-text text-glass-highlight"></i> LEGAL
+                </h4>
+                <ul class="space-y-3">
+                    <li><a href="/terms-of-service" class="text-sm text-gray-400 hover:text-white hover:translate-x-1 inline-block transition-all flex items-center gap-2"><i class="bi bi-file-text text-glass-highlight/50"></i> Terms of Service</a></li>
+                    <li><a href="/privacy-policy" class="text-sm text-gray-400 hover:text-white hover:translate-x-1 inline-block transition-all flex items-center gap-2"><i class="bi bi-shield-lock text-glass-highlight/50"></i> Privacy Policy</a></li>
+                    <li><a href="/cookie-policy" class="text-sm text-gray-400 hover:text-white hover:translate-x-1 inline-block transition-all flex items-center gap-2"><i class="bi bi-hdd-fill text-glass-highlight/50"></i> Cookie Policy</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent mb-8"></div>
+
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="text-xs text-gray-500 font-mono">
+                &copy; 2026 playluckypiggs.com <span class="mx-2 text-glass-highlight/30">|</span> All Rights Reserved
+            </div>
+            
+            <div class="flex items-center gap-2 px-4 py-2 rounded-full bg-glass-surface/50 border border-glass-highlight/20 shadow-hud backdrop-blur-sm">
+                <span class="w-2 h-2 rounded-full bg-glass-highlight animate-pulse"></span>
+                <span class="text-[10px] font-bold text-gray-300 uppercase tracking-widest">18+ Entertainment Only</span>
+            </div>
+        </div>
+        
+        <p class="mt-8 text-[10px] text-gray-600 text-center max-w-4xl mx-auto leading-relaxed font-mono">
+            The website provides free-to-play social games intended for adult entertainment purposes only. No real money or prizes can be won. Practice or success at social casino gaming does not imply future success at real money gambling.
+        </p>
+    </div>
+</footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+    
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true });
+
+        // Slider Logic
+        const slides = document.querySelectorAll('.slider-slide');
+        const dots = document.querySelectorAll('.slider-dot');
+        let currentSlide = 0;
+        
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => {
+                dot.classList.remove('bg-glass-highlight', 'w-6', 'md:w-8');
+                dot.classList.add('bg-white/40', 'w-2');
+            });
+            slides[index].classList.add('active');
+            dots[index].classList.remove('bg-white/40', 'w-2');
+            dots[index].classList.add('bg-glass-highlight', 'w-6', 'md:w-8');
+        }
+        
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }, 5000);
+        
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                currentSlide = parseInt(dot.getAttribute('data-index'));
+                showSlide(currentSlide);
+            });
+        });
+
+        // Header Scroll Effect
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('header-scrolled');
+            } else {
+                header.classList.remove('header-scrolled');
+            }
+        });
+
+        // Mobile Menu
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileIcon = document.getElementById('mobile-menu-icon');
+
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            if(mobileMenu.classList.contains('hidden')){
+                mobileIcon.classList.remove('bi-x-lg');
+                mobileIcon.classList.add('bi-grid-fill');
+            } else {
+                mobileIcon.classList.remove('bi-grid-fill');
+                mobileIcon.classList.add('bi-x-lg');
+            }
+        });
+
+        // FAQ Logic
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const answer = item.querySelector('.faq-answer');
+                const icon = item.querySelector('.icon-toggle');
+                const isOpen = answer.classList.contains('open');
+
+                document.querySelectorAll('.faq-answer').forEach(a => {
+                    a.style.maxHeight = null;
+                    a.classList.remove('open');
+                });
+                document.querySelectorAll('.icon-toggle').forEach(i => {
+                    i.classList.remove('bi-dash-lg');
+                    i.classList.add('bi-plus-lg');
+                });
+
+                if (!isOpen) {
+                    answer.style.maxHeight = answer.scrollHeight + "px";
+                    answer.classList.add('open');
+                    icon.classList.remove('bi-plus-lg');
+                    icon.classList.add('bi-dash-lg');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

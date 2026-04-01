@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Best Health Providers in USA 2026 | HealthGuide</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* Modern Color Palette */
+      --primary:      #4f46e5; /* Indigo 600 */
+      --primary-dark: #3730a3; /* Indigo 800 */
+      --primary-soft: #e0e7ff; /* Indigo 100 */
+      --success:      #10b981; /* Emerald 500 */
+      --success-soft: #d1fae5; /* Emerald 100 */
+      --warning:      #f59e0b; /* Amber 500 */
+      --warning-soft: #fef3c7; /* Amber 100 */
+      
+      --bg-body:      #f8fafc; /* Slate 50 */
+      --bg-card:      #ffffff;
+      --bg-alt:       #f1f5f9; /* Slate 100 */
+      
+      --text-main:    #0f172a; /* Slate 900 */
+      --text-body:    #475569; /* Slate 600 */
+      --text-muted:   #94a3b8; /* Slate 400 */
+      
+      --border:       #e2e8f0; /* Slate 200 */
+      --border-light: #f1f5f9; /* Slate 100 */
+      --white:        #ffffff;
+      
+      --shadow-sm:    0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md:    0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+      --shadow-lg:    0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.02);
+      
+      --radius-lg:    16px;
+      --radius-xl:    24px;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      background: var(--bg-body);
+      color: var(--text-body);
+      min-height: 100vh;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    .topbar { 
+      background: rgba(255, 255, 255, 0.85); 
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border); 
+      padding: 0 24px; 
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .topbar-inner {
+      max-width: 1400px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; height: 64px;
+    }
+    .topbar-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .topbar-icon {
+      width: 36px; height: 36px; background: var(--primary); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 1rem;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    }
+    .topbar-name { font-size: 1.125rem; font-weight: 800; color: var(--text-main); letter-spacing: -0.02em; }
+    .topbar-name span { color: var(--primary); }
+    .topbar-tag {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+      color: var(--text-main); background: var(--border-light);
+      padding: 6px 12px; border-radius: 6px;
+    }
+    .topbar-right { display: flex; align-items: center; gap: 12px; }
+    .topbar-hamburger {
+      display: none;
+      width: 36px; height: 36px; border-radius: 10px;
+      background: var(--surface); border: 1px solid var(--border);
+      align-items: center; justify-content: center;
+      cursor: pointer; color: var(--text-main); font-size: 1rem;
+      transition: all 0.2s;
+    }
+    .topbar-hamburger:hover { background: var(--primary); border-color: var(--primary); color: var(--white); }
+
+    /* Mobile nav drawer */
+    .mobile-nav {
+      display: none;
+      position: fixed; top: 64px; left: 0; right: 0;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      z-index: 49;
+      padding: 0 20px;
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1), padding 0.35s;
+    }
+    .mobile-nav.open {
+      max-height: 400px;
+      padding: 16px 20px 20px;
+    }
+    .mobile-nav-links {
+      display: flex; flex-direction: column; gap: 2px;
+    }
+    .mobile-nav-link {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 14px; border-radius: 10px;
+      text-decoration: none; color: var(--text-main);
+      font-size: 0.9rem; font-weight: 600;
+      transition: background 0.18s;
+    }
+    .mobile-nav-link:hover { background: var(--surface); }
+    .mobile-nav-link i {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: var(--surface); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; color: var(--primary); flex-shrink: 0;
+    }
+    .mobile-nav-link span { flex: 1; }
+    .mobile-nav-link small { font-size: 0.7rem; color: var(--text-muted); font-weight: 400; }
+    .mobile-nav-divider { height: 1px; background: var(--border); margin: 8px 0; }
+    .mobile-nav-cta {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      margin-top: 12px; padding: 12px;
+      background: var(--primary); color: var(--white);
+      border-radius: 10px; text-decoration: none;
+      font-size: 0.875rem; font-weight: 700;
+      transition: background 0.2s;
+    }
+    .mobile-nav-cta:hover { background: var(--primary-dark); }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(160deg, #eef2ff 0%, #f0fdf4 55%, #eff6ff 100%);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      padding: 80px 24px;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 100%;
+      background:
+        radial-gradient(ellipse 55% 60% at 85% 10%, rgba(99, 102, 241, 0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 45% 50% at 5% 90%, rgba(16, 185, 129, 0.12) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: ''; position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(99,102,241,0.08) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+    .hero-inner {
+      position: relative; z-index: 1;
+      max-width: 800px; margin: 0 auto;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--success); background: var(--success-soft);
+      padding: 6px 16px; border-radius: 99px; margin-bottom: 24px;
+    }
+    .hero-eyebrow i { font-size: 0.8rem; }
+    .hero-title { 
+      font-size: 3.5rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; 
+      color: var(--text-main); margin-bottom: 16px; 
+    }
+    .hero-title .accent { color: var(--primary); }
+    .hero-desc {
+      font-size: 1.125rem; color: var(--text-body); margin-bottom: 32px;
+      max-width: 680px; margin-left: auto; margin-right: auto;
+    }
+    .hero-pills { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+    .hero-pill {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.875rem; font-weight: 600; color: var(--text-main);
+      padding: 8px 16px; border-radius: 8px;
+      background: var(--bg-body); border: 1px solid var(--border);
+    }
+    .hero-pill i { color: var(--primary); }
+
+    /* ── CONTENT ── */
+    .content-wrap { max-width: 1400px; margin: 0 auto; padding: 48px 24px; }
+    .cards-list { display: flex; flex-direction: column; gap: 24px; }
+    .list-header { 
+      display: flex; align-items: center; justify-content: space-between; 
+      margin-bottom: 8px; padding-bottom: 16px; border-bottom: 1px solid var(--border);
+    }
+    .list-title { font-size: 1.25rem; font-weight: 700; color: var(--text-main); letter-spacing: -0.01em; }
+    .list-count { font-size: 0.875rem; font-weight: 600; color: var(--text-muted); }
+
+    /* ── CARD ── */
+    .provider-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      display: grid;
+      grid-template-columns: 250px 1fr 250px 300px;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      position: relative;
+    }
+    .provider-card:hover {
+      box-shadow: 0 16px 40px rgba(0,0,0,0.09), 0 4px 12px rgba(0,0,0,0.05);
+      transform: translateY(-3px);
+      border-color: rgba(79,70,229,0.2);
+    }
+    .provider-card.top-pick {
+      border-color: rgba(79,70,229,0.3);
+      box-shadow: 0 0 0 3px rgba(79,70,229,0.07), 0 1px 4px rgba(0,0,0,0.04);
+    }
+
+    /* ── RANK RIBBON ── */
+    .rank-ribbon {
+      position: absolute; top: 10px; left: 14px;
+      z-index: 10; width: 40px;
+      display: flex; flex-direction: column; align-items: center;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.28));
+    }
+    .rank-ribbon::before { display: none; }
+    .rank-ribbon::after {
+      content: ''; width: 20px; height: 20px;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 74%, 0 100%);
+      margin-top: -1px; z-index: 0;
+    }
+    .rank-1 .rank-ribbon::after { background: linear-gradient(90deg, #92400e 0%, #d97706 30%, #fbbf24 50%, #d97706 70%, #92400e 100%); }
+    .rank-2 .rank-ribbon::after { background: linear-gradient(90deg, #334155 0%, #64748b 30%, #cbd5e1 50%, #64748b 70%, #334155 100%); }
+    .rank-3 .rank-ribbon::after { background: linear-gradient(90deg, #7c2d12 0%, #b45309 30%, #fb923c 50%, #b45309 70%, #7c2d12 100%); }
+
+    .medal-body {
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; z-index: 1; flex-shrink: 0;
+      border: 2px solid rgba(255,255,255,0.65);
+    }
+    .medal-body::before {
+      content: ''; position: absolute; top: 3px; left: 5px; right: 5px; height: 36%;
+      border-radius: 50%; background: linear-gradient(180deg, rgba(255,255,255,0.5), transparent);
+      pointer-events: none; z-index: 2;
+    }
+    .rank-1 .medal-body {
+      background: radial-gradient(circle at 35% 30%, #fef08a, #fbbf24 38%, #d97706 68%, #92400e);
+      box-shadow: 0 0 0 3px #b45309, 0 4px 18px rgba(217,119,6,0.45);
+    }
+    .rank-2 .medal-body {
+      background: radial-gradient(circle at 35% 30%, #f8fafc, #cbd5e1 38%, #94a3b8 68%, #475569);
+      box-shadow: 0 0 0 3px #64748b, 0 4px 18px rgba(100,116,139,0.35);
+    }
+    .rank-3 .medal-body {
+      background: radial-gradient(circle at 35% 30%, #fed7aa, #fb923c 38%, #c2410c 68%, #7c2d12);
+      box-shadow: 0 0 0 3px #9a3412, 0 4px 18px rgba(154,52,18,0.4);
+    }
+
+    .medal-num {
+      font-size: 1rem; font-weight: 900; letter-spacing: -0.04em;
+      color: var(--white); line-height: 1; position: relative; z-index: 3;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.35);
+    }
+    .rank-2 .medal-num { color: #1e293b; text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+
+    /* ── LOGO COLUMN ── */
+    .card-logo-col {
+      padding: 32px 20px 28px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 12px; background: var(--white); position: relative; overflow: hidden; border-radius: 20px 0 0 20px;
+    }
+    .card-logo-col::before {
+      content: ''; position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+      width: 110px; height: 110px; border-radius: 50%; pointer-events: none; z-index: 0;
+    }
+    .provider-logo-avatar {
+      width: 140px; height: 60px; border-radius: 12px;
+      display: block; object-fit: contain; padding: 6px 10px;
+      position: relative; z-index: 1; flex-shrink: 0;
+    }
+
+    /* ── CARD MAIN ── */
+    .card-main {
+      padding: 28px 28px; display: flex; flex-direction: column; justify-content: center;
+      border-left: 1px solid var(--border-light);
+    }
+    .card-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+    .badge-highlight {
+      display: inline-flex; align-items: center;
+      font-size: 0.625rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+      background: var(--primary-soft); color: var(--primary-dark);
+      padding: 3px 9px; border-radius: 5px;
+    }
+    .provider-name { font-size: 1.125rem; font-weight: 800; color: var(--text-main); margin-bottom: 4px; letter-spacing: -0.02em; }
+    .provider-tagline { font-size: 0.8125rem; color: var(--text-body); margin-bottom: 14px; line-height: 1.55; }
+    .feat-list { display: flex; flex-direction: column; gap: 8px; }
+    .feat-item { display: flex; align-items: flex-start; gap: 9px; }
+    .feat-check {
+      background: var(--success-soft); border-radius: 50%;
+      width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .feat-check i { font-size: 0.5rem; color: var(--success); }
+    .feat-text { font-size: 0.8125rem; color: var(--text-body); line-height: 1.5; }
+
+    /* ── SCORE COLUMN ── */
+    .card-score { display: none; }
+    .score-mini {
+      padding: 28px 20px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; background: var(--bg-body); border-left: 1px solid var(--border-light);
+    }
+    .score-mini-left { display: flex; flex-direction: column; align-items: center; }
+    .score-mini .score-stats { display: flex; flex-direction: column; gap: 6px; width: 100%; margin-top: 14px; }
+    .score-number-wrap {
+      width: 78px; height: 78px; border-radius: 50%; background: var(--white);
+      display: flex; align-items: center; justify-content: center; margin-bottom: 12px;
+      border: 3px solid var(--success); box-shadow: 0 0 0 5px var(--success-soft);
+    }
+    .score-number { font-size: 1.625rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1; color: var(--text-main); }
+    .score-meta { display: flex; flex-direction: column; align-items: center; }
+    .score-stars { display: flex; gap: 3px; margin-bottom: 6px; }
+    .score-stars i { font-size: 0.75rem; color: var(--warning); }
+    .score-label {
+      font-size: 0.75rem; font-weight: 700; color: var(--success);
+      display: flex; align-items: center; gap: 4px; margin-bottom: 14px;
+    }
+    .score-stats { display: flex; flex-direction: column; gap: 7px; width: 100%; text-align: left; align-items: center;}
+    .score-stat {
+      display: flex; align-items: center; gap: 7px;
+      font-size: 0.6875rem; font-weight: 600; color: var(--text-muted);
+    }
+    .score-stat i { font-size: 0.75rem; width: 14px; text-align: center; }
+
+    /* ── CTA COLUMN ── */
+    .card-cta {
+      background: var(--white); padding: 24px 20px;
+      display: flex; flex-direction: column; justify-content: center; align-items: stretch;
+      border-left: 1px solid var(--border); border-radius: 0 20px 20px 0;
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); border-right: 1px solid var(--border);
+    }
+    .cta-trust-badge {
+      display: inline-flex; align-items: center; justify-content: center; align-self: center; gap: 8px;
+      padding: 6px 14px; background: var(--success-soft); border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 999px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.08em; color: #065f46; margin-bottom: 18px;
+    }
+    .cta-offer-box {
+      width: 100%; background: var(--warning-soft); border: 2px dashed rgba(245, 158, 11, 0.55);
+      border-radius: 10px; padding: 13px 14px; margin-bottom: 16px; text-decoration: none;
+      display: block; text-align: center; transition: all 0.2s ease;
+    }
+    .cta-offer-box:hover { border-color: var(--warning); transform: translateY(-2px); box-shadow: 0 4px 14px rgba(245, 158, 11, 0.15); }
+    .offer-primary { background: var(--primary-soft); border: 2px dashed rgba(79, 70, 229, 0.45); }
+    .offer-primary:hover { border-color: var(--primary); box-shadow: 0 4px 14px rgba(79, 70, 229, 0.12); }
+    .cta-offer-label {
+      font-size: 0.65rem; font-weight: 800; color: #92400e; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px;
+      display: flex; align-items: center; justify-content: center; gap: 5px;
+    }
+    .offer-primary .cta-offer-label { color: var(--primary-dark); }
+    .cta-offer-label i { font-size: 0.75rem; }
+    .cta-offer-text { font-size: 0.875rem; font-weight: 700; color: var(--text-main); line-height: 1.35; }
+    .btn-primary {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; padding: 14px; border-radius: 8px; background: var(--primary); color: var(--white); 
+      font-weight: 700; font-size: 0.9375rem; text-decoration: none; text-align: center;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 6px rgba(79, 70, 229, 0.2);
+    }
+    .btn-primary i { transition: transform 0.2s; }
+    .btn-primary:hover { background: var(--primary-dark); box-shadow: 0 6px 12px rgba(79, 70, 229, 0.3); }
+    .btn-primary:hover i { transform: translateX(4px); }
+    .link-secondary {
+      font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-decoration: none; text-align: center; margin-top: 14px; display: block; transition: color 0.2s;
+    }
+    .link-secondary:hover { color: var(--text-main); text-decoration: underline; }
+
+    /* ── FAQ SECTION ── */
+    .faq-section {
+      padding: 80px 24px;
+      background: var(--bg-body);
+    }
+    .faq-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .faq-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .faq-header h2 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+    .faq-header p {
+      font-size: 1.125rem;
+      color: var(--text-body);
+    }
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .faq-item {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .faq-item:hover {
+      border-color: var(--primary-soft);
+      box-shadow: var(--shadow-sm);
+    }
+    .faq-item.active {
+      border-color: var(--primary);
+      box-shadow: var(--shadow-md);
+    }
+    .faq-question {
+      width: 100%;
+      text-align: left;
+      padding: 24px;
+      background: none;
+      border: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .faq-question i {
+      color: var(--primary);
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+    }
+    .faq-item.active .faq-question i {
+      transform: rotate(180deg);
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    .faq-answer-inner {
+      padding: 0 24px 24px;
+      color: var(--text-body);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* ── NEW MODERN FOOTER ── */
+    .site-footer {
+      background: #0b1120; /* Deep slate blue */
+      color: #94a3b8;
+      margin-top: 100px;
+      position: relative;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* Ambient glow at the top of the footer */
+    .site-footer::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%; transform: translateX(-50%);
+      width: 60%; height: 200px;
+      background: radial-gradient(ellipse at top, rgba(79, 70, 229, 0.15), transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .footer-inner {
+      position: relative; z-index: 1;
+      max-width: 1400px; margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    /* Floating Newsletter/CTA Card */
+    .footer-cta-card {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 40px;
+      display: flex; justify-content: space-between; align-items: center;
+      transform: translateY(-50%);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+      margin-bottom: -10px; /* Offset the transform */
+    }
+    .cta-card-text h3 {
+      color: #fff; font-size: 1.5rem; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.02em;
+    }
+    .cta-card-text p {
+      color: #cbd5e1; font-size: 0.95rem;
+    }
+    .cta-form {
+      display: flex; gap: 12px; width: 100%; max-width: 450px;
+    }
+    .cta-form input {
+      flex: 1; padding: 14px 20px; border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(15, 23, 42, 0.6); color: #fff; outline: none; transition: border 0.3s;
+    }
+    .cta-form input:focus { border-color: var(--primary); }
+    .cta-form button {
+      padding: 14px 24px; border-radius: 10px; border: none;
+      background: var(--primary); color: #fff; font-weight: 700; cursor: pointer;
+      transition: background 0.2s; white-space: nowrap;
+    }
+    .cta-form button:hover { background: var(--primary-dark); }
+
+    /* Footer Main Grid */
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 64px;
+      padding-bottom: 56px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    
+    .footer-brand h4 {
+      display: flex; align-items: center; gap: 12px; color: #fff; font-size: 1.25rem; font-weight: 800; margin-bottom: 20px;
+    }
+    .footer-brand h4 i { color: var(--primary); font-size: 1.5rem; }
+    .footer-brand p {
+      font-size: 0.9rem; line-height: 1.7; color: #94a3b8; max-width: 320px; margin-bottom: 24px;
+    }
+    .footer-socials { display: flex; gap: 12px; }
+    .social-btn {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05); color: #cbd5e1;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s ease; text-decoration: none; font-size: 0.9rem;
+    }
+    .social-btn:hover { background: var(--primary); color: #fff; transform: translateY(-3px); }
+
+    /* Footer Links */
+    .footer-col h5 {
+      color: #f8fafc; font-size: 0.85rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; margin-bottom: 24px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .footer-col a {
+      color: #94a3b8; text-decoration: none; font-size: 0.9rem; font-weight: 500;
+      transition: all 0.2s; display: inline-block;
+    }
+    .footer-col a:hover { color: #fff; transform: translateX(4px); }
+
+    /* Disclaimer Box */
+    .footer-disclaimer-box {
+      margin: 48px 0; padding: 28px 32px;
+      background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 16px; display: flex; gap: 20px; align-items: flex-start;
+    }
+    .disclaimer-icon {
+      width: 40px; height: 40px; flex-shrink: 0; background: rgba(245, 158, 11, 0.15);
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      color: #f59e0b; font-size: 1.1rem;
+    }
+    .disclaimer-content h6 {
+      color: #cbd5e1; font-size: 0.85rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.05em; margin-bottom: 8px;
+    }
+    .disclaimer-content p {
+      font-size: 0.8rem; color: #64748b; line-height: 1.6;
+    }
+    .disclaimer-content p + p { margin-top: 10px; }
+
+    /* Bottom Bar */
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 32px 0; border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.85rem; color: #64748b;
+    }
+    .footer-bottom-links { display: flex; gap: 24px; }
+    .footer-bottom-links a { color: #64748b; text-decoration: none; transition: color 0.2s; }
+    .footer-bottom-links a:hover { color: #cbd5e1; }
+
+
+    /* ── RESPONSIVE MAIN, FAQ, AND FOOTER ── */
+    @media (max-width: 1024px) {
+      .provider-card { grid-template-columns: 1fr 1fr; }
+      .card-logo-col {
+        grid-column: span 2; border-bottom: 1px solid var(--border-light);
+        padding: 28px 24px 28px 48px; flex-direction: row; justify-content: flex-start; gap: 16px;
+        border-radius: 20px 20px 0 0;
+      }
+      .rank-ribbon { top: 24px; left: -12px; }
+      .card-main { grid-column: span 2; border-bottom: 1px solid var(--border-light); border-left: none; }
+      .score-mini { border-left: none; background: var(--bg-body); }
+      .card-cta { border-radius: 0 0 20px 20px; }
+
+      /* Footer Tablets */
+      .footer-cta-card { flex-direction: column; text-align: center; gap: 24px; padding: 32px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 48px; }
+      .footer-brand { grid-column: span 2; }
+      .footer-brand p { max-width: 100%; }
+    }
+
+    @media (max-width: 768px) {
+      .topbar-tag { display: none; }
+      .topbar-hamburger { display: flex; }
+      .mobile-nav { display: block; }
+      .hero { padding: 32px 16px; }
+      .hero-title { font-size: 1.75rem; }
+      .hero-desc { font-size: 0.875rem; }
+      .hero-eyebrow { font-size: 0.65rem; padding: 5px 12px; }
+      .hero-pills { gap: 6px; }
+      .hero-pill { font-size: 0.6rem; padding: 4px 8px; gap: 5px; border-radius: 6px; }
+
+      .content-wrap { padding: 0 12px; }
+      .list-header { margin-bottom: 6px; padding-bottom: 10px; margin-top:10px;}
+      .list-title { font-size: 0.75rem; }
+      .list-count { font-size: 0.7rem; font-weight: 500; }
+      .cards-list { gap: 12px; }
+
+      .provider-card { grid-template-columns: 1fr; border-radius: 14px; }
+      .rank-ribbon { top: 10px; left: 10px; }
+      .card-logo-col {
+        grid-column: 1; flex-direction: row; align-items: center; justify-content: center;
+        padding: 12px 16px; gap: 10px; border-radius: 14px 14px 0 0;
+      }
+      .provider-logo-avatar { width: 100px; height: 44px; border-radius: 8px; padding: 4px 8px; }
+      .card-main { grid-column: 1; padding: 16px 16px; order: 4; border-radius: 0; padding-bottom: 24px; }
+      .provider-name { font-size: 1rem; }
+      .provider-tagline { font-size: 0.75rem; margin-bottom: 10px; }
+      .feat-text { font-size: 0.75rem; }
+      .feat-list { gap: 6px; }
+      .badge-highlight { font-size: 0.575rem; }
+
+      .card-score {
+        grid-column: 1; border-top: 1px solid var(--border-light); padding: 12px 14px; background: var(--bg-body);
+        display: grid; grid-template-columns: auto 1fr auto; grid-template-rows: auto auto;
+        align-items: center; column-gap: 12px; row-gap: 4px; text-align: left; order: 4; border-radius: 0 0 14px 14px;
+      }
+      .score-number-wrap { grid-column: 1; grid-row: 1 / 3; width: 46px; height: 46px; margin-bottom: 0; flex-shrink: 0; }
+      .score-number { font-size: 1.125rem; }
+      .score-meta { grid-column: 2; grid-row: 1 / 3; flex-direction: column; justify-content: center; align-items: flex-start; gap: 3px; }
+      .score-stars { margin-bottom: 0; gap: 3px; }
+      .score-stars i { font-size: 0.65rem; }
+      .score-label { font-size: 0.7rem; margin-bottom: 0; }
+      .score-stats { grid-column: 3; grid-row: 1 / 3; flex-direction: column; justify-content: center; gap: 5px; width: auto; }
+      .score-stat {
+        font-size: 0.6rem; font-weight: 600; background: var(--success-soft); border: 1px solid rgba(16,185,129,0.18);
+        border-radius: 6px; padding: 3px 8px; color: #065f46; gap: 5px; white-space: nowrap;
+      }
+      .score-stat i { font-size: 0.65rem; width: auto; color: var(--success); }
+
+      .score-mini {
+        grid-column: 1; order: 3; flex-direction: row; align-items: center; justify-content: space-between;
+        text-align: left; padding: 12px 16px; border-left: none; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      }
+      .score-mini-left { flex-direction: row; align-items: center; gap: 10px; }
+      .score-mini .score-number-wrap { width: 46px; height: 46px; margin-bottom: 0; flex-shrink: 0; grid-column: unset; grid-row: unset; }
+      .score-mini .score-number { font-size: 1rem; }
+      .score-mini .score-meta { flex-direction: column; align-items: flex-start; gap: 3px; grid-column: unset; grid-row: unset; }
+      .score-mini .score-stars { gap: 2px; }
+      .score-mini .score-stars i { font-size: 0.6rem; }
+      .score-mini .score-label { font-size: 0.65rem; margin-bottom: 0; }
+      .score-mini .score-stats {
+        display: flex; flex-direction: column; gap: 5px; align-items: flex-end; grid-column: unset; grid-row: unset; width: auto; margin-top: 0;
+      }
+      .score-mini .score-stat {
+        font-size: 0.6rem; font-weight: 600; background: var(--success-soft); border: 1px solid rgba(16,185,129,0.18);
+        border-radius: 6px; padding: 3px 8px; color: #065f46; gap: 5px; white-space: nowrap;
+      }
+      .score-mini .score-stat i { font-size: 0.6rem; width: auto; color: var(--success); }
+
+      .card-cta {
+        grid-column: 1; border-top: 1px solid var(--border); border-left: none; padding: 14px 16px; border-radius: 0; order: 2;
+      }
+      .cta-trust-badge { font-size: 0.575rem; padding: 4px 10px; margin-bottom: 10px; }
+      .cta-offer-box { padding: 10px 12px; margin-bottom: 10px; }
+      .cta-offer-label { font-size: 0.575rem; }
+      .cta-offer-text { font-size: 0.8rem; }
+      .btn-primary { padding: 11px; font-size: 0.875rem; }
+      .link-secondary { font-size: 0.7rem; margin-top: 8px; }
+
+      /* FAQ Mobile */
+      .faq-section { padding: 32px 14px; }
+      .faq-header h2 { font-size: 1.35rem; }
+      .faq-header p { font-size: 0.78rem; }
+      .faq-question { padding: 13px 14px; font-size: 0.8rem; }
+      .faq-answer-inner { padding: 0 14px 14px; font-size: 0.75rem; }
+
+      /* Footer Mobile */
+      .site-footer { margin-top: 50px; }
+      .footer-inner { padding: 0 24px; }
+      .footer-cta-card { transform: translateY(-40px); padding: 24px; }
+      .cta-card-text h3 { font-size: 1.25rem; }
+      .cta-form { flex-direction: column; }
+      .footer-grid { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+      .footer-brand { grid-column: span 1; display: flex; flex-direction: column; align-items: center; }
+      .footer-disclaimer-box { flex-direction: column; align-items: center; text-align: center; padding: 24px 20px; }
+      .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+      .footer-bottom-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-desc{ font-size: 0.75rem; margin-bottom: 20px; }
+      .hero-eyebrow{ font-size: 0.6rem; padding: 4px 10px; margin-bottom: 10px; }
+      .hero { padding: 18px 14px; } 
+      .score-stats { gap: 6px; }
+      .score-stat { font-size: 0.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="topbar">
+    <div class="topbar-inner">
+      <a href="#" class="topbar-brand">
+        <div class="topbar-icon"><i class="fa-solid fa-notes-medical"></i></div>
+        <span class="topbar-name">Health<span>Guide</span></span>
+      </a>
+      <div class="topbar-right">
+        <span class="topbar-tag">2026 Rankings</span>
+        <button class="topbar-hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+          <i class="fa-solid fa-bars" id="hamburgerIcon"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav-links">
+      <a href="#" class="mobile-nav-link">
+        <i class="fa-solid fa-ranking-star"></i>
+        <span>Top Providers</span>
+        <small>2026 Rankings</small>
+      </a>
+      <a href="#" class="mobile-nav-link">
+        <i class="fa-solid fa-flask"></i>
+        <span>Peptide Guides</span>
+        <small>BPC-157, TB-500 &amp; more</small>
+      </a>
+      <a href="#" class="mobile-nav-link">
+        <i class="fa-solid fa-circle-info"></i>
+        <span>How We Rate</span>
+        <small>Our methodology</small>
+      </a>
+      <div class="mobile-nav-divider"></div>
+      <a href="#" class="mobile-nav-link">
+        <i class="fa-solid fa-shield-check"></i>
+        <span>Safety &amp; Compliance</span>
+        <small>What to look for</small>
+      </a>
+    </div>
+    <a href="#" class="mobile-nav-cta">
+      <i class="fa-solid fa-arrow-right"></i> Compare All Providers
+    </a>
+  </div>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-eyebrow"><i class="fa-solid fa-shield-check"></i> Expert-Verified · March 2026</div>
+      <h1 class="hero-title">Top <span class="accent">Peptide</span> Providers</h1>
+      <p class="hero-desc">We rigorously evaluate providers on clinical credentials, pricing transparency, and real patient outcomes so you can make confident health decisions.</p>
+      <div class="hero-pills">
+        <div class="hero-pill"><i class="fa-solid fa-user-doctor"></i> Licensed Providers</div>
+        <div class="hero-pill"><i class="fa-solid fa-truck-fast"></i> Free Shipping</div>
+        <div class="hero-pill"><i class="fa-solid fa-lock"></i> Secure & Private</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="content-wrap">
+    <div class="list-header">
+      <h2 class="list-title">Compare Top Platforms</h2>
+      <span class="list-count">Showing 3 verified results</span>
+    </div>
+    
+    <div class="cards-list">
+      
+      <div class="provider-card top-pick rank-1">
+        <div class="rank-ribbon"><div class="medal-body"><span class="medal-num">1</span></div></div>
+        <div class="card-logo-col">
+          <img class="provider-logo-avatar" src="img/refills.svg" alt="Refills logo" />
+        </div>
+        <div class="card-main">
+          <div class="card-badges"></div>
+          <div class="provider-name">Refills</div>
+          <p class="provider-tagline">Fast online approvals for compounded GLP-1 injectables and oral drops.</p>
+          <div class="feat-list">
+            <div class="feat-item">
+              <div class="feat-check"><i class="fa-solid fa-check"></i></div>
+              <span class="feat-text">Starting at just $159 with free same-day shipping</span>
+            </div>
+            <div class="feat-item">
+              <div class="feat-check"><i class="fa-solid fa-check"></i></div>
+              <span class="feat-text">Ongoing telehealth consults and personalized care</span>
+            </div>
+            <div class="feat-item">
+              <div class="feat-check"><i class="fa-solid fa-check"></i></div>
+              <span class="feat-text">Automatic deliveries so you never miss a dose</span>
+            </div>
+          </div>
+        </div>
+        <div class="score-mini">
+          <div class="score-mini-left">
+            <div class="score-number-wrap"><div class="score-number">9.8</div></div>
+            <div class="score-meta">
+              <div class="score-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <div class="score-label"><i class="fa-solid fa-badge-check"></i> Exceptional</div>
+            </div>
+          </div>
+          <div class="score-stats">
+            <div class="score-stat"><i class="fa-solid fa-users"></i> 22k+ active patients</div>
+            <div class="score-stat"><i class="fa-solid fa-comment-dots"></i> 3.2k verified reviews</div>
+          </div>
+        </div>
+        <div class="card-cta">
+          <div class="cta-trust-badge badge-success">Top Rated Provider</div>
+          <a href="#" class="cta-offer-box">
+            <div class="cta-offer-label"><i class="fa-solid fa-bolt"></i> Flash Sale</div>
+            <div class="cta-offer-text">$100 Off First Peptide Order</div>
+          </a>
+          <a href="#" class="btn-primary">
+            Visit Site <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <a href="#" class="link-secondary">View full analysis & pricing</a>
+        </div>
+      </div>
+
+      <div class="provider-card rank-2">
+        <div class="rank-ribbon"><div class="medal-body"><span class="medal-num">2</span></div></div>
+        <div class="card-logo-col">
+          <img class="provider-logo-avatar" src="img/directmeds.svg" alt="DirectMeds logo" />
+        </div>
+        <div class="card-main">
+          <div class="card-badges"></div>
+          <div class="provider-name">DirectMeds</div>
+          <p class="provider-tagline">Comprehensive peptide therapy with personalized wellness coaching.</p>
+          <div class="feat-list">
+            <div class="feat-item">
+              <div class="feat-check"><i class="fa-solid fa-check"></i></div>
+              <span class="feat-text">Refer-a-friend program with ongoing wellness incentives</span>
+            </div>
+            <div class="feat-item">
+              <div class="feat-check"><i class="fa-solid fa-check"></i></div>
+              <span class="feat-text">Health coins rewards redeemable across select programs</span>
+            </div>
+            <div class="feat-item">
+              <div class="feat-check"><i class="fa-solid fa-check"></i></div>
+              <span class="feat-text">Mail-in option for exclusive Wellness Credits</span>
+            </div>
+          </div>
+        </div>
+        <div class="score-mini">
+          <div class="score-mini-left">
+            <div class="score-number-wrap"><div class="score-number">9.4</div></div>
+            <div class="score-meta">
+              <div class="score-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
+              <div class="score-label">Excellent</div>
+            </div>
+          </div>
+          <div class="score-stats">
+            <div class="score-stat"><i class="fa-solid fa-users"></i> 18k+ active patients</div>
+            <div class="score-stat"><i class="fa-solid fa-comment-dots"></i> 2.7k verified reviews</div>
+          </div>
+        </div>
+        <div class="card-cta">
+          <div class="cta-trust-badge badge-warning">Top Rated Provider</div>
+          <a href="#" class="cta-offer-box">
+            <div class="cta-offer-label"><i class="fa-solid fa-clock"></i> Limited Time</div>
+            <div class="cta-offer-text">Free Peptide Consult + 20% Off</div>
+          </a>
+          <a href="#" class="btn-primary">
+            Visit Site <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <a href="#" class="link-secondary">View full analysis & pricing</a>
+        </div>
+      </div>
+
+      <div class="provider-card rank-3">
+        <div class="rank-ribbon"><div class="medal-body"><span class="medal-num">3</span></div></div>
+        <div class="card-logo-col">
+          <img class="provider-logo-avatar" src="img/sprout.svg" alt="Sprout logo" />
+        </div>
+        <div class="card-main">
+          <div class="card-badges"></div>
+          <div class="provider-name">Sprout</div>
+          <p class="provider-tagline">24/7 telehealth access with AI-powered health monitoring.</p>
+          <div class="feat-list">
+            <div class="feat-item">
+              <div class="feat-check"><i class="fa-solid fa-check"></i></div>
+              <span class="feat-text">24/7 on-demand access to licensed specialists</span>
+            </div>
+            <div class="feat-item">
+              <div class="feat-check"><i class="fa-solid fa-check"></i></div>
+              <span class="feat-text">AI-powered symptom checker and dashboard</span>
+            </div>
+            <div class="feat-item">
+              <div class="feat-check"><i class="fa-solid fa-check"></i></div>
+              <span class="feat-text">Nationwide network with discounted generics</span>
+            </div>
+          </div>
+        </div>
+        <div class="score-mini">
+          <div class="score-mini-left">
+            <div class="score-number-wrap"><div class="score-number">9.1</div></div>
+            <div class="score-meta">
+              <div class="score-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div>
+              <div class="score-label">Very Good</div>
+            </div>
+          </div>
+          <div class="score-stats">
+            <div class="score-stat"><i class="fa-solid fa-users"></i> 14k+ active patients</div>
+            <div class="score-stat"><i class="fa-solid fa-comment-dots"></i> 1.9k verified reviews</div>
+          </div>
+        </div>
+        <div class="card-cta">
+          <div class="cta-trust-badge badge-primary">HIPAA Compliant</div>
+          <a href="#" class="cta-offer-box">
+            <div class="cta-offer-label"><i class="fa-solid fa-gift"></i> New Patient</div>
+            <div class="cta-offer-text">First Peptide Cycle Free — No Commitment</div>
+          </a>
+          <a href="#" class="btn-primary">
+            Visit Site <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <a href="#" class="link-secondary">View full analysis & pricing</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <section class="faq-section">
+    <div class="faq-container">
+      <div class="faq-header">
+        <h2>Frequently Asked Questions</h2>
+        <p>Everything you need to know about starting peptide therapy online.</p>
+      </div>
+      <div class="faq-list">
+        
+        <div class="faq-item">
+          <button class="faq-question">
+            What exactly are peptides and how do they work?
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Peptides are short chains of amino acids that act as signaling molecules in the body. They naturally occur in humans and are responsible for telling cells how to function. In peptide therapy, specific synthesized peptides are used to mimic these natural signals, potentially aiding in muscle recovery, weight management, anti-aging, and improving cellular function.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            Do I need a prescription for peptide therapy?
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Yes. Legitimate, pharmaceutical-grade peptide therapy requires a prescription from a licensed healthcare provider. The platforms listed above connect you with board-certified medical professionals who will evaluate your health profile via a telehealth consultation to determine if peptide therapy is safe and appropriate for you.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            Are compounded peptides safe and regulated?
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              When prescribed by a licensed doctor and prepared by a state-licensed, FDA-registered compounding pharmacy, compounded peptides are generally considered safe. While the compounded medications themselves are not individually FDA-approved, the facilities that produce them are highly regulated to ensure sterility, potency, and quality.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            How are the peptides administered?
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              The method of administration depends on the specific peptide and your treatment plan. Many common peptides (like GLP-1s, BPC-157, or CJC-1295) are administered via a simple, relatively painless subcutaneous injection (just under the skin) using a tiny needle. Some providers also offer oral troches, nasal sprays, or topical creams for certain types of peptides.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      
+      <div class="footer-cta-card">
+        <div class="cta-card-text">
+          <h3>Smarter Health Decisions</h3>
+          <p>Join 50,000+ subscribers receiving our latest provider analyses and peptide guides.</p>
+        </div>
+        <form class="cta-form" onsubmit="event.preventDefault();">
+          <input type="email" placeholder="Enter your email address" required />
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h4><i class="fa-solid fa-shield-halved"></i> HealthGuide</h4>
+          <p>Transparent, research-informed comparisons of leading peptide and telehealth services. Confidently evaluate safe, reliable, and medically supervised options.</p>
+          <div class="footer-socials">
+            <a href="#" class="social-btn" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#" class="social-btn" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="social-btn" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h5>Categories</h5>
+          <ul>
+            <li><a href="#">Peptide Therapy</a></li>
+            <li><a href="#">GLP-1 Medications</a></li>
+            <li><a href="#">Testosterone (TRT)</a></li>
+            <li><a href="#">Hair Loss</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Trust & Safety</h5>
+          <ul>
+            <li><a href="#">How We Compare</a></li>
+            <li><a href="#">Editorial Standards</a></li>
+            <li><a href="#">Medical Review Board</a></li>
+            <li><a href="#">Ad Disclosure</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Legal</h5>
+          <ul>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Cookie Policy</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-disclaimer-box">
+        <div class="disclaimer-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+        <div class="disclaimer-content">
+          <h6>Medical Disclaimer</h6>
+          <p>This website is an informative comparison site that aims to offer its users helpful information regarding the products and offers featured herein, which are offered for purchase by third-party providers. We do not test, recommend, or endorse the products and services displayed here. The content herein is not and shall not be taken as a substitute for expert medical advice.</p>
+          <p>Information provided on HealthGuide is for educational purposes only. We do not offer individual medical advice, diagnosis, or treatment plans. For personal advice, please consult with a licensed medical professional.</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-copyright">&copy; 2026 HealthGuide USA. All rights reserved.</div>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Cookies</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    // Mobile Nav Toggle
+    const btn = document.getElementById('hamburgerBtn');
+    const nav = document.getElementById('mobileNav');
+    const icon = document.getElementById('hamburgerIcon');
+    
+    btn.addEventListener('click', () => {
+      const isOpen = nav.classList.toggle('open');
+      icon.className = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+    });
+    
+    // Close mobile nav on outside click
+    document.addEventListener('click', (e) => {
+      if (!btn.contains(e.target) && !nav.contains(e.target)) {
+        nav.classList.remove('open');
+        icon.className = 'fa-solid fa-bars';
+      }
+    });
+
+    // FAQ Accordion Logic
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+      const questionBtn = item.querySelector('.faq-question');
+      questionBtn.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        
+        // Close all other items
+        faqItems.forEach(i => {
+          i.classList.remove('active');
+          i.querySelector('.faq-answer').style.maxHeight = null;
+        });
+
+        // Open the clicked item if it wasn't already open
+        if (!isActive) {
+          item.classList.add('active');
+          const answer = item.querySelector('.faq-answer');
+          answer.style.maxHeight = answer.scrollHeight + "px";
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

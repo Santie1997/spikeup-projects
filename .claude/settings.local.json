@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \":*)",
+      "Bash(powershell.exe -Command \"Get-Command node,python,python3,npx 2>&1 | Select-Object Name,Source\")",
+      "Bash(powershell.exe -Command \"python --version\")",
+      "Bash(npm install:*)",
+      "Bash(npx playwright:*)"
+    ]
+  }
+}

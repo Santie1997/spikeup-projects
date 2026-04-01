@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mad Devil Rush</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        magma: {
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                        },
+                        devil: {
+                            500: '#ef4444',
+                            600: '#dc2626',
+                            900: '#7f1d1d',
+                        },
+                        void: '#050505', 
+                    },
+                    fontFamily: {
+                        sans: ['Rajdhani', 'sans-serif'],
+                        devil: ['Creepster', 'cursive'], 
+                    },
+                    backgroundImage: {
+                        'magma-text': 'linear-gradient(to bottom, #ef4444, #f97316)',
+                    },
+                    animation: {
+                        'blob': 'blob 10s infinite',
+                        'float-slow': 'float 6s ease-in-out infinite',
+                        'levitate': 'levitate 6s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        levitate: {
+                            '0%, 100%': { transform: 'translateY(0) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-20px) rotate(1deg)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: '1', boxShadow: '0 0 20px rgba(220, 38, 38, 0.4)' },
+                            '50%': { opacity: '.7', boxShadow: '0 0 10px rgba(220, 38, 38, 0.1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        body {
+            background-color: #050505;
+            color: #e5e5e5;
+        }
+
+        /* Glass Card Effect */
+        .glass-card {
+            background: rgba(20, 20, 20, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            border-color: rgba(220, 38, 38, 0.6);
+            box-shadow: 0 0 40px rgba(220, 38, 38, 0.2), inset 0 0 20px rgba(220, 38, 38, 0.1);
+            transform: translateY(-5px);
+        }
+
+        /* Devil Title Text */
+        .text-devil-gradient {
+            background: linear-gradient(to bottom, #ff0000 30%, #450a0a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 0px 15px rgba(220, 38, 38, 0.5);
+        }
+
+        /* Button Modern */
+        .btn-devil {
+            background: linear-gradient(180deg, #dc2626 0%, #991b1b 100%);
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.8rem 2.5rem;
+            border: 1px solid #ef4444;
+            border-radius: 0.25rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.4);
+        }
+        
+        .btn-devil:hover {
+            box-shadow: 0 0 50px rgba(220, 38, 38, 0.8);
+            text-shadow: 0 0 8px white;
+            border-color: #fff;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #7f1d1d; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #dc2626; }
+    </style>
+</head>
+<body class="antialiased selection:bg-devil-600 selection:text-white">
+
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div class="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-devil-900 rounded-full mix-blend-screen filter blur-[150px] opacity-40 animate-blob"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-magma-700 rounded-full mix-blend-screen filter blur-[150px] opacity-30 animate-blob" style="animation-delay: 2s"></div>
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-30"></div>
+    </div>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        document.addEventListener('alpine:init', () => {
+            
+            // 1. Navigation Logic
+            Alpine.data('navData', () => ({
+                mobileMenu: false,
+                scrolled: false,
+                init() {
+                    window.addEventListener('scroll', () => {
+                        this.scrolled = window.scrollY > 20;
+                    });
+                },
+                toggleMenu() {
+                    this.mobileMenu = !this.mobileMenu;
+                }
+            }));
+
+            // 2. Slider Logic
+            Alpine.data('heroSlider', () => ({
+                activeSlide: 0,
+                slides: [
+                    'https://maddevilrush.com/wp-content/themes/site-theme/img/banner1.png',
+                    'https://maddevilrush.com/wp-content/themes/site-theme/img/banner2.png',
+                    'https://maddevilrush.com/wp-content/themes/site-theme/img/banner3.png'
+                ],
+                timer: null,
+                init() {
+                    this.startAutoPlay();
+                },
+                startAutoPlay() {
+                    this.timer = setInterval(() => {
+                        this.next();
+                    }, 5000);
+                },
+                next() {
+                    this.activeSlide = this.activeSlide === this.slides.length - 1 ? 0 : this.activeSlide + 1;
+                },
+                prev() {
+                    this.activeSlide = this.activeSlide === 0 ? this.slides.length - 1 : this.activeSlide - 1;
+                },
+                goTo(index) {
+                    this.activeSlide = index;
+                    clearInterval(this.timer);
+                    this.startAutoPlay();
+                }
+            }));
+
+            // 3. FAQ Logic
+            Alpine.data('faqData', () => ({
+                open: null,
+                items: [
+                    {q: 'Is Mad Devil Rush free to play?', a: 'Yes. This game is entirely free to play and loads instantly in your browser without any delay.'},
+                    {q: 'Do I need an account or payment method?', a: 'No. There is no sign up required and no payment method is requested on this platform.'},
+                    {q: 'Can I win real money or cash out?', a: 'No. Everything in the game is virtual and has no cash value in the real world.'},
+                    {q: 'How do I start playing?', a: 'You can open the game and press the play button after using the plus or minus controls to set a comfortable level.'},
+                    {q: 'What is the goal of the game?', a: 'The goal is to match symbols on the five reel board and watch for special Mad Devil tiles and prize embers that make rounds more exciting.'},
+                    {q: 'How do the jackpots work?', a: 'Four tiers of virtual jackpots can be collected when a Mad Devil symbol lands at the same time as a Jackpot icon on the reels.'},
+                    {q: 'What do the Inferno Surge symbols do?', a: 'The Mad Devil icons act as a collection mechanic that gathers all displayed prizes and jackpots currently visible on the board.'},
+                    {q: 'Is there a Hold and Collect style feature?', a: 'Yes. Certain triggers can start a short sequence where triggering icons lock in place and open spaces refresh for a set count.'},
+                    {q: 'Are there free spins?', a: 'Some versions include a set of free rounds where Mad Devil icons and prize embers appear more often because the trigger and number of rounds can vary.'},
+                    {q: 'Does the game work on mobile?', a: 'Yes. The layout and fonts and buttons are specifically designed to be easy to use on phones and tablets and desktop.'},
+                    {q: 'What can I do if the game does not load?', a: 'You should refresh the page and check your internet connection and try closing other tabs or apps. If issues continue then you may try another browser.'}
+                ]
+            }));
+        });
+    </script>
+
+    <nav x-data="navData" 
+         class="fixed w-full top-0 z-50 transition-all duration-300 border-b border-white/5 pt-4"
+         :class="scrolled ? 'bg-black/90 backdrop-blur-xl pb-3' : 'bg-transparent pb-4'">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            
+            <a href="#" class="flex items-center gap-3 group">
+                <img src="https://maddevilrush.com/wp-content/themes/site-theme/img/logo.png" alt="Mad Hit Devil Logo" class="w-12 h-12 object-contain"/>
+            </a>
+
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#hero" class="text-lg font-bold uppercase tracking-widest text-gray-400 hover:text-white transition-colors">Lair</a>
+                <a href="#ratings" class="text-lg font-bold uppercase tracking-widest text-gray-400 hover:text-white transition-colors">Stats</a>
+                <a href="#features" class="text-lg font-bold uppercase tracking-widest text-gray-400 hover:text-white transition-colors">Features</a>
+                <a href="#howtoplay" class="text-lg font-bold uppercase tracking-widest text-gray-400 hover:text-white transition-colors">Rituals</a>
+                <a href="/game" class="btn-devil !py-2 !px-6">Play</a>
+            </div>
+
+            <button @click="toggleMenu()" class="md:hidden text-3xl text-devil-500 p-2 relative z-50 focus:outline-none">
+                <i class="bi bi-list"></i>
+            </button>
+        </div>
+
+        <div x-show="mobileMenu" 
+             x-transition 
+             class="absolute top-full left-0 w-full bg-black/95 border-b border-white/10 px-6 py-8 flex flex-col gap-8 md:hidden backdrop-blur-xl shadow-2xl z-50 max-h-[80vh] overflow-y-auto">
+            <a href="#hero" @click="mobileMenu = false" class="text-3xl font-devil text-white text-center hover:text-devil-500">Lair</a>
+            <a href="#ratings" @click="mobileMenu = false" class="text-3xl font-devil text-white text-center hover:text-devil-500">Stats</a>
+            <a href="#features" @click="mobileMenu = false" class="text-3xl font-devil text-white text-center hover:text-devil-500">Features</a>
+            <a href="#howtoplay" @click="mobileMenu = false" class="text-3xl font-devil text-white text-center hover:text-devil-500">Rituals</a>
+            <a href="/game" class="btn-devil text-center w-full">Enter Game</a>
+        </div>
+    </nav>
+
+    <main class="relative z-10">
+
+        <section id="hero" class="relative pt-20 md:pt-28 pb-4 md:pb-8 flex flex-col justify-center">
+            
+            <div class="container mx-auto px-6 flex flex-col flex-grow">
+                
+                <div class="w-full relative rounded-xl overflow-hidden shadow-[0_0_30px_rgba(220,38,38,0.2)] border border-white/10 mb-6 md:mb-24 group"
+                     x-data="heroSlider">
+                    
+                    <img :src="slides[0]" alt="Spacer" class="w-full h-auto invisible relative z-0 pointer-events-none block">
+                    
+                    <div class="absolute inset-0 w-full h-full">
+                        <template x-for="(slide, index) in slides" :key="index">
+                            <div x-show="activeSlide === index"
+                                 x-transition:enter="transition ease-out duration-500"
+                                 x-transition:enter-start="opacity-0 transform scale-95"
+                                 x-transition:enter-end="opacity-100 transform scale-100"
+                                 x-transition:leave="transition ease-in duration-300"
+                                 x-transition:leave-start="opacity-100"
+                                 x-transition:leave-end="opacity-0"
+                                 class="absolute inset-0 w-full h-full">
+                                <img :src="slide" alt="Banner" class="w-full h-full object-contain">
+                            </div>
+                        </template>
+                    </div>
+
+                    <button @click="prev(); clearInterval(timer); startAutoPlay();" 
+                            class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-black/50 hover:bg-devil-600 text-white rounded-full backdrop-blur-sm transition-all border border-white/10 z-10">
+                        <i class="bi bi-chevron-left text-lg md:text-xl"></i>
+                    </button>
+                    
+                    <button @click="next(); clearInterval(timer); startAutoPlay();" 
+                            class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-black/50 hover:bg-devil-600 text-white rounded-full backdrop-blur-sm transition-all border border-white/10 z-10">
+                        <i class="bi bi-chevron-right text-lg md:text-xl"></i>
+                    </button>
+
+                    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-3 z-10">
+                        <template x-for="(slide, index) in slides" :key="index">
+                            <button @click="goTo(index)" 
+                                    class="w-2 h-2 md:w-3 md:h-3 rounded-full transition-all border border-black/50 shadow-sm"
+                                    :class="activeSlide === index ? 'bg-devil-500 scale-125' : 'bg-gray-400/50 hover:bg-white'">
+                            </button>
+                        </template>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                    
+                    <div data-aos="fade-right" data-aos-duration="1000" class="order-1 flex flex-col items-center text-center">
+                        <div class="inline-flex items-center gap-3 px-4 py-2 rounded-sm bg-devil-900/30 border border-devil-500/30 mb-8 backdrop-blur-md">
+                            <i class="bi bi-exclamation-triangle-fill text-devil-500 animate-pulse"></i>
+                            <span class="text-sm font-bold text-gray-300 tracking-[0.2em] uppercase">System Overheat</span>
+                        </div>
+
+                        <h1 class="font-devil text-4xl sm:text-5xl md:text-8xl text-white leading-[0.9] md:leading-[0.8] mb-4 md:mb-6 drop-shadow-2xl">
+                            Mad Hit <br/>
+                            <span class="text-devil-gradient text-[1.2em]">Devil</span>
+                        </h1>
+
+                        <p class="text-sm md:text-xl text-gray-100 font-semibold max-w-lg leading-relaxed mb-0 md:mb-10">
+                           Mad Devil Rush provides a fiery free to play experience where volcanic landscapes and obsidian treasure symbols meet high energy gaming on a bold five reel board. You can jump into the action within seconds to watch the Inferno Surge symbols activate and enjoy short and lively sessions without any unnecessary clutter. This game is entirely free to play and loads instantly in your browser while all items and outcomes remain virtual and possess no cash value at any time.
+                        </p>
+
+                    </div>
+
+                    <div class="relative group order-2" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="200">
+                        <div class="animate-levitate hover:animate-none transition-all duration-500 relative z-10 p-2 bg-gradient-to-b from-white/10 to-transparent border border-white/5 shadow-2xl backdrop-blur-sm rounded-lg">
+                            
+                            <a href="/game" class="block rounded overflow-hidden relative aspect-video bg-black shadow-inner">
+                                <img src="https://maddevilrush.com/wp-content/themes/site-theme/img/previewgame.png" 
+                                     class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-700 contrast-125" 
+                                     alt="Game Preview">
+                                
+                                <div class="absolute inset-0 flex items-center justify-center bg-black/50 group-hover:bg-black/20 transition-colors cursor-pointer">
+                                    <div class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-devil-600/20 backdrop-blur-md border border-devil-500/50 flex items-center justify-center group-hover:scale-110 transition-transform shadow-[0_0_30px_rgba(220,38,38,0.4)]">
+                                        <i class="bi bi-play-fill text-4xl md:text-5xl text-white pl-1"></i>
+                                    </div>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="ratings" class="py-8 md:py-20 relative">
+            <div class="container mx-auto px-4 md:px-6">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-8 md:mb-16 border-b border-white/10 pb-5 md:pb-8" data-aos="fade-up">
+                    <div class="w-full md:w-auto text-center md:text-left">
+                        <h2 class="font-devil text-3xl md:text-6xl text-white mb-2 tracking-wide">Infernal Ratings</h2>
+                        <p class="text-devil-500 font-bold uppercase tracking-widest text-sm">Live Core Metrics</p>
+                    </div>
+                    <div class="mt-4 md:mt-0 hidden md:block">
+                        <i class="bi bi-grid-3x3-gap-fill text-4xl text-gray-500"></i>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <div class="glass-card rounded-xl p-5 md:p-8 lg:col-span-2 group relative overflow-hidden flex flex-col justify-center text-center md:text-left" data-aos="fade-up">
+                        <div class="absolute right-0 top-0 w-64 h-64 bg-devil-600/20 blur-[50px] rounded-full group-hover:bg-devil-600/30 transition-colors"></div>
+                        <div class="relative z-10">
+                            <h3 class="font-bold text-gray-400 uppercase tracking-widest text-sm mb-2 flex items-center justify-center md:justify-start gap-2">
+                                <i class="bi bi-people-fill text-devil-500"></i> Community Score
+                            </h3>
+                            <div class="flex flex-wrap items-baseline justify-center md:justify-start gap-2">
+                                <span class="font-devil text-5xl md:text-8xl text-white leading-none drop-shadow-lg group-hover:text-devil-500 transition-colors">4.8</span>
+                                <span class="font-devil text-3xl md:text-4xl text-gray-500">/ 5</span>
+                            </div>
+                            <div class="flex text-magma-500 text-2xl mt-4 gap-1 justify-center md:justify-start">
+                                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
+                            </div>
+                            <p class="text-xs text-gray-400 mt-4 uppercase tracking-wider font-bold">Based on 666+ Infernal Reviews</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-xl p-5 md:p-8 lg:col-span-2 flex flex-col md:flex-row items-center gap-4 md:gap-6 group relative overflow-hidden text-center md:text-left" data-aos="fade-up" data-aos-delay="100">
+                        <div class="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-devil-600 transition-colors">
+                            <i class="bi bi-eye-fill text-2xl text-white"></i>
+                        </div>
+                        <div class="w-full">
+                             <h3 class="font-bold text-gray-400 uppercase tracking-widest text-sm mb-1">Visual Fidelity</h3>
+                             <div class="text-4xl md:text-5xl font-devil text-white mb-2">ULTRA HD</div>
+                             <div class="w-full h-1 bg-gray-800 rounded-full overflow-hidden">
+                                 <div class="h-full bg-gradient-to-r from-devil-600 to-magma-500 w-full animate-pulse"></div>
+                             </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-xl p-5 md:p-8 flex flex-col justify-between group text-center md:text-left" data-aos="fade-up" data-aos-delay="200">
+                        <div class="flex justify-between items-start mb-6 flex-col md:flex-row items-center md:items-start">
+                            <i class="bi bi-lightning-charge-fill text-3xl text-gray-500 group-hover:text-magma-500 transition-colors mb-4 md:mb-0"></i>
+                            <span class="text-xs font-bold border border-white/20 px-2 py-1 rounded text-white">60 FPS</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-400 uppercase tracking-widest text-sm mb-1">Gameplay Flow</h3>
+                            <div class="text-3xl font-devil text-white group-hover:text-magma-500 transition-colors">SEAMLESS</div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-xl p-5 md:p-8 flex flex-col justify-between group text-center md:text-left" data-aos="fade-up" data-aos-delay="300">
+                        <div class="flex justify-between items-start mb-6 flex-col md:flex-row items-center md:items-start">
+                            <i class="bi bi-fire text-3xl text-gray-500 group-hover:text-devil-500 transition-colors mb-4 md:mb-0"></i>
+                            <span class="text-xs font-bold bg-devil-900/50 text-devil-500 px-2 py-1 rounded border border-devil-500/30">HOT</span>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-400 uppercase tracking-widest text-sm mb-1">Feature Action</h3>
+                            <div class="text-3xl font-devil text-white">EXPLOSIVE</div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-xl p-5 md:p-8 lg:col-span-2 flex flex-col md:flex-row items-center justify-between text-center md:text-left group gap-4" data-aos="fade-up" data-aos-delay="400">
+                          <div class="mb-4 md:mb-0">
+                              <h3 class="font-bold text-gray-400 uppercase tracking-widest text-sm mb-2">Mobile Experience</h3>
+                              <div class="text-4xl font-devil text-white mb-2">NATIVE FEEL</div>
+                              <span class="text-xs text-green-400 font-bold bg-green-900/30 px-3 py-1 rounded-full border border-green-500/20">100% Responsive</span>
+                          </div>
+                          <div class="w-20 h-20 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-devil-500 group-hover:bg-devil-500/10 transition-all">
+                              <i class="bi bi-phone text-4xl text-white"></i>
+                          </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="py-10 md:py-32 relative">
+             <div class="container mx-auto px-4 md:px-6 max-w-7xl">
+                 <div class="text-center mb-8 md:mb-24" data-aos="fade-down">
+                     <h2 class="font-devil text-3xl md:text-6xl text-white mb-3 md:mb-4">Inside the Vault</h2>
+                     <p class="text-gray-400 font-bold tracking-widest uppercase">Game Features</p>
+                 </div>
+
+                 <div class="flex flex-col lg:flex-row items-center gap-6 md:gap-16 mb-10 md:mb-24">
+                     <div class="lg:w-1/2 text-center lg:text-left" data-aos="fade-right">
+                         <h3 class="font-devil text-2xl md:text-4xl text-magma-500 mb-3 md:mb-6">Visual Overview</h3>
+                         <p class="text-gray-300 text-sm md:text-lg leading-relaxed mb-4 md:mb-6">
+                            A subterranean volcanic backdrop featuring flowing lava and flickering embers frames the primary board area. The reels sit in a heavy metallic frame that resembles a forged iron gate with a glowing obsidian finish that catches every flickering light source. Animated sparks and rhythmic heat waves provide a constant pulse to the screen to indicate activity during the session. Symbols remain high contrast and easy to read on mobile devices through the use of high definition icons such as the Mad Devil himself in a mischievous pose and glowing pitchforks and burning medallions. Sharp highlights and deep shadows help each individual tile stand out against the dark and energetic playfield to ensure a premium visual experience.
+                         </p>
+                     </div>
+                     <div class="lg:w-1/2 relative group w-full" data-aos="fade-left">
+                         <div class="absolute -inset-1 bg-gradient-to-r from-magma-600 to-devil-600 rounded-lg blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
+                         <div class="relative rounded-lg overflow-hidden border border-white/10 shadow-2xl">
+                             <img src="https://maddevilrush.com/wp-content/themes/site-theme/img/visualoverview.png" alt="Visual Overview" class="w-full transform group-hover:scale-105 transition-transform duration-700">
+                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none"></div>
+                         </div>
+                     </div>
+                 </div>
+
+                 <div class="flex flex-col lg:flex-row-reverse items-center gap-6 md:gap-16 mb-10 md:mb-24">
+                     <div class="lg:w-1/2 text-center lg:text-left" data-aos="fade-left">
+                         <h3 class="font-devil text-2xl md:text-4xl text-devil-500 mb-3 md:mb-6">Theme and Visuals</h3>
+                         <p class="text-gray-300 text-sm md:text-lg leading-relaxed mb-4 md:mb-6">
+                           A powerful and intense subterranean theme sets the stage through the use of deep obsidian blacks and brilliant orange accents that feel professional and immersive. The playfield sits in a polished iron frame with a gentle glow while prize embers and pitchfork icons use sharp bevels and crisp highlights for easy reading on all devices. Multipliers and rewards appear on bold metallic badges that shimmer when active and jackpot values gleam with a steady pulse so their role is clear at a glance.
+
+Motion is heavy and readable throughout the site as icons settle with a satisfying thud and values pulse to confirm activity. Locking tiles add a soft halo during feature moments to highlight your progress. The fonts are large and high contrast while the user interface buttons are simple and rounded for ease of use. The audio leans toward an intense orchestral style with deep rumbles and metallic chimes and a mild lift during feature moments which keeps the tone exciting without overpowering the screen. All elements work together to deliver a clean and fiery and inviting look.
+                         </p>
+                     </div>
+                     <div class="lg:w-1/2 relative group w-full" data-aos="fade-right">
+                         <div class="absolute -inset-1 bg-gradient-to-l from-devil-600 to-magma-600 rounded-lg blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
+                         <div class="relative rounded-lg overflow-hidden border border-white/10 shadow-2xl">
+                             <img src="https://maddevilrush.com/wp-content/themes/site-theme/img/themevisuals.png" alt="Theme and Visuals" class="w-full transform group-hover:scale-105 transition-transform duration-700">
+                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none"></div>
+                         </div>
+                     </div>
+                 </div>
+                 
+                 <div class="flex flex-col lg:flex-row items-center gap-6 md:gap-16">
+                     <div class="lg:w-1/2 text-center lg:text-left" data-aos="fade-right">
+                         <h3 class="font-devil text-2xl md:text-4xl text-white mb-3 md:mb-6">BONUS ROUND FEATURES</h3>
+                         <p class="text-gray-300 text-sm md:text-lg leading-relaxed mb-4 md:mb-6">
+                           Free rounds begin when bonus icons land in view although the exact trigger and round count may vary by version. Once active you play a set of rounds at the same level with prize embers and Mad Devil icons appearing more often to keep the pace moving. Special symbols can extend the feature or add more rounds or boost existing prize values for clearer connections.
+                            Retriggers are possible when the required icons show again in the furnace during the round to extend the play time. In some versions the feature can link with a short Hold and Collect sequence where triggering symbols stay locked while open spaces refresh for a set count. This lets new boosters add to the virtual total. Visual cues such as bright counters and soft glows make progress easy to follow throughout the round.
+                        </p>
+                     </div>
+                     <div class="lg:w-1/2 relative group w-full" data-aos="fade-left">
+                         <div class="absolute -inset-1 bg-gradient-to-r from-magma-600 to-devil-600 rounded-lg blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
+                         <div class="relative rounded-lg overflow-hidden border border-white/10 shadow-2xl">
+                             <img src="https://maddevilrush.com/wp-content/themes/site-theme/img/freespins.png" alt="Free Spin Features" class="w-full transform group-hover:scale-105 transition-transform duration-700">
+                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none"></div>
+                         </div>
+                     </div>
+                 </div>
+
+             </div>
+        </section>
+
+        <section id="howtoplay" class="py-10 md:py-32 relative bg-black/40 border-y border-white/5">
+            <div class="container mx-auto px-4 md:px-6 max-w-5xl">
+
+                <div class="text-center mb-8 md:mb-24">
+                    <h2 class="font-devil text-3xl md:text-6xl text-white mb-3 md:mb-4">HOW TO PLAY</h2>
+                    <p class="text-gray-400 font-bold tracking-widest uppercase">Guide to the Depths</p>
+                </div>
+
+                <div class="relative w-full">
+                    
+                    <div class="absolute left-6 md:left-1/2 top-8 bottom-8 w-1 bg-gradient-to-b from-devil-600 via-magma-500 to-transparent -translate-x-1/2 rounded-full shadow-[0_0_15px_#ea580c] z-0"></div>
+
+                    <div class="relative w-full mb-6 md:mb-16 flex flex-col md:flex-row items-start md:items-center justify-between group" data-aos="fade-up">
+                        <div class="w-full md:w-[45%] pl-14 md:pl-0 pr-0 md:pr-10 text-left md:text-right order-2 md:order-1 pt-2 md:pt-0">
+                            <div class="glass-card p-4 md:p-6 rounded-xl border-l-4 md:border-l-0 md:border-r-4 border-devil-900 group-hover:border-magma-500 transition-all duration-300 transform group-hover:-translate-y-1">
+                                <h3 class="font-devil text-xl md:text-4xl text-white mb-1 md:mb-2 group-hover:text-magma-500 transition-colors">01. Choose your play level</h3>
+                                <p class="text-gray-400 leading-relaxed">You should use the plus and minus buttons to set a comfortable level before you begin your journey through the depths.</p>
+                            </div>
+                        </div>
+                        <div class="absolute left-6 md:left-1/2 top-8 md:top-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center z-20 order-1 md:order-2">
+                            <div class="w-6 h-6 bg-void border-2 border-devil-500 group-hover:border-magma-500 rounded-sm rotate-45 transition-all duration-500 group-hover:scale-125 shadow-[0_0_15px_rgba(220,38,38,0.5)] group-hover:shadow-[0_0_20px_#f97316] relative overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-br from-magma-500 to-devil-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            </div>
+                        </div>
+                        <div class="hidden md:block md:w-[45%] order-3"></div>
+                    </div>
+
+                    <div class="relative w-full mb-6 md:mb-16 flex flex-col md:flex-row items-start md:items-center justify-between group" data-aos="fade-up">
+                        <div class="hidden md:block md:w-[45%] order-1"></div>
+                        <div class="absolute left-6 md:left-1/2 top-8 md:top-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center z-20 order-1 md:order-2">
+                            <div class="w-6 h-6 bg-void border-2 border-devil-500 group-hover:border-magma-500 rounded-sm rotate-45 transition-all duration-500 group-hover:scale-125 shadow-[0_0_15px_rgba(220,38,38,0.5)] group-hover:shadow-[0_0_20px_#f97316] relative overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-br from-magma-500 to-devil-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            </div>
+                        </div>
+                        <div class="w-full md:w-[45%] pl-14 md:pl-10 text-left order-2 md:order-3 pt-2 md:pt-0">
+                            <div class="glass-card p-4 md:p-6 rounded-xl border-l-4 border-devil-900 group-hover:border-magma-500 transition-all duration-300 transform group-hover:-translate-y-1">
+                                <h3 class="font-devil text-xl md:text-4xl text-white mb-1 md:mb-2 group-hover:text-magma-500 transition-colors">02. Press play</h3>
+                                <p class="text-gray-400 leading-relaxed">The five reel grid spins and stops automatically while matches are evaluated on the specific lines shown within the game interface.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative w-full mb-6 md:mb-16 flex flex-col md:flex-row items-start md:items-center justify-between group" data-aos="fade-up">
+                        <div class="w-full md:w-[45%] pl-14 md:pl-0 pr-0 md:pr-10 text-left md:text-right order-2 md:order-1 pt-2 md:pt-0">
+                            <div class="glass-card p-4 md:p-6 rounded-xl border-l-4 md:border-l-0 md:border-r-4 border-devil-900 group-hover:border-magma-500 transition-all duration-300 transform group-hover:-translate-y-1">
+                                <h3 class="font-devil text-xl md:text-4xl text-white mb-1 md:mb-2 group-hover:text-magma-500 transition-colors">03. Watch for Inferno Surge</h3>
+                                <p class="text-gray-400 leading-relaxed">Special Mad Devil icons grant instant virtual rewards when they appear alongside prize embers on the first and second reels.</p>
+                            </div>
+                        </div>
+                        <div class="absolute left-6 md:left-1/2 top-8 md:top-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center z-20 order-1 md:order-2">
+                            <div class="w-6 h-6 bg-void border-2 border-devil-500 group-hover:border-magma-500 rounded-sm rotate-45 transition-all duration-500 group-hover:scale-125 shadow-[0_0_15px_rgba(220,38,38,0.5)] group-hover:shadow-[0_0_20px_#f97316] relative overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-br from-magma-500 to-devil-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            </div>
+                        </div>
+                        <div class="hidden md:block md:w-[45%] order-3"></div>
+                    </div>
+
+                    <div class="relative w-full mb-6 md:mb-16 flex flex-col md:flex-row items-start md:items-center justify-between group" data-aos="fade-up">
+                        <div class="hidden md:block md:w-[45%] order-1"></div>
+                        <div class="absolute left-6 md:left-1/2 top-8 md:top-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center z-20 order-1 md:order-2">
+                            <div class="w-6 h-6 bg-void border-2 border-devil-500 group-hover:border-magma-500 rounded-sm rotate-45 transition-all duration-500 group-hover:scale-125 shadow-[0_0_15px_rgba(220,38,38,0.5)] group-hover:shadow-[0_0_20px_#f97316] relative overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-br from-magma-500 to-devil-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            </div>
+                        </div>
+                        <div class="w-full md:w-[45%] pl-14 md:pl-10 text-left order-2 md:order-3 pt-2 md:pt-0">
+                            <div class="glass-card p-4 md:p-6 rounded-xl border-l-4 border-devil-900 group-hover:border-magma-500 transition-all duration-300 transform group-hover:-translate-y-1">
+                                <h3 class="font-devil text-xl md:text-4xl text-white mb-1 md:mb-2 group-hover:text-magma-500 transition-colors">04. Trigger The Hellfire Spin</h3>
+                                <p class="text-gray-400 leading-relaxed">Landing the required feature symbols starts a short Hold and Collect style sequence. Triggering icons lock in place while open spaces refresh for a set number of tries and any new embers are added to the running total.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative w-full mb-6 md:mb-16 flex flex-col md:flex-row items-start md:items-center justify-between group" data-aos="fade-up">
+                        <div class="w-full md:w-[45%] pl-14 md:pl-0 pr-0 md:pr-10 text-left md:text-right order-2 md:order-1 pt-2 md:pt-0">
+                            <div class="glass-card p-4 md:p-6 rounded-xl border-l-4 md:border-l-0 md:border-r-4 border-devil-900 group-hover:border-magma-500 transition-all duration-300 transform group-hover:-translate-y-1">
+                                <h3 class="font-devil text-xl md:text-4xl text-white mb-1 md:mb-2 group-hover:text-magma-500 transition-colors">05. Free rounds if available</h3>
+                                <p class="text-gray-400 leading-relaxed">Landing three or more scatter symbols activates a set of free rounds where prize embers and Mad Devil icons appear more frequently to keep the pace lively. Play continues automatically for the stated number of rounds.</p>
+                            </div>
+                        </div>
+                        <div class="absolute left-6 md:left-1/2 top-8 md:top-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center z-20 order-1 md:order-2">
+                            <div class="w-6 h-6 bg-void border-2 border-devil-500 group-hover:border-magma-500 rounded-sm rotate-45 transition-all duration-500 group-hover:scale-125 shadow-[0_0_15px_rgba(220,38,38,0.5)] group-hover:shadow-[0_0_20px_#f97316] relative overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-br from-magma-500 to-devil-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            </div>
+                        </div>
+                        <div class="hidden md:block md:w-[45%] order-3"></div>
+                    </div>
+
+                    <div class="relative w-full mb-6 md:mb-24 flex flex-col md:flex-row items-start md:items-center justify-between group" data-aos="fade-up">
+                        <div class="hidden md:block md:w-[45%] order-1"></div>
+                        <div class="absolute left-6 md:left-1/2 top-8 md:top-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center z-20 order-1 md:order-2">
+                            <div class="w-6 h-6 bg-void border-2 border-devil-500 group-hover:border-magma-500 rounded-sm rotate-45 transition-all duration-500 group-hover:scale-125 shadow-[0_0_15px_rgba(220,38,38,0.5)] group-hover:shadow-[0_0_20px_#f97316] relative overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-br from-magma-500 to-devil-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            </div>
+                        </div>
+                        <div class="w-full md:w-[45%] pl-14 md:pl-10 text-left order-2 md:order-3 pt-2 md:pt-0">
+                            <div class="glass-card p-4 md:p-6 rounded-xl border-l-4 border-devil-900 group-hover:border-magma-500 transition-all duration-300 transform group-hover:-translate-y-1">
+                                <h3 class="font-devil text-xl md:text-4xl text-white mb-1 md:mb-2 group-hover:text-magma-500 transition-colors">06. Read the screen cues</h3>
+                                <p class="text-gray-400 leading-relaxed">Glows and counters and large numbers show your current progress and remaining tries so it is easy to follow on both mobile and desktop.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="pt-8 relative z-20" data-aos="fade-up">
+                    <div class="bg-devil-900/20 border border-devil-500/30 rounded-lg p-6 text-center max-w-2xl mx-auto backdrop-blur-sm relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-devil-500 to-transparent"></div>
+                        <h3 class="font-devil text-2xl text-magma-500 mb-2">Remember</h3>
+                        <p class="text-gray-300 font-medium">Everything within this game is virtual and provided strictly for entertainment only.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+     <section class="py-10 md:py-32 border-t border-white/5">
+            <div class="container mx-auto px-4 md:px-6 max-w-3xl">
+                <h2 class="font-devil text-2xl md:text-5xl text-center text-white mb-6 md:mb-16 tracking-wider">INTERROGATION</h2>
+
+                <div class="space-y-4" x-data="faqData">
+                    <template x-for="(qa, index) in items">
+                        <div class="glass-card rounded-lg overflow-hidden">
+                            <button @click="open === index ? open = null : open = index"
+                                    class="w-full text-left p-4 md:p-6 flex justify-between items-center text-white font-bold uppercase tracking-wider text-xs md:text-sm hover:text-devil-500 transition-colors">
+                                <span x-text="qa.q" class="pr-4"></span>
+                                <i class="bi bi-plus-lg transition-transform text-2xl flex-shrink-0" :class="open === index ? 'rotate-45 text-devil-500' : ''"></i>
+                            </button>
+                            <div x-show="open === index" 
+                                 x-transition 
+                                 class="px-6 pb-6 text-gray-400 leading-relaxed" 
+                                 x-text="qa.a"></div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </section>
+
+   <section class="py-20 md:py-32 border-t border-white/5 bg-gradient-to-b from-black via-devil-900/5 to-black relative">
+            <div class="container mx-auto px-6 max-w-[1200px] relative z-10">
+                
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <h2 class="font-devil text-4xl md:text-5xl text-white tracking-wider mb-4">OVERALL SUMMARY</h2>
+                    <div class="h-1 w-24 bg-gradient-to-r from-transparent via-devil-500 to-transparent mx-auto"></div>
+                </div>
+
+                <div class="glass-card rounded-xl p-8 md:p-12 border border-white/10 shadow-[0_0_50px_rgba(220,38,38,0.1)]" data-aos="fade-up" data-aos-delay="100">
+                    <p class="text-gray-300 text-lg leading-relaxed mb-6 text-center md:text-left">
+                        Mad Devil Rush is easy to learn and built for short and high energy sessions. A clean five reel layout keeps rounds readable while fiery multipliers and the Inferno Surge mechanic add simple progress moments that feel purposeful as you play. Features appear often enough to keep the pace moving without any clutter and visual cues make changes clear on both mobile and desktop.
+                    </p>
+                    
+                    <p class="text-gray-300 text-lg leading-relaxed mb-8 text-center md:text-left">
+                        Most of the action centers on two specific paths. Instant rewards create bright bursts during regular rounds and certain triggers can shift into a brief Hold and Collect sequence where triggering icons lock and open spaces refresh for a set count. This allows new prizes to add to the virtual total. If you enjoy clear progress and quick feature bursts and a professional look then this is a strong pick for casual sessions.
+                    </p>
+
+                    <div class="bg-devil-900/20 rounded-lg p-6 border-l-4 border-devil-500 flex items-center justify-center md:justify-start gap-4">
+                        <i class="bi bi-shield-exclamation text-2xl text-devil-500"></i>
+                        <span class="text-gray-200 font-bold uppercase tracking-wider text-sm md:text-base text-center md:text-left">
+                            All items and outcomes are virtual and have no cash value.
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer class="py-16 border-t border-white/10 bg-black relative">
+            <div class="mx-auto px-6 max-w-[1200px]">
+                
+                <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
+                    
+                    <a href="#" class="inline-flex items-center gap-3 group">
+                        <i class="bi bi-fire text-3xl text-devil-600 group-hover:animate-pulse"></i>
+                        <span class="font-devil text-3xl text-white tracking-widest pt-2">MAD HIT DEVIL</span>
+                    </a>
+
+                    <div class="flex flex-wrap justify-center md:justify-end gap-6 md:gap-10 text-sm font-bold text-gray-400 uppercase tracking-widest">
+                        <a href="/terms-of-service" class="hover:text-white transition-colors">Terms</a>
+                        <a href="/privacy-policy" class="hover:text-white transition-colors">Privacy</a>
+                        <a href="/cookie-policy" class="hover:text-white transition-colors">Cookies</a>
+                    </div>
+                </div>
+
+                <div class="w-full p-6 rounded-lg bg-white/5 border border-white/5 backdrop-blur-sm mb-12">
+                     <div class="flex items-center justify-center md:justify-start gap-2 mb-4 text-devil-500">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                        <span class="font-bold uppercase tracking-widest text-sm">Disclaimer</span>
+                    </div>
+                    <p class="text-sm text-gray-300 leading-relaxed font-light text-center md:text-left">
+                        Experience the thrill of the spin in a purely social environment. No downloads, no deposits, just fun. <br><br>
+                        The website provides free-to-play social games intended for adult entertainment purposes only. To participate, players must be 18 years or older. Success in these games does not imply future success in real-money gaming. No real money or prizes can be won.
+                    </p>
+                </div>
+
+                <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+                    <p class="text-xs text-gray-500 font-bold tracking-widest uppercase">
+                        &copy; 2026 MAD HIT DEVIL
+                    </p>
+                    <p class="text-xs text-gray-600 font-bold tracking-widest uppercase">
+                        18+ ENTERTAINMENT ONLY • NO REAL MONEY GAMBLING
+                    </p>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true, offset: 50 });
+    </script>
+    <script type="text/javascript">
+         function replaceLinks() {
+           var urlParams = location.search.substring(1).split("&").map(function(s) {
+             return s.split("=").map(function(p) {
+               return decodeURIComponent(p);
+             });
+           }).reduce(function(p, c) {
+             p[c[0]] = c[1];
+             return p;
+           }, {});
+           var paramRegex = /\[\[(.+?)\]\]/g;
+           document.querySelectorAll("a").forEach(function(a) {
+             a.href = a.href.replace(paramRegex, function(match, key) {
+               var lowerKey = key.toLowerCase();
+               return (lowerKey in urlParams ? urlParams[lowerKey] : "");
+             });
+           });
+         }
+         if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+           replaceLinks();
+         } else {
+           document.addEventListener('DOMContentLoaded', replaceLinks);
+         }
+    </script>
+</body>
+</html>

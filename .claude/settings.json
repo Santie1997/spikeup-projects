@@ -1,0 +1,10 @@
+{
+  "allow": [
+    "node -e",
+    "playwright",
+    "chromium.launch",
+    "page.goto",
+    "page.screenshot"
+  ],
+  "enableAllProjectMcpServers": true
+}
